@@ -1,0 +1,107 @@
+# Welcome to Jekyll!
+#
+# This config file is meant for settings that affect your whole blog, values
+# which you are expected to set up once and rarely edit after that. If you find
+# yourself editing this file very often, consider using Jekyll's data files
+# feature for the data you need to update frequently.
+#
+# For technical reasons, this file is *NOT* reloaded automatically when you use
+# 'bundle exec jekyll serve'. If you change this file, please restart the server process.
+
+# Site settings
+# These are used to personalize your new site. If you look in the HTML files,
+# you will see them accessed via {{ site.title }}, {{ site.email }}, and so on.
+# You can create any custom variable you would like, and they will be accessible
+# in the templates via {{ site.myvariable }}.
+
+# Title, decription, tagline and URL for your site
+# Can be used in your theme by calling 'site.title' and so on
+title: yewtree
+description: Portfolio website.
+url: https://yewtreeweb.co.uk
+lang: en_GB
+
+# Used so Jekyll outputs the site correctly so Gulp can do what it wants
+source: .tmp/src
+destination: .tmp/dist
+include:
+  - _pages
+exclude:
+  - assets
+  - Gemfile
+  - Gemfile.lock
+  - node_modules
+  - vendor/bundle/
+  - vendor/cache/
+  - vendor/gems/
+  - vendor/ruby/
+  - package.json
+  - bower.json
+  - .bowerrc
+  - yarn.lock
+  - package-lock.json
+  - .jekyll-assets-cache
+  - .sass-cache/
+  - Rakefile
+  - README.md
+  - gulpfile.js
+  - gulpfile.babel.js
+  - .babelrc.js
+  - markdown.style.rb
+  - .mdlrc
+  - .scss-lint.yml
+  - .eslintignore
+  - .eslintrc.js
+  - .gitattributes
+  - .gitignore
+  - .editorconfig
+  - .travis.yml
+  - .codeclimate.yml
+  - .github/
+  - CHANGELOG.md,
+
+# Same as the title etc for your site but can instead be
+# called by using 'site.author.name' and so on
+# NOTE: Don't use @ in front of your Twitter username
+author:
+  name: Mathew Teague
+  email: mathew.teague@yewtreeweb.co.uk
+  uri: yewtreeweb
+  bio: me
+  twitter:
+  github:
+  twitter:
+  facebook:
+  instagram:
+  linkedin:
+
+# _config.dev.yml overwrites these options when you run `gulp`
+# Hides your drafts and future posts
+future: false
+show_drafts: false
+# Disables the more accurate related posts for faster generating of the site
+lsi: false
+# Removes the upper limit for posts generated
+limit_posts: 0
+
+# Permalink structure and pagination options
+permalink: pretty
+paginate: 10
+paginate_path: 'page:num'
+excerpt_separator: ''
+
+# Markdown library and options
+markdown: redcarpet
+redcarpet:
+  extensions: ['no_intra_emphasis', 'tables', 'fenced_code_blocks', 'autolink', 'smart',
+              'strikethrough', 'superscript', 'underline', 'highlight', 'footnotes']
+highlighter: rouge
+
+# Extending Jekyll
+plugins:
+  - jekyll-feed
+  - jekyll-gist
+  - jekyll-paginate
+  - jekyll-sitemap
+  - jekyll-seo-tag
+  - jekyll-redirect-from
