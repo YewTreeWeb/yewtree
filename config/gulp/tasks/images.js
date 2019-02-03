@@ -1,9 +1,9 @@
 'use strict';
-import gulp from 'gulp';
-import imagemin from 'gulp-imagemin';
-import cache from 'gulp-cache';
-import size from 'gulp-size';
-import replace from 'gulp-replace';
+const gulp = require('gulp');
+const imagemin = require('gulp-imagemin');
+const cache = require('gulp-cache');
+const size = require('gulp-size');
+const replace = require('gulp-replace');
 
 // 'gulp images' -- optimizes and caches your images
 gulp.task('images', () =>

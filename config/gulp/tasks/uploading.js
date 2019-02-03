@@ -1,8 +1,8 @@
 'use strict';
-import fs from 'fs';
-import gulp from 'gulp';
-import rsync from 'gulp-rsync';
-import cloudinary from 'gulp-cloudinary-upload';
+const fs = require('fs');
+const gulp = require('gulp');
+const rsync = require('gulp-rsync');
+const cloudinary = require('gulp-cloudinary-upload');
 
 // 'gulp deploy' -- reads from your Rsync credentials file and incrementally
 // uploads your site to your server
@@ -29,8 +29,8 @@ gulp.task('upload-images-to-cloudinary', () => {
       }
     }))
     .pipe(cloudinary.manifest({
-      path: '.tmp/src/_config/cloudinary-manifest.json',
+      path: './config/cloudinary-manifest.json',
       merge: true
     }))
-    .pipe(gulp.dest('.tmp/src/_config'));
+    .pipe(gulp.dest('./config'));
 });
