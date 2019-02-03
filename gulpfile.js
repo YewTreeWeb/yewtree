@@ -4,7 +4,7 @@
 const gulp = require('gulp');
 
 const requireDir = require('require-dir');
-const tasks = requireDir('./gulp/tasks', {recurse: true}); // eslint-disable-line
+const tasks = requireDir('./config/gulp/tasks', {recurse: true}); // eslint-disable-line
 
 // 'gulp inject' -- injects your CSS and JS into either the header or the footer
 gulp.task('inject', gulp.parallel('inject:head', 'inject:footer'));
