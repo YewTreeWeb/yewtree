@@ -20,6 +20,38 @@ const size = require('gulp-size');
 const sourcemaps = require('gulp-sourcemaps');
 const uglify = require('gulp-uglify');
 const when = require('gulp-if');
+const cssvariables = require('postcss-css-variables');
+const calc = require('postcss-calc');
+const rucksack = require('rucksack-css');
+const webpack = require('webpack');
+const webpackStream = require('webpack-stream');
+
+const webpackConfig = {
+  mode: mode,
+  entry: {
+    main: './' + paths.jsFiles + '/kubix.js'
+  },
+  output: {
+    filename: 'kubix.js'
+  },
+  module: {
+    rules: [{
+      loader: 'babel-loader',
+      exclude: /node_modules/,
+      options: {
+        presets: [
+          'babel-preset-es2015',
+          'babel-preset-react',
+          'babel-preset-env'
+        ].map(require.resolve)
+      }
+    }]
+  },
+  devServer: {
+    historyApiFallback: true
+  },
+  devtool: 'source-map'
+};
 
 // 'gulp scripts' -- creates a index.js file from your JavaScript files and
 // creates a Sourcemap for it
@@ -28,19 +60,59 @@ const when = require('gulp-if');
 gulp.task('scripts', () =>
   // NOTE: The order here is important since it's concatenated in order from
   // top to bottom, so you want vendor scripts etc on top
-  gulp.src([
-    'src/assets/javascript/vendor.js',
-    'src/assets/javascript/main.js'
-  ])
-  .pipe(newer('.tmp/assets/javascript/index.js', {
+  gulp.src('src/assets/javascript/main.js')
+  .pipe($.plumber())
+  .pipe(newer('.tmp/assets/javascript/main.js', {
+    dest: '.tmp/assets/javascript',
+    ext: '.js'
+  }))
+  .pipe(webpackStream(webpackConfig), webpack)
+  .pipe(when(!argv.prod, sourcemaps.init({
+    loadMaps: true
+  })))
+  .pipe(size({
+    showFiles: true
+  }))
+  .pipe(when(argv.prod, rename({
+    suffix: '.min'
+  })))
+  .pipe(when(argv.prod, when('*.js', uglify({
+    preserveComments: 'some'
+  }))))
+  .pipe(when(argv.prod, size({
+    showFiles: true
+  })))
+  .pipe(when(argv.prod, rev()))
+  .pipe($.if(env.sourcemaps, through.obj(function (file, enc, cb) {
+    // Dont pipe through any source map files as it will be handled
+    // by gulp-sourcemaps
+    const isSourceMap = /\.map$/.test(file.path);
+    if (!isSourceMap) this.push(file);
+    cb();
+  })))
+  .pipe(when(!argv.prod, sourcemaps.write('.')))
+  .pipe(when(argv.prod, gulp.dest('.tmp/assets/javascript')))
+  .pipe(when(argv.prod, when('*.js', gzip({
+    append: true
+  }))))
+  .pipe(when(argv.prod, size({
+    gzip: true,
+    showFiles: true
+  })))
+  .pipe(gulp.dest('.tmp/assets/javascript'))
+);
+
+gulp.task('vendorScripts', () =>
+  // NOTE: The order here is important since it's concatenated in order from
+  // top to bottom, so you want vendor scripts etc on top
+  gulp.src('src/assets/javascript/vendor.js')
+  .pipe($.plumber())
+  .pipe(newer('.tmp/assets/javascript/vendors.js', {
     dest: '.tmp/assets/javascript',
     ext: '.js'
   }))
   .pipe(when(!argv.prod, sourcemaps.init()))
-  .pipe(babel({
-    presets: ['es2015']
-  }))
-  .pipe(concat('index.js'))
+  .pipe(concat('vendors.js'))
   .pipe(size({
     showFiles: true
   }))
@@ -72,14 +144,42 @@ gulp.task('scripts', () =>
 // then minwhenies, gzips and cache busts it. Does not create a Sourcemap
 gulp.task('styles', () =>
   gulp.src('src/assets/scss/style.scss')
+  .pipe($.plumber())
   .pipe(when(!argv.prod, sourcemaps.init()))
+  .pipe($.cssimport({
+    matchPattern: "*.css"
+  }))
+  .pipe($.sassGlob())
   .pipe(sass({
-    precision: 10
+    precision: 10,
+    outputStyle: 'expanded'
   }).on('error', sass.logError))
   .pipe(postcss([
+    rucksack({
+      fallbacks: true
+    }),
     autoprefixer({
-      browsers: 'last 1 version'
-    })
+      browsers: [
+        'last 15 versions',
+        '>1%',
+        'ie >= 11',
+        'ie_mob >= 10',
+        'firefox >= 30',
+        'Firefox ESR',
+        'chrome >= 34',
+        'safari >= 7',
+        'opera >= 23',
+        'ios >= 9',
+        'android >= 4.4',
+        'bb >= 10'
+      ],
+      grid: true,
+      cascade: false
+    }),
+    cssvariables({
+      preserve: true
+    }),
+    calc()
   ]))
   .pipe(size({
     showFiles: true
@@ -132,7 +232,8 @@ gulp.task('serve', (done) => {
   // Watch various files for changes and do the needful
   gulp.watch(['src/**/*.{md|markdown}', 'src/**/*.html', 'src/**/*.{yml|yaml}', '_config.yml', '_config.dev.yml', '_headers', '_redirects'], gulp.series('build:site', reload));
   gulp.watch(['src/**/*.xml', 'src/**/*.txt'], gulp.series('site', reload));
-  gulp.watch('src/assets/javascript/**/*.js', gulp.series('scripts', reload));
+  gulp.watch(['src/assets/javascript/**/*.js', '! src/assets/javascript/vendors/*.js'], gulp.series('scripts', reload));
+  gulp.watch('src/assets/javascript/vendors/*.js', gulp.series('vendorScripts', reload));
   gulp.watch('src/assets/scss/**/*.{scss|sass}', gulp.series('styles'));
   gulp.watch('src/assets/images/**/*', gulp.series('images', 'upload-images-to-cloudinary', reload));
 });
