@@ -3,6 +3,10 @@ const fs = require('fs');
 const gulp = require('gulp');
 const rsync = require('gulp-rsync');
 const cloudinary = require('gulp-cloudinary-upload');
+const $ = require('gulp-load-plugins')({
+  pattern: ['gulp-*', 'gulp.*', '-', '@*/gulp{-,.}*'],
+  replaceString: /\bgulp[\-.]/
+});
 
 // 'gulp deploy' -- reads from your Rsync credentials file and incrementally
 // uploads your site to your server
@@ -10,6 +14,7 @@ gulp.task('upload', () => {
   var credentials = JSON.parse(fs.readFileSync('rsync-credentials.json', 'utf8'));
 
   return gulp.src('dist/**', {dot: true})
+    .pipe($.plumber())
     .pipe(rsync({
       root: 'dist',
       hostname: credentials.hostname,
@@ -21,6 +26,7 @@ gulp.task('upload', () => {
 
 gulp.task('upload-images-to-cloudinary', () => {
   gulp.src('.tmp/assets/images/*')
+    .pipe($.plumber())
     .pipe(cloudinary({
       config: {
         cloud_name: 'mat-teague',

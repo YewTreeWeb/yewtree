@@ -1,4 +1,6 @@
 'use strict';
+const fs = require('fs');
+const through = require('through2');
 const argv = require('yargs').argv;
 const yaml = require('js-yaml');
 const autoprefixer = require('autoprefixer');
@@ -28,7 +30,7 @@ const webpack = require('webpack');
 const webpackStream = require('webpack-stream');
 
 function loadConfig() {
-  var ymlFile = fs.readFileSync('gulpconfig.yml', 'utf8');
+  var ymlFile = fs.readFileSync('config/gulpconfig.yml', 'utf8');
   return yaml.load(ymlFile);
 }
 var config = loadConfig();
@@ -37,7 +39,7 @@ module.exports = config;
 const webpackConfig = {
   mode: argv.prod ? 'production' : 'development',
   entry: {
-    main: 'src/assets/javascript/main.js'
+    main: './src/assets/js/main.js'
   },
   output: {
     filename: 'main.js'
@@ -50,7 +52,6 @@ const webpackConfig = {
       options: {
         presets: [
           'babel-preset-es2015',
-          'babel-preset-react',
           'babel-preset-env'
         ].map(require.resolve)
       }
@@ -72,10 +73,10 @@ const webpackConfig = {
 gulp.task('scripts', () =>
   // NOTE: The order here is important since it's concatenated in order from
   // top to bottom, so you want vendor scripts etc on top
-  gulp.src('src/assets/javascript/main.js')
+  gulp.src('src/assets/js/main.js')
   .pipe($.plumber())
-  .pipe(newer('.tmp/assets/javascript/main.js', {
-    dest: '.tmp/assets/javascript',
+  .pipe(newer('.tmp/assets/js/main.js', {
+    dest: '.tmp/assets/js',
     ext: '.js'
   }))
   .pipe(webpackStream(webpackConfig), webpack)
@@ -95,7 +96,7 @@ gulp.task('scripts', () =>
     showFiles: true
   })))
   .pipe(when(argv.prod, rev()))
-  .pipe($.if(env.sourcemaps, through.obj(function (file, enc, cb) {
+  .pipe(when(sourcemaps, through.obj(function (file, enc, cb) {
     // Dont pipe through any source map files as it will be handled
     // by gulp-sourcemaps
     const isSourceMap = /\.map$/.test(file.path);
@@ -103,7 +104,7 @@ gulp.task('scripts', () =>
     cb();
   })))
   .pipe(when(!argv.prod, sourcemaps.write('.')))
-  .pipe(when(argv.prod, gulp.dest('.tmp/assets/javascript')))
+  .pipe(when(argv.prod, gulp.dest('.tmp/assets/js')))
   .pipe(when(argv.prod, when('*.js', gzip({
     append: true
   }))))
@@ -111,16 +112,16 @@ gulp.task('scripts', () =>
     gzip: true,
     showFiles: true
   })))
-  .pipe(gulp.dest('.tmp/assets/javascript'))
+  .pipe(gulp.dest('.tmp/assets/js'))
 );
 
 gulp.task('vendorScripts', () =>
   // NOTE: The order here is important since it's concatenated in order from
   // top to bottom, so you want vendor scripts etc on top
-  gulp.src(['src/assets/javascript/vendor.js'])
+  gulp.src('src/assets/js/vendor.js')
   .pipe($.plumber())
-  .pipe(newer('.tmp/assets/javascript/vendors.js', {
-    dest: '.tmp/assets/javascript',
+  .pipe(newer('.tmp/assets/js/vendors.js', {
+    dest: '.tmp/assets/js',
     ext: '.js'
   }))
   .pipe(when(!argv.prod, sourcemaps.init()))
@@ -139,7 +140,7 @@ gulp.task('vendorScripts', () =>
   })))
   .pipe(when(argv.prod, rev()))
   .pipe(when(!argv.prod, sourcemaps.write('.')))
-  .pipe(when(argv.prod, gulp.dest('.tmp/assets/javascript')))
+  .pipe(when(argv.prod, gulp.dest('.tmp/assets/js')))
   .pipe(when(argv.prod, when('*.js', gzip({
     append: true
   }))))
@@ -147,7 +148,7 @@ gulp.task('vendorScripts', () =>
     gzip: true,
     showFiles: true
   })))
-  .pipe(gulp.dest('.tmp/assets/javascript'))
+  .pipe(gulp.dest('.tmp/assets/js'))
 );
 
 // 'gulp styles' -- creates a CSS file from your SASS, adds prefixes and
@@ -242,9 +243,9 @@ gulp.task('serve', (done) => {
   done();
 
   // Watch various files for changes and do the needful
-  gulp.watch(['src/**/*.{md|markdown}', 'src/**/*.html', 'src/**/*.{yml|yaml}', '_config.yml', '_config.dev.yml', '_headers', '_redirects'], gulp.series('build:site', reload));
+  gulp.watch(['src/**/*.+(md|markdown)', 'src/**/*.html', 'src/**/*.+(yml|yaml)', '_config.yml', '_config.dev.yml', '_headers', '_redirects'], gulp.series('build:site', reload));
   gulp.watch(['src/**/*.xml', 'src/**/*.txt'], gulp.series('site', reload));
-  gulp.watch(['src/assets/javascript/**/*.js', '! src/assets/javascript/vendors/*.js'], gulp.series('scripts', reload));
-  gulp.watch('src/assets/scss/**/*.{scss|sass}', gulp.series('styles'));
+  gulp.watch(['src/assets/js/**/*.js', '! src/assets/js/vendors/*.js'], gulp.series('scripts', reload));
+  gulp.watch('src/assets/scss/**/*.+(scss|sass)', gulp.series('styles'));
   gulp.watch('src/assets/images/**/*', gulp.series('images', 'upload-images-to-cloudinary', reload));
 });

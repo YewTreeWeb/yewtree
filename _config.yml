@@ -26,6 +26,9 @@ source: .tmp/src
 destination: .tmp/dist
 include:
   - _pages
+  - _headers
+  - _redirects
+  
 exclude:
   - assets
   - Gemfile

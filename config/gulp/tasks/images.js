@@ -4,10 +4,15 @@ const imagemin = require('gulp-imagemin');
 const cache = require('gulp-cache');
 const size = require('gulp-size');
 const replace = require('gulp-replace');
+const $ = require('gulp-load-plugins')({
+  pattern: ['gulp-*', 'gulp.*', '-', '@*/gulp{-,.}*'],
+  replaceString: /\bgulp[\-.]/
+});
 
 // 'gulp images' -- optimizes and caches your images
 gulp.task('images', () =>
   gulp.src('src/assets/images/**/*')
+  .pipe($.plumber())
   .pipe(cache(imagemin([
     imagemin.gifsicle({
       interlaced: true
@@ -33,6 +38,7 @@ gulp.task("use-cloudinary-images", () => {
 
   // replaces paths in build with cloudinary path
   return gulp.src(".tmp/dist/**/*.{html,css}")
+    .pipe($.plumber())
     .pipe(replace(/\/?img\//g, function (match) {
       return "/img/";
     }))
