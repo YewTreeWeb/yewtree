@@ -1,5 +1,6 @@
 'use strict';
 const argv = require('yargs').argv;
+const yaml = require('js-yaml');
 const autoprefixer = require('autoprefixer');
 const $ = require('gulp-load-plugins')({
   pattern: ['gulp-*', 'gulp.*', '-', '@*/gulp{-,.}*'],
@@ -26,16 +27,24 @@ const rucksack = require('rucksack-css');
 const webpack = require('webpack');
 const webpackStream = require('webpack-stream');
 
+function loadConfig() {
+  var ymlFile = fs.readFileSync('gulpconfig.yml', 'utf8');
+  return yaml.load(ymlFile);
+}
+var config = loadConfig();
+module.exports = config;
+
 const webpackConfig = {
-  mode: mode,
+  mode: argv.prod ? 'production' : 'development',
   entry: {
-    main: './' + paths.jsFiles + '/kubix.js'
+    main: 'src/assets/javascript/main.js'
   },
   output: {
-    filename: 'kubix.js'
+    filename: 'main.js'
   },
   module: {
     rules: [{
+      test: /\.js$/,
       loader: 'babel-loader',
       exclude: /node_modules/,
       options: {
@@ -50,7 +59,10 @@ const webpackConfig = {
   devServer: {
     historyApiFallback: true
   },
-  devtool: 'source-map'
+  devtool: !argv.prod ? 'inline-source-map' : false,
+  externals: {
+    jquery: 'jQuery'
+  }
 };
 
 // 'gulp scripts' -- creates a index.js file from your JavaScript files and
@@ -105,7 +117,7 @@ gulp.task('scripts', () =>
 gulp.task('vendorScripts', () =>
   // NOTE: The order here is important since it's concatenated in order from
   // top to bottom, so you want vendor scripts etc on top
-  gulp.src('src/assets/javascript/vendor.js')
+  gulp.src(['src/assets/javascript/vendor.js'])
   .pipe($.plumber())
   .pipe(newer('.tmp/assets/javascript/vendors.js', {
     dest: '.tmp/assets/javascript',
@@ -216,16 +228,16 @@ function reload(done) {
 // in all your files and update them when needed
 gulp.task('serve', (done) => {
   browserSync.init({
-    port: env.port, // change port to match default Jekyll
+    port: config.browsersync.port, // change port to match default Jekyll
     ui: {
-      port: env.port + 1
+      port: config.browsersync.port + 1
     },
     server: ['.tmp', 'dist'],
-    logFileChanges: (env.debug) ? true : false,
-    logLevel: (env.debug) ? 'debug' : '',
+    logFileChanges: config.browsersync.debug ? true : false,
+    logLevel: config.browsersync.debug ? 'debug' : '',
     injectChanges: true,
-    notify: env.notify,
-    open: env.open // Toggle to automatically open page when starting.
+    notify: config.browsersync.notify,
+    open: config.browsersync.open // Toggle to automatically open page when starting.
   });
   done();
 
@@ -233,7 +245,6 @@ gulp.task('serve', (done) => {
   gulp.watch(['src/**/*.{md|markdown}', 'src/**/*.html', 'src/**/*.{yml|yaml}', '_config.yml', '_config.dev.yml', '_headers', '_redirects'], gulp.series('build:site', reload));
   gulp.watch(['src/**/*.xml', 'src/**/*.txt'], gulp.series('site', reload));
   gulp.watch(['src/assets/javascript/**/*.js', '! src/assets/javascript/vendors/*.js'], gulp.series('scripts', reload));
-  gulp.watch('src/assets/javascript/vendors/*.js', gulp.series('vendorScripts', reload));
   gulp.watch('src/assets/scss/**/*.{scss|sass}', gulp.series('styles'));
   gulp.watch('src/assets/images/**/*', gulp.series('images', 'upload-images-to-cloudinary', reload));
 });

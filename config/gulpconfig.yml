@@ -1,11 +1,8 @@
 browsersync:
   notify: true
-  open:   true
+  open:   false
   port:   4000
-  server:
-    basedir: "_site/"
-  xip:    false
-  browser: "Google Chrome"
+  debug:  true
 
 clean:
   # The jekyll build dir
