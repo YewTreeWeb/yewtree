@@ -8,7 +8,6 @@ const $ = require('gulp-load-plugins')({
   pattern: ['gulp-*', 'gulp.*', '-', '@*/gulp{-,.}*'],
   replaceString: /\bgulp[\-.]/
 });
-const babel = require('gulp-babel');
 const browserSync = require('browser-sync').create();
 const concat = require('gulp-concat');
 const cssnano = require('gulp-cssnano');
@@ -28,6 +27,10 @@ const calc = require('postcss-calc');
 const rucksack = require('rucksack-css');
 const webpack = require('webpack');
 const webpackStream = require('webpack-stream');
+const modernizr = require('modernizr');
+
+import pkg from './package.json';
+import modernizrConfig from './config/modernizr-config.json';
 
 function loadConfig() {
   var ymlFile = fs.readFileSync('config/gulpconfig.yml', 'utf8');
@@ -220,6 +223,15 @@ gulp.task('styles', () =>
   .pipe(when(!argv.prod, browserSync.stream()))
 );
 
+// Build modernizr from the config.json
+gulp.task('modernizr', (done) => {
+
+  modernizr.build(modernizrConfig, (code) => {
+    fs.writeFile(`src/assets/js/modernizr-${pkg.devDependencies.modernizr}.min.js`, code, done);
+  });
+
+});
+
 // Function to properly reload your browser
 function reload(done) {
   browserSync.reload();
@@ -245,7 +257,8 @@ gulp.task('serve', (done) => {
   // Watch various files for changes and do the needful
   gulp.watch(['src/**/*.+(md|markdown)', 'src/**/*.html', 'src/**/*.+(yml|yaml)', '_config.yml', '_config.dev.yml', '_headers', '_redirects'], gulp.series('build:site', reload));
   gulp.watch(['src/**/*.xml', 'src/**/*.txt'], gulp.series('site', reload));
-  gulp.watch(['src/assets/js/**/*.js', '! src/assets/js/vendors/*.js'], gulp.series('scripts', reload));
-  gulp.watch('src/assets/scss/**/*.+(scss|sass)', gulp.series('styles'));
-  gulp.watch('src/assets/images/**/*', gulp.series('images', 'upload-images-to-cloudinary', reload));
+  gulp.watch(['src/assets/js/**/*.js', '! src/assets/js/vendors/*.js']).on('add', gulp.series('scripts', reload)).on('change', gulp.series('scripts', reload));
+  gulp.watch('src/assets/scss/**/*.+(scss|sass)').on('add', gulp.series('styles')).on('change', gulp.series('styles'));
+  // gulp.watch('src/assets/images/**/*', gulp.series('images', 'upload-images-to-cloudinary', reload));
+  gulp.watch('src/assets/images/**/*').on('add', gulp.series('images', 'upload-images-to-cloudinary', reload)).on('change', gulp.series('images', 'upload-images-to-cloudinary', reload));
 });

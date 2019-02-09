@@ -13,4 +13,3 @@ gulp.task('copy:site', () =>
   gulp.src('.tmp/dist/**/*')
     .pipe(gulp.dest('dist'))
 );
-

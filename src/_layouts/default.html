@@ -1,5 +1,7 @@
 <!DOCTYPE html>
-<html class="no-js" lang="en">
+<html {%- if jekyll.environment == "development" -%}
+class="no-js"
+{%- endif -%} lang="en">
 
   {% include head.html %}
 
@@ -19,20 +21,26 @@
     {% include footer.html %}
 
     <!-- JS -->
+    {%- if jekyll.environment == "development" -%}
+      <script src="{{ '/assets/js/modernizr-3.6.0.min.js' | relative_url }}"></script>
+    {%- endif -%}
+
     <!-- inject:js -->
     <!-- endinject -->
 
-    <!-- Google Analytics: change UA-XXXXX-Y to be your site's ID. -->
-    <script>
-      window.ga = function () {
-        ga.q.push(arguments)
-      };
-      ga.q = [];
-      ga.l = +new Date;
-      ga('create', 'UA-XXXXX-Y', 'auto');
-      ga('send', 'pageview')
-    </script>
-    <script src="https://www.google-analytics.com/analytics.js" async defer></script>
+    {%- if jekyll.environment == "production" -%}
+      <!-- Google Analytics: change UA-XXXXX-Y to be your site's ID. -->
+      <script>
+        window.ga = function () {
+          ga.q.push(arguments)
+        };
+        ga.q = [];
+        ga.l = +new Date;
+        ga('create', 'UA-XXXXX-Y', 'auto');
+        ga('send', 'pageview')
+      </script>
+      <script src="https://www.google-analytics.com/analytics.js" async defer></script>
+    {%- endif -%}
   </body>
 
 </html>

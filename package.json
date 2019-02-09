@@ -91,6 +91,7 @@
     "imagemin-svgo": "^7.0.0",
     "imagemin-zopfli": "^6.0.0",
     "lighthouse": "^4.1.0",
+    "modernizr": "^3.6.0",
     "node-sass": "^4.11.0",
     "postcss-calc": "^7.0.1",
     "postcss-css-variables": "^0.11.0",
@@ -114,7 +115,6 @@
     "hover.css": "^2.3.2",
     "include-media": "^1.4.9",
     "jquery": "^3.3.1",
-    "modernizr": "^3.6.0",
     "quicklink": "^1.0.0"
   }
 }
