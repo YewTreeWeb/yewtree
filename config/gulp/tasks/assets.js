@@ -1,52 +1,45 @@
 'use strict';
-const fs = require('fs');
-const through = require('through2');
-const argv = require('yargs').argv;
-const yaml = require('js-yaml');
-const autoprefixer = require('autoprefixer');
-const $ = require('gulp-load-plugins')({
+
+import { src, dest, watch } from "gulp";
+import fs from "fs";
+import through from "through2";
+import yargs from "yargs";
+import yaml from "js-yaml";
+import autoprefixer from "autoprefixer";
+import plugins from "gulp-load-plugins";
+import browserSync from "browser-sync";
+import del from "del";
+import webpack from "webpack-stream";
+import named from "vinyl-named";
+import cssvariables from "postcss-css-variables";
+import calc from "postcss-calc";
+import rucksack from "rucksack-css";
+
+import pkg from './package.json';
+
+// Define environment.
+const prod = yargs.argv.prod;
+
+// Load Gulp config file.
+function loadConfig() {
+  const ymlFile = fs.readFileSync('config/gulpconfig.yml', 'utf8');
+  return yaml.load(ymlFile);
+}
+const config = loadConfig();
+module.exports = config;
+
+// Load Gulp Plugins
+const $ = plugins({
   pattern: ['gulp-*', 'gulp.*', '-', '@*/gulp{-,.}*'],
   replaceString: /\bgulp[\-.]/
 });
-const browserSync = require('browser-sync').create();
-const concat = require('gulp-concat');
-const cssnano = require('gulp-cssnano');
-const gulp = require('gulp');
-const gzip = require('gulp-gzip');
-const newer = require('gulp-newer');
-const postcss = require('gulp-postcss');
-const rename = require('gulp-rename');
-const rev = require('gulp-rev');
-const sass = require('gulp-sass');
-const size = require('gulp-size');
-const sourcemaps = require('gulp-sourcemaps');
-const uglify = require('gulp-uglify');
-const when = require('gulp-if');
-const cssvariables = require('postcss-css-variables');
-const calc = require('postcss-calc');
-const rucksack = require('rucksack-css');
-const webpack = require('webpack');
-const webpackStream = require('webpack-stream');
-const modernizr = require('modernizr');
 
-import pkg from './package.json';
-import modernizrConfig from './config/modernizr-config.json';
+// Create BrowserSync Server
+const server = browserSync.create();
 
-function loadConfig() {
-  var ymlFile = fs.readFileSync('config/gulpconfig.yml', 'utf8');
-  return yaml.load(ymlFile);
-}
-var config = loadConfig();
-module.exports = config;
-
+// Setup Webpack.
 const webpackConfig = {
-  mode: argv.prod ? 'production' : 'development',
-  entry: {
-    main: './src/assets/js/main.js'
-  },
-  output: {
-    filename: 'main.js'
-  },
+  mode: prod ? 'production' : 'development',
   module: {
     rules: [{
       test: /\.js$/,
@@ -55,19 +48,47 @@ const webpackConfig = {
       options: {
         presets: [
           'babel-preset-es2015',
-          'babel-preset-env'
+          'babel-preset-env',
+          'babel-preset-airbnb'
         ].map(require.resolve)
       }
     }]
   },
+  output: {
+    filename: '[name].js'
+  },
   devServer: {
     historyApiFallback: true
   },
-  devtool: !argv.prod ? 'inline-source-map' : false,
+  devtool: !prod ? 'inline-source-map' : false,
   externals: {
     jquery: 'jQuery'
-  }
+  },
+  plugins: [
+    // Set jQuery in global scope
+    // https://webpack.js.org/plugins/provide-plugin/
+    new webpack.ProvidePlugin({
+      $: 'jquery',
+      jQuery: 'jquery',
+    }),
+  ],
 };
+
+// Call project vendors
+const vendors = Object.keys(pkg.dependencies || {});
+
+gulp.task('vendor', () => {
+  if (vendors.length === 0) {
+    return new Promise((resolve) => {
+      console.log("No dependencies specified");
+      resolve();
+    });
+  }
+
+  return gulp.src(vendors.map(dependency => node_modules_folder + dependency + '/**/*.*'), { base: node_modules_folder })
+    .pipe(gulp.dest(dist_node_modules_folder))
+    .pipe(browserSync.stream());
+});
 
 // 'gulp scripts' -- creates a index.js file from your JavaScript files and
 // creates a Sourcemap for it
@@ -82,23 +103,23 @@ gulp.task('scripts', () =>
     dest: '.tmp/assets/js',
     ext: '.js'
   }))
-  .pipe(webpackStream(webpackConfig), webpack)
-  .pipe(when(!argv.prod, sourcemaps.init({
+  .pipe(webpackStream(webpackConfig))
+  .pipe(when(!prod, sourcemaps.init({
     loadMaps: true
   })))
   .pipe(size({
     showFiles: true
   }))
-  .pipe(when(argv.prod, rename({
+  .pipe(when(prod, rename({
     suffix: '.min'
   })))
-  .pipe(when(argv.prod, when('*.js', uglify({
+  .pipe(when(prod, when('*.js', uglify({
     preserveComments: 'some'
   }))))
-  .pipe(when(argv.prod, size({
+  .pipe(when(prod, size({
     showFiles: true
   })))
-  .pipe(when(argv.prod, rev()))
+  .pipe(when(prod, rev()))
   .pipe(when(sourcemaps, through.obj(function (file, enc, cb) {
     // Dont pipe through any source map files as it will be handled
     // by gulp-sourcemaps
@@ -106,48 +127,12 @@ gulp.task('scripts', () =>
     if (!isSourceMap) this.push(file);
     cb();
   })))
-  .pipe(when(!argv.prod, sourcemaps.write('.')))
-  .pipe(when(argv.prod, gulp.dest('.tmp/assets/js')))
-  .pipe(when(argv.prod, when('*.js', gzip({
+  .pipe(when(!prod, sourcemaps.write('.')))
+  .pipe(when(prod, gulp.dest('.tmp/assets/js')))
+  .pipe(when(prod, when('*.js', gzip({
     append: true
   }))))
-  .pipe(when(argv.prod, size({
-    gzip: true,
-    showFiles: true
-  })))
-  .pipe(gulp.dest('.tmp/assets/js'))
-);
-
-gulp.task('vendorScripts', () =>
-  // NOTE: The order here is important since it's concatenated in order from
-  // top to bottom, so you want vendor scripts etc on top
-  gulp.src('src/assets/js/vendor.js')
-  .pipe($.plumber())
-  .pipe(newer('.tmp/assets/js/vendors.js', {
-    dest: '.tmp/assets/js',
-    ext: '.js'
-  }))
-  .pipe(when(!argv.prod, sourcemaps.init()))
-  .pipe(concat('vendors.js'))
-  .pipe(size({
-    showFiles: true
-  }))
-  .pipe(when(argv.prod, rename({
-    suffix: '.min'
-  })))
-  .pipe(when(argv.prod, when('*.js', uglify({
-    preserveComments: 'some'
-  }))))
-  .pipe(when(argv.prod, size({
-    showFiles: true
-  })))
-  .pipe(when(argv.prod, rev()))
-  .pipe(when(!argv.prod, sourcemaps.write('.')))
-  .pipe(when(argv.prod, gulp.dest('.tmp/assets/js')))
-  .pipe(when(argv.prod, when('*.js', gzip({
-    append: true
-  }))))
-  .pipe(when(argv.prod, size({
+  .pipe(when(prod, size({
     gzip: true,
     showFiles: true
   })))
@@ -161,7 +146,7 @@ gulp.task('vendorScripts', () =>
 gulp.task('styles', () =>
   gulp.src('src/assets/scss/style.scss')
   .pipe($.plumber())
-  .pipe(when(!argv.prod, sourcemaps.init()))
+  .pipe(when(!prod, sourcemaps.init()))
   .pipe($.cssimport({
     matchPattern: "*.css"
   }))
@@ -200,27 +185,27 @@ gulp.task('styles', () =>
   .pipe(size({
     showFiles: true
   }))
-  .pipe(when(argv.prod, rename({
+  .pipe(when(prod, rename({
     suffix: '.min'
   })))
-  .pipe(when(argv.prod, when('*.css', cssnano({
+  .pipe(when(prod, when('*.css', cssnano({
     autoprefixer: false
   }))))
-  .pipe(when(argv.prod, size({
+  .pipe(when(prod, size({
     showFiles: true
   })))
-  .pipe(when(argv.prod, rev()))
-  .pipe(when(!argv.prod, sourcemaps.write('.')))
-  .pipe(when(argv.prod, gulp.dest('.tmp/assets/stylesheets')))
-  .pipe(when(argv.prod, when('*.css', gzip({
+  .pipe(when(prod, rev()))
+  .pipe(when(!prod, sourcemaps.write('.')))
+  .pipe(when(prod, gulp.dest('.tmp/assets/stylesheets')))
+  .pipe(when(prod, when('*.css', gzip({
     append: true
   }))))
-  .pipe(when(argv.prod, size({
+  .pipe(when(prod, size({
     gzip: true,
     showFiles: true
   })))
   .pipe(gulp.dest('.tmp/assets/stylesheets'))
-  .pipe(when(!argv.prod, browserSync.stream()))
+  .pipe(when(!prod, browserSync.stream()))
 );
 
 // Build modernizr from the modernizr-config.json
