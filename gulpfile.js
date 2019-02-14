@@ -16,7 +16,7 @@ gulp.task('build:site', gulp.series('site:tmp', 'inject', 'site', 'copy:site'));
 // 'gulp assets --prod' -- cleans out your assets and rebuilds them with
 // production settings
 gulp.task('assets', gulp.series(
-  gulp.parallel('styles', 'scripts', 'vendorScripts', 'fonts', 'use-cloudinary-images'),
+  gulp.parallel('modernizr', 'styles', 'scripts', 'vendorScripts', 'fonts', 'use-cloudinary-images'),
   gulp.series('copy:assets')
 ));
 

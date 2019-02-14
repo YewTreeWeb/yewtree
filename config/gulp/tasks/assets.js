@@ -223,12 +223,16 @@ gulp.task('styles', () =>
   .pipe(when(!argv.prod, browserSync.stream()))
 );
 
-// Build modernizr from the config.json
+// Build modernizr from the modernizr-config.json
 gulp.task('modernizr', (done) => {
 
-  modernizr.build(modernizrConfig, (code) => {
-    fs.writeFile(`src/assets/js/modernizr-${pkg.devDependencies.modernizr}.min.js`, code, done);
-  });
+  let buildModernizr = false;
+  if (buildModernizr === false) {
+    modernizr.build(modernizrConfig, (code) => {
+      let buildModernizr = true;
+      fs.writeFile(`src/assets/js/modernizr-${pkg.devDependencies.modernizr}.min.js`, code, done);
+    });
+  }
 
 });
 

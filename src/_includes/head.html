@@ -1,9 +1,19 @@
 <head>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-  <script>document.getElementsByTagName("html")[0].className += " js";</script>
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no, viewport-fit=cover, user-scalable=0">
+  <meta name="HandheldFriendly" content="True" />
+  <meta name="MobileOptimized" content="320" />
   <meta name="author" content="{{ site.author.name }}">
+
+  <!-- SEO -->
+  {% seo %}
+
+  <link rel="canonical" href="{{ page.url | replace:'index.html','' | prepend: site.url }}">
+
+  <!-- Icons -->
+  {% include favicons/icons.html %}
+
   <!-- Disable tap highlight on IE -->
   <meta name="msapplication-tap-highlight" content="no">
 
@@ -12,37 +22,56 @@
 
   <!-- Add to homescreen for Chrome on Android -->
   <meta name="mobile-web-app-capable" content="yes">
-  <meta name="application-name" content="{{ site.title }}">
-  <link rel="icon" sizes="192x192" href="images/touch/chrome-touch-icon-192x192.png">
+  <meta name="application-name" content="{{ site.title }}">]
 
   <!-- Add to homescreen for Safari on iOS -->
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black">
   <meta name="apple-mobile-web-app-title" content="{{ site.title }}">
-  <link rel="apple-touch-icon" href="images/touch/apple-touch-icon.png">
 
   <!-- Tile icon for Win8 (144x144 + tile color) -->
-  <meta name="msapplication-TileImage" content="images/touch/ms-touch-icon-144x144-precomposed.png">
-  <meta name="msapplication-TileColor" content="#2F3BA2">
+  <meta name="msapplication-TileImage" content="{{ '/assets/images/icons/favicons/ms-touch-icon-144x144-precomposed.png' | relative_url }}">
+  <meta name="msapplication-TileColor" content="#3b3634">
+  <meta name="msapplication-config" content="{{ '/assets/images/icons/favicons/browserconfig.xml' | relative_url }}">
 
   <!-- Color the status bar on mobile devices -->
-  <meta name="theme-color" content="#2F3BA2">
+  <meta name="theme-color" content="#3b3634">
 
-  <link rel="canonical" href="{{ page.url | replace:'index.html','' | prepend: site.url }}">
-  <link rel="alternate" type="application/rss+xml" title="{{ site.title }}" href="{{ "/feed.xml" | prepend: site.url }}" />
-
+  <link rel="dns-prefetch" href="//www.google-analytics.com">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://res.cloudinary.com">
   <link rel="preload" href="{{ '/assets/stylesheets/style.css' | relative.url }}" as="style">
-  <!-- SEO -->
-  {% seo %}
-
+  
   <!-- CSS -->
   <!-- inject:css -->
   <!-- endinject -->
 
-  <!-- Icons -->
-  <link rel="apple-touch-icon-precomposed" sizes="144x144" href="/assets/images/touch/apple-touch-icon-144-precomposed.png">
-  <link rel="shortcut icon" href="/assets/favicon.ico">
+  <script async>document.getElementsByTagName("html")[0].className += " js";</script>
 
+  {% if site.pingback_url %}
+    <link rel="pingback" href="{{ site.pingback_url }}">
+  {% endif %}
+
+  {% if site.webmention_url %}
+    <link rel="webmention" href="{{ site.webmention_url }}">
+  {% endif %}
+
+  {% if site.micropub_url %}
+    <link rel="micropub" href="{{ site.micropub_url }}">
+  {% endif %}
+
+  {% if site.plugins contains 'jekyll-sitemap' %}
+    <link rel="sitemap" type="application/xml" title="Sitemap" href="{{ 'sitemap.xml' | relative_url }}">
+  {% endif %}
+
+  <link rel="alternate" title="{{ site.title }}" type="application/rss+xml" href="{{ "/feed.xml" | prepend: site.url }}" />
+  <link rel="alternate" title="{{ site.title }} Feed" type="application/atom+xml" href="{{ 'atom.xml' | absolute_url }}">
+  <link rel="alternate" title="{{ site.title }} Feed" type="application/json" href="{{ 'feed.json' | absolute_url }}">
+  <link rel="alternate" title="{{ site.title }} &#8211; Articles Feed" type="application/atom+xml" href="{{ 'articles.xml' | absolute_url }}">
+  <link rel="alternate" title="{{ site.title }} &#8211; Mastering Paper Feed" type="application/atom+xml" href="{{ 'mastering-paper.xml' | absolute_url }}">
+  <link rel="alternate" title="{{ site.title }} &#8211; PaperFaces Feed" type="application/atom+xml"  href="{{ 'paperfaces.xml' | absolute_url }}">
+  <link rel="alternate" title="{{ site.title }} &#8211; Procreate Paintings Feed" type="application/atom+xml"  href="{{ 'procreate-paintings.xml' | absolute_url }}">
+  <link rel="alternate" title="{{ site.title }} &#8211; Today I Learned Feed" type="application/atom+xml"  href="{{ 'til.xml' | absolute_url }}">
   <!-- RSS -->
   {% feed_meta %}
 </head>
