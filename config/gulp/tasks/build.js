@@ -1,31 +1,39 @@
 'use strict';
-const gulp = require('gulp');
-const shell = require('shelljs');
-const size = require('gulp-size');
-const argv = require('yargs').argv;
+
+import { src, dest } from 'gulp';
+import shell from 'shelljs';
+import plugins from "gulp-load-plugins";
+import yargs from 'yargs';
+
+const prod = yargs.argv.prod;
+
+const $ = plugins({
+  pattern: ['gulp-*', '*', '-', '@*/gulp{-,.}*'],
+  replaceString: /\bgulp[\-.]/
+});
 
 // 'gulp jekyll:tmp' -- copies your Jekyll site to a temporary directory
 // to be processed
-gulp.task('site:tmp', () =>
-  gulp.src(['src/**/*', '!src/assets/**/*', '!src/assets'], {dot: true})
-    .pipe(gulp.dest('.tmp/src'))
-    .pipe(size({title: 'Jekyll'}))
-);
+export const siteTmp = () => {
+  src(['src/**/*', '!src/assets/**/*', '!src/assets'], {dot: true})
+    .pipe(dest('.tmp/src'))
+    .pipe($.size({title: 'Jekyll'}))
+}
 
 // 'gulp jekyll' -- builds your site with development settings
 // 'gulp jekyll --prod' -- builds your site with production settings
-gulp.task('site', done => {
-  if (!argv.prod) {
+export const site = (done) => {
+  if (!prod) {
     shell.exec('bundle exec jekyll build --config _config.yml,_config.dev.yml --verbose --incremental');
     done();
-  } else if (argv.prod) {
+  } else if (prod) {
     shell.exec('bundle exec jekyll build');
     done();
   }
-});
+};
 
 // 'gulp doctor' -- literally just runs jekyll doctor
-gulp.task('site:check', done => {
+export const siteCheck = (done) => {
   shell.exec('jekyll doctor');
   done();
-});
+};

@@ -1,6 +1,6 @@
 'use strict';
 
-import { src, dest, watch } from "gulp";
+import { src, dest, watch, series } from "gulp";
 import fs from "fs";
 import through from "through2";
 import yargs from "yargs";
@@ -8,7 +8,6 @@ import yaml from "js-yaml";
 import autoprefixer from "autoprefixer";
 import plugins from "gulp-load-plugins";
 import browserSync from "browser-sync";
-import del from "del";
 import webpack from "webpack-stream";
 import named from "vinyl-named";
 import cssvariables from "postcss-css-variables";
@@ -34,7 +33,8 @@ const $ = plugins({
     "gulp-sass-lint": "sassLint",
     "gulp-group-css-media-queries": "gcmq",
     "gulp-sass-glob": "sassGlob",
-    "gulp-jpeg-2000": "jp2"
+    "gulp-jpeg-2000": "jp2",
+    "gulp-if": "when"
   },
   pattern: ['gulp-*', '*', '-', '@*/gulp{-,.}*'],
   replaceString: /\bgulp[\-.]/
@@ -93,11 +93,11 @@ export const vendor = () => {
 
   return src(vendors.map(dependency => './node_modules/' + dependency + '/**/*.*'), { base: './node_modules/' })
     .pipe(
-      $.changed("src/assets/js/vendors", {
+      $.changed("src/assets/vendors", {
         hasChanged: $.changed.compareContents
       })
     )
-    .pipe(dest('src/assets/js/vendors'))
+    .pipe(dest('src/assets/vendors'))
     .pipe(server.stream());
 };
 
@@ -108,42 +108,44 @@ export const vendor = () => {
 export const scripts = () => {
   // NOTE: The order here is important since it's concatenated in order from
   // top to bottom, so you want vendor scripts etc on top
-  src('src/assets/js/main.js')
+  return src('src/assets/js/main.js')
   .pipe($.plumber())
+  .pipe(named())
   .pipe($.newer('.tmp/assets/js/main.js', {
     dest: '.tmp/assets/js',
     ext: '.js'
   }))
   .pipe(webpack(webpackConfig))
-  .pipe(when(!prod, sourcemaps.init({
+  .pipe($.when(!prod, $.sourcemaps.init({
     loadMaps: true
   })))
-  .pipe(size({
+  .pipe($.size({
     showFiles: true
   }))
-  .pipe(when(prod, rename({
+  .pipe($.when(prod, $.rename({
     suffix: '.min'
   })))
-  .pipe(when(prod, when('*.js', uglify({
+  .pipe($.when(prod, $.when('*.js', $.uglify({
     preserveComments: 'some'
   }))))
-  .pipe(when(prod, size({
+  .pipe($.when(prod, $.size({
     showFiles: true
   })))
-  .pipe(when(prod, rev()))
-  .pipe(when(sourcemaps, through.obj(function (file, enc, cb) {
+  .pipe($.when(prod, $.rev()))
+  .pipe($.when($.sourcemaps, through.obj(function (file, enc, cb) {
     // Dont pipe through any source map files as it will be handled
     // by gulp-sourcemaps
     const isSourceMap = /\.map$/.test(file.path);
     if (!isSourceMap) this.push(file);
     cb();
   })))
-  .pipe(when(!prod, sourcemaps.write('.')))
-  .pipe(when(prod, dest('.tmp/assets/js')))
-  .pipe(when(prod, when('*.js', gzip({
+  .pipe($.when(!prod, $.sourcemaps.write('.')))
+  .pipe($.when(prod, $.rev.manifest('js-manifest.json')))
+  .pipe($.when(prod, dest('.tmp/assets/js')))
+  .pipe($.when(prod, $.when('*.js', $.gzip({
     append: true
   }))))
-  .pipe(when(prod, size({
+  .pipe($.when(prod, $.size({
     gzip: true,
     showFiles: true
   })))
@@ -153,20 +155,20 @@ export const scripts = () => {
 // 'gulp styles' -- creates a CSS file from your SASS, adds prefixes and
 // creates a Sourcemap
 // 'gulp styles --prod' -- creates a CSS file from your SASS, adds prefixes and
-// then minwhenies, gzips and cache busts it. Does not create a Sourcemap
+// then min$.whenies, gzips and cache busts it. Does not create a Sourcemap
 export const styles = () => {
-  src('src/assets/scss/style.scss')
+  return src('src/assets/scss/style.scss')
   .pipe($.plumber())
-  .pipe(when(!prod, sourcemaps.init()))
+  .pipe($.when(!prod, $.sourcemaps.init()))
   .pipe($.cssimport({
     matchPattern: "*.css"
   }))
   .pipe($.sassGlob())
-  .pipe(sass({
+  .pipe($.sass({
     precision: 10,
     outputStyle: 'expanded'
   }).on('error', sass.logError))
-  .pipe(postcss([
+  .pipe($.postcss([
     rucksack({
       fallbacks: true
     }),
@@ -193,30 +195,33 @@ export const styles = () => {
     }),
     calc()
   ]))
-  .pipe(size({
+  .pipe($.size({
     showFiles: true
   }))
-  .pipe(when(prod, rename({
+  .pipe($.when(prod, $.rename({
     suffix: '.min'
   })))
-  .pipe(when(prod, when('*.css', cssnano({
+  .pipe($.when(prod, $.when('*.css', $.cssnano({
     autoprefixer: false
   }))))
-  .pipe(when(prod, size({
+  .pipe($.gcmq())
+  .pipe($.csscomb())
+  .pipe($.when(prod, $.size({
     showFiles: true
   })))
-  .pipe(when(prod, rev()))
-  .pipe(when(!prod, sourcemaps.write('.')))
-  .pipe(when(prod, dest('.tmp/assets/styles')))
-  .pipe(when(prod, when('*.css', gzip({
+  .pipe($.when(prod, $.rev()))
+  .pipe($.when(!prod, $.sourcemaps.write('.')))
+  .pipe($.when(prod), $.rev.manifest('css-manifest.json'))
+  .pipe($.when(prod, dest('.tmp/assets/styles')))
+  .pipe($.when(prod, $.when('*.css', $.gzip({
     append: true
   }))))
-  .pipe(when(prod, size({
+  .pipe($.when(prod, $.size({
     gzip: true,
     showFiles: true
   })))
   .pipe(dest('.tmp/assets/styles'))
-  .pipe(when(!prod, server.stream()))
+  .pipe($.when(!prod, server.stream()))
 };
 
 // Function to properly reload your browser
@@ -225,7 +230,7 @@ function reload(done) {
   done();
 }
 // 'gulp serve' -- open up your website in your browser and watch for changes
-// in all your files and update them when needed
+// in all your files and update them $.when needed
 export const serve = (done) => {
   browserSync.init({
     port: config.browsersync.port, // change port to match default Jekyll
@@ -237,15 +242,16 @@ export const serve = (done) => {
     logLevel: config.browsersync.debug ? 'debug' : '',
     injectChanges: true,
     notify: config.browsersync.notify,
-    open: config.browsersync.open // Toggle to automatically open page when starting.
+    open: config.browsersync.open // Toggle to automatically open page $.when starting.
   });
   done();
 
   // Watch various files for changes and do the needful
-  watch(['src/**/*.+(md|markdown)', 'src/**/*.html', 'src/**/*.+(yml|yaml)', '_config.yml', '_config.dev.yml', '_headers', '_redirects'], series('build:site', reload));
-  watch(['src/**/*.xml', 'src/**/*.txt'], series('site', reload));
-  watch(['src/assets/js/**/*.js', '! src/assets/js/vendors/*.js']).on('add', series('scripts', reload)).on('change', series('scripts', reload));
-  watch('src/assets/scss/**/*.+(scss|sass)').on('add', series('styles')).on('change', series('styles'));
+  watch(['src/**/*.+(md|markdown)', 'src/**/*.html', 'src/**/*.+(yml|yaml)', '_config.yml', '_config.dev.yml', '_headers', '_redirects'], series(buildSite, reload));
+  watch(['src/**/*.xml', 'src/**/*.txt'], series(site, reload));
+  watch('src/assets/js/**/*.js').on('add', series(scripts, reload)).on('change', series(scripts, reload));
+  watch('src/assets/scss/**/*.+(scss|sass)').on('add', series(styles)).on('change', series(styles));
   // watch('src/assets/images/**/*', series('images', 'upload-images-to-cloudinary', reload));
-  watch('src/assets/images/**/*').on('add', series('images', 'upload-images-to-cloudinary', reload)).on('change', series('images', 'upload-images-to-cloudinary', reload));
+  watch('src/assets/images/**/*').on('add', series(images, cloudinary, reload)).on('change', series(images, cloudinary, reload));
+  watch('./node_modules/').on('add', series(vendor, reload)).on('change', series(vendor, reload));
 };
