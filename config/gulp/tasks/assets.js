@@ -30,7 +30,13 @@ module.exports = config;
 
 // Load Gulp Plugins
 const $ = plugins({
-  pattern: ['gulp-*', 'gulp.*', '-', '@*/gulp{-,.}*'],
+  rename: {
+    "gulp-sass-lint": "sassLint",
+    "gulp-group-css-media-queries": "gcmq",
+    "gulp-sass-glob": "sassGlob",
+    "gulp-jpeg-2000": "jp2"
+  },
+  pattern: ['gulp-*', '*', '-', '@*/gulp{-,.}*'],
   replaceString: /\bgulp[\-.]/
 });
 
@@ -77,7 +83,7 @@ const webpackConfig = {
 // Call project vendors
 const vendors = Object.keys(pkg.dependencies || {});
 
-gulp.task('vendor', () => {
+export const vendor = () => {
   if (vendors.length === 0) {
     return new Promise((resolve) => {
       console.log("No dependencies specified");
@@ -85,25 +91,30 @@ gulp.task('vendor', () => {
     });
   }
 
-  return gulp.src(vendors.map(dependency => node_modules_folder + dependency + '/**/*.*'), { base: node_modules_folder })
-    .pipe(gulp.dest(dist_node_modules_folder))
-    .pipe(browserSync.stream());
-});
+  return src(vendors.map(dependency => './node_modules/' + dependency + '/**/*.*'), { base: './node_modules/' })
+    .pipe(
+      $.changed("src/assets/js/vendors", {
+        hasChanged: $.changed.compareContents
+      })
+    )
+    .pipe(dest('src/assets/js/vendors'))
+    .pipe(server.stream());
+};
 
 // 'gulp scripts' -- creates a index.js file from your JavaScript files and
 // creates a Sourcemap for it
 // 'gulp scripts --prod' -- creates a index.js file from your JavaScript files,
 // minifies, gzips and cache busts it. Does not create a Sourcemap
-gulp.task('scripts', () =>
+export const scripts = () => {
   // NOTE: The order here is important since it's concatenated in order from
   // top to bottom, so you want vendor scripts etc on top
-  gulp.src('src/assets/js/main.js')
+  src('src/assets/js/main.js')
   .pipe($.plumber())
-  .pipe(newer('.tmp/assets/js/main.js', {
+  .pipe($.newer('.tmp/assets/js/main.js', {
     dest: '.tmp/assets/js',
     ext: '.js'
   }))
-  .pipe(webpackStream(webpackConfig))
+  .pipe(webpack(webpackConfig))
   .pipe(when(!prod, sourcemaps.init({
     loadMaps: true
   })))
@@ -128,7 +139,7 @@ gulp.task('scripts', () =>
     cb();
   })))
   .pipe(when(!prod, sourcemaps.write('.')))
-  .pipe(when(prod, gulp.dest('.tmp/assets/js')))
+  .pipe(when(prod, dest('.tmp/assets/js')))
   .pipe(when(prod, when('*.js', gzip({
     append: true
   }))))
@@ -136,15 +147,15 @@ gulp.task('scripts', () =>
     gzip: true,
     showFiles: true
   })))
-  .pipe(gulp.dest('.tmp/assets/js'))
-);
+  .pipe(dest('.tmp/assets/js'));
+};
 
 // 'gulp styles' -- creates a CSS file from your SASS, adds prefixes and
 // creates a Sourcemap
 // 'gulp styles --prod' -- creates a CSS file from your SASS, adds prefixes and
 // then minwhenies, gzips and cache busts it. Does not create a Sourcemap
-gulp.task('styles', () =>
-  gulp.src('src/assets/scss/style.scss')
+export const styles = () => {
+  src('src/assets/scss/style.scss')
   .pipe($.plumber())
   .pipe(when(!prod, sourcemaps.init()))
   .pipe($.cssimport({
@@ -196,7 +207,7 @@ gulp.task('styles', () =>
   })))
   .pipe(when(prod, rev()))
   .pipe(when(!prod, sourcemaps.write('.')))
-  .pipe(when(prod, gulp.dest('.tmp/assets/stylesheets')))
+  .pipe(when(prod, dest('.tmp/assets/styles')))
   .pipe(when(prod, when('*.css', gzip({
     append: true
   }))))
@@ -204,22 +215,9 @@ gulp.task('styles', () =>
     gzip: true,
     showFiles: true
   })))
-  .pipe(gulp.dest('.tmp/assets/stylesheets'))
-  .pipe(when(!prod, browserSync.stream()))
-);
-
-// Build modernizr from the modernizr-config.json
-gulp.task('modernizr', (done) => {
-
-  let buildModernizr = false;
-  if (buildModernizr === false) {
-    modernizr.build(modernizrConfig, (code) => {
-      let buildModernizr = true;
-      fs.writeFile(`src/assets/js/modernizr-${pkg.devDependencies.modernizr}.min.js`, code, done);
-    });
-  }
-
-});
+  .pipe(dest('.tmp/assets/styles'))
+  .pipe(when(!prod, server.stream()))
+};
 
 // Function to properly reload your browser
 function reload(done) {
@@ -228,7 +226,7 @@ function reload(done) {
 }
 // 'gulp serve' -- open up your website in your browser and watch for changes
 // in all your files and update them when needed
-gulp.task('serve', (done) => {
+export const serve = (done) => {
   browserSync.init({
     port: config.browsersync.port, // change port to match default Jekyll
     ui: {
@@ -244,10 +242,10 @@ gulp.task('serve', (done) => {
   done();
 
   // Watch various files for changes and do the needful
-  gulp.watch(['src/**/*.+(md|markdown)', 'src/**/*.html', 'src/**/*.+(yml|yaml)', '_config.yml', '_config.dev.yml', '_headers', '_redirects'], gulp.series('build:site', reload));
-  gulp.watch(['src/**/*.xml', 'src/**/*.txt'], gulp.series('site', reload));
-  gulp.watch(['src/assets/js/**/*.js', '! src/assets/js/vendors/*.js']).on('add', gulp.series('scripts', reload)).on('change', gulp.series('scripts', reload));
-  gulp.watch('src/assets/scss/**/*.+(scss|sass)').on('add', gulp.series('styles')).on('change', gulp.series('styles'));
-  // gulp.watch('src/assets/images/**/*', gulp.series('images', 'upload-images-to-cloudinary', reload));
-  gulp.watch('src/assets/images/**/*').on('add', gulp.series('images', 'upload-images-to-cloudinary', reload)).on('change', gulp.series('images', 'upload-images-to-cloudinary', reload));
-});
+  watch(['src/**/*.+(md|markdown)', 'src/**/*.html', 'src/**/*.+(yml|yaml)', '_config.yml', '_config.dev.yml', '_headers', '_redirects'], series('build:site', reload));
+  watch(['src/**/*.xml', 'src/**/*.txt'], series('site', reload));
+  watch(['src/assets/js/**/*.js', '! src/assets/js/vendors/*.js']).on('add', series('scripts', reload)).on('change', series('scripts', reload));
+  watch('src/assets/scss/**/*.+(scss|sass)').on('add', series('styles')).on('change', series('styles'));
+  // watch('src/assets/images/**/*', series('images', 'upload-images-to-cloudinary', reload));
+  watch('src/assets/images/**/*').on('add', series('images', 'upload-images-to-cloudinary', reload)).on('change', series('images', 'upload-images-to-cloudinary', reload));
+};
