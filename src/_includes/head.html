@@ -9,7 +9,7 @@
   <!-- SEO -->
   {% seo %}
 
-  <link rel="canonical" href="{{ page.url | replace:'index.html','' | prepend: site.url }}">
+  <!-- <link rel="canonical" href="{{ page.url | replace:'index.html','' | prepend: site.url }}"> -->
 
   <!-- Icons -->
   {% include favicons/icons.html %}
@@ -22,7 +22,7 @@
 
   <!-- Add to homescreen for Chrome on Android -->
   <meta name="mobile-web-app-capable" content="yes">
-  <meta name="application-name" content="{{ site.title }}">]
+  <meta name="application-name" content="{{ site.title }}">
 
   <!-- Add to homescreen for Safari on iOS -->
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -40,13 +40,13 @@
   <link rel="dns-prefetch" href="//www.google-analytics.com">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://res.cloudinary.com">
-  <link rel="preload" href="{{ '/assets/stylesheets/style.css' | relative.url }}" as="style">
+  <link rel="preload" href="{{ '/assets/styles/style.css' | relative.url }}" as="style">
+
+  <script async>document.getElementsByTagName("html")[0].className += "js";</script>
   
   <!-- CSS -->
   <!-- inject:css -->
   <!-- endinject -->
-
-  <script async>document.getElementsByTagName("html")[0].className += " js";</script>
 
   {% if site.pingback_url %}
     <link rel="pingback" href="{{ site.pingback_url }}">

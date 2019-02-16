@@ -1,20 +1,20 @@
 'use strict';
 
-import gulp from 'gulp';
+import { task } from 'gulp';
 import del from 'del';
 
-export const cleanAssets = () => {
+task('clean:assets', () => {
   return del(['.tmp/**/*', '!.tmp/assets', '!.tmp/assets/images', '!.tmp/assets/images/**/*', 'dist/assets']);
-};
-export const cleanImages = () => {
+});
+task('clean:images', () => {
   return del(['.tmp/assets/images', 'dist/assets/images']);
-};
-export const cleanDist = () => {
+});
+task('clean:dist', () => {
   return del(['dist/', '.tmp/dist']);
-};
-export const cleanGzip = () => {
+});
+task('clean:gzip', () => {
   return del(['dist/**/*.gz']);
-};
-export const cleanSite = () => {
+});
+task('clean:site', () => {
   return del(['.tmp/src']);
-};
+});

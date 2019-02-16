@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html {%- if jekyll.environment == "development" -%}class="no-js"{%- endif -%} lang="en">
+<html lang="en">
 
   {% include head.html %}
 
@@ -19,9 +19,6 @@
     {% include footer.html %}
 
     <!-- JS -->
-    {%- if jekyll.environment == "development" -%}
-      <script src="{{ '/assets/js/modernizr-3.6.0.min.js' | relative_url }}"></script>
-    {%- endif -%}
 
     <!-- inject:js -->
     <!-- endinject -->

@@ -1,6 +1,6 @@
 'use strict';
 
-import { src, dest } from 'gulp';
+import { task, src, dest } from 'gulp';
 import plugins from "gulp-load-plugins";
 import yargs from 'yargs';
 
@@ -16,11 +16,11 @@ const $ = plugins({
 
 // 'gulp html' -- does nothing
 // 'gulp html --prod' -- minifies and gzips our HTML files
-export const html = () => {
+task('html', () => {
   return src('dist/**/*.html')
     .pipe($.plumber())
     .pipe($.htmlAutoprefixer())
-    .pipe($.when(prod, htmlmin({
+    .pipe($.when(prod, $.htmlmin({
       removeComments: true,
       collapseWhitespace: true,
       collapseBooleanAttributes: false,
@@ -37,4 +37,4 @@ export const html = () => {
       gzip: true
     })))
     .pipe($.when(prod, dest('dist')))
-};
+});

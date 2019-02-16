@@ -1,6 +1,6 @@
 'use strict';
 
-import { src, dest } from 'gulp';
+import { task, src, dest } from 'gulp';
 import plugins from "gulp-load-plugins";
 
 const $ = plugins({
@@ -9,18 +9,18 @@ const $ = plugins({
 });
 
 // 'gulp images' -- optimizes and caches your images
-export const images = () => {
+task('images', () => {
   return src('src/assets/images/**/*')
   .pipe($.plumber())
   .pipe($.cache($.imagemin([
-    imagemin.gifsicle({
+    $.imagemin.gifsicle({
       interlaced: true
     }),
-    imagemin.jpegtran({
+    $.imagemin.jpegtran({
       progressive: true
     }),
-    imagemin.optipng(),
-    imagemin.svgo({
+    $.imagemin.optipng(),
+    $.imagemin.svgo({
       plugins: [{
         cleanupIDs: false
       }]
@@ -30,9 +30,9 @@ export const images = () => {
   .pipe($.size({
     title: 'images'
   }));
-};
+});
 
-export const useCloudinary = () => {
+task('useCloudinary', () => {
   const cloudinaryURL = "https://res.cloudinary.com/mat-teague/image/upload/c_scale,dpr_auto,f_auto,w_auto/v1549232522/";
 
   // replaces paths in build with cloudinary path
@@ -42,4 +42,4 @@ export const useCloudinary = () => {
       return "/img/";
     }))
     .pipe(dest(".tmp/dist"));
-};
+});

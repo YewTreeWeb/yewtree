@@ -6,8 +6,4 @@ The main SCSS file for everything, yep
 @import "base";
 @import "layout";
 @import "syntax-highlighting";
-
-body{
-    // background: black;
-    // color: white;
-}
+@import 'header';

@@ -1,7 +1,7 @@
 'use strict';
 
 import fs from 'fs';
-import { src, dest } from 'gulp';
+import { task, src, dest } from 'gulp';
 import plugins from "gulp-load-plugins";
 
 const $ = plugins({
@@ -11,7 +11,7 @@ const $ = plugins({
 
 // 'gulp deploy' -- reads from your Rsync credentials file and incrementally
 // uploads your site to your server
-export const upload = () => {
+task('upload', () => {
   const credentials = JSON.parse(fs.readFileSync('rsync-credentials.json', 'utf8'));
 
   return src('dist/**', {dot: true})
@@ -23,9 +23,9 @@ export const upload = () => {
       destination: credentials.destination,
       incremental: true
     }));
-};
+});
 
-export const cloudinary = () => {
+task('cloudinary', () => {
   return src('.tmp/assets/images/*')
     .pipe($.plumber())
     .pipe($.cloudinary({
@@ -40,4 +40,4 @@ export const cloudinary = () => {
       merge: true
     }))
     .pipe(dest('./config'));
-};
+});
