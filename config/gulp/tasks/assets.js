@@ -105,8 +105,7 @@ task('vendor', () => {
         hasChanged: $.changed.compareContents
       })
     )
-    .pipe(dest('src/assets/vendors'))
-    .pipe(server.stream());
+    .pipe(dest('src/assets/vendors'));
 });
 
 // 'gulp scripts' -- creates a index.js file from your JavaScript files and

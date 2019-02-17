@@ -26,7 +26,7 @@ task('upload', () => {
 });
 
 task('cloudinary', () => {
-  return src('.tmp/assets/images/*')
+  return src('src/assets/images/*')
     .pipe($.plumber())
     .pipe($.cloudinary({
       config: {
