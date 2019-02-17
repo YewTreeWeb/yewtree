@@ -50,6 +50,11 @@ const $ = plugins({
 // Create BrowserSync Server
 const sync = browserSync.create();
 
+// new function added to check if ESLint has run the fix
+function isFixed(file) {
+  return file.eslint !== null && file.eslint.fixed;
+}
+
 // Setup Webpack.
 const webpackConfig = {
   mode: prod ? 'production' : 'development',
@@ -122,6 +127,13 @@ task('scripts', (done) => {
       dest: '.tmp/assets/js',
       ext: '.js'
     }))
+    .pipe($.when(!prod, eslint({
+      fix: true, 
+    })))
+    .pipe($.when(!prod, $.eslint.format()))
+    // if running fix - replace existing file with fixed one
+    .pipe($.when(!prod, $.when(isFixed, gulp.dest('src/assets/js'))))
+    .pipe($.when(!prod, $.eslint.failAfterError()))
     .pipe(webpackStream(webpackConfig), webpack)
     .pipe($.when(!prod, $.sourcemaps.init({
       loadMaps: true

@@ -61,7 +61,10 @@ exclude:
   - .travis.yml
   - .codeclimate.yml
   - .github/
-  - CHANGELOG.md,
+  - CHANGELOG.md
+  - workbox-config.js
+  - src/assets/js/sw.js
+  - .tmp/src/assets/js/sw.js
 
 # Same as the title etc for your site but can instead be
 # called by using 'site.author.name' and so on

@@ -32,7 +32,7 @@ task('images', () => {
   }));
 });
 
-task('useCloudinary', () => {
+task('cloudinary:use', () => {
   const cloudinaryURL = "https://res.cloudinary.com/mat-teague/image/upload/c_scale,dpr_auto,f_auto,w_auto/v1549232522/";
 
   // replaces paths in build with cloudinary path

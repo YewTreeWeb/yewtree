@@ -4,7 +4,7 @@
   "description": "jekyll portfolio",
   "scripts": {
     "start": "gulp",
-    "build": "gulp build",
+    "build": "gulp build && workbox injectManifest workbox-config.js",
     "check": "gulp check",
     "deploy": "gulp deploy",
     "js": "gulp scripts",
@@ -108,6 +108,7 @@
     "require-dir": "^0.3.0",
     "rev-del": "^2.0.0",
     "rucksack-css": "^1.0.2",
+    "sass-lint-auto-fix": "^0.15.1",
     "shelljs": "^0.7.0",
     "ssri": "^6.0.1",
     "submit-sitemap": "^0.1.3",
@@ -124,7 +125,7 @@
     "hamburgers": "^1.1.3",
     "hover.css": "^2.3.2",
     "include-media": "^1.4.9",
-    "jquery": "^3.3.1",
+    "normalize-scss": "^7.0.1",
     "quicklink": "^1.0.0"
   }
 }

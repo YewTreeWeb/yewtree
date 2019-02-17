@@ -21,7 +21,7 @@ task('build:site', series('site:tmp', 'inject', 'site', 'copy:site'));
 // 'gulp assets' -- cleans out your assets and rebuilds them
 // 'gulp assets --prod' -- cleans out your assets and rebuilds them with
 // production settings
-task('assets', series('vendor', parallel('styles', 'scripts', 'fonts', 'images'), series('copy:assets')));
+task('assets', series('vendor', parallel('styles', 'scripts', 'fonts', 'images', 'cloudinary:use'), series('copy:assets')));
 
 // 'gulp clean' -- erases your assets and gzipped files
 task('clean', parallel('clean:assets', 'clean:gzip', 'clean:dist', 'clean:site'));
