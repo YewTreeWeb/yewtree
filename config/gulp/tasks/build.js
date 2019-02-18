@@ -31,9 +31,3 @@ task('site', (done) => {
     done();
   }
 });
-
-// 'gulp doctor' -- literally just runs jekyll doctor
-task('site:check', (done) => {
-  shell.exec('jekyll doctor');
-  done();
-});

@@ -41,7 +41,8 @@ const $ = plugins({
     "gulp-group-css-media-queries": "gcmq",
     "gulp-sass-glob": "sassGlob",
     "gulp-jpeg-2000": "jp2",
-    "gulp-if": "when"
+    "gulp-if": "when",
+    "gulp-sass-lint": "sassLint"
   },
   pattern: ['gulp-*', '*', '-', '@*/gulp{-,.}*'],
   replaceString: /\bgulp[\-.]/
@@ -57,7 +58,6 @@ function isFixed(file) {
 
 // Setup Webpack.
 const webpackConfig = {
-  mode: prod ? 'production' : 'development',
   module: {
     rules: [{
       test: /\.js$/,
@@ -71,13 +71,14 @@ const webpackConfig = {
       }
     }]
   },
-  output: {
-    filename: '[name].js'
-  },
+  mode: prod ? 'production' : 'development',
   devServer: {
     historyApiFallback: true
   },
   devtool: !prod ? 'inline-source-map' : false,
+  output: {
+    filename: '[name].js'
+  },
   externals: {
     jquery: 'jQuery'
   },
