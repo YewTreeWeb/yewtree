@@ -129,7 +129,7 @@ task('scripts', (done) => {
       ext: '.js'
     }))
     .pipe($.when(!prod, eslint({
-      fix: true, 
+      fix: true,
     })))
     .pipe($.when(!prod, $.eslint.format()))
     // if running fix - replace existing file with fixed one
@@ -170,7 +170,7 @@ task('scripts', (done) => {
       showFiles: true
     })))
     .pipe(dest('.tmp/assets/js'));
-    done();
+  done();
 });
 
 // 'gulp styles' -- creates a CSS file from your SASS, adds prefixes and
@@ -243,7 +243,7 @@ task('styles', (done) => {
     })))
     .pipe(dest('.tmp/assets/styles'))
     .pipe($.when(!prod, sync.stream()));
-    done();
+  done();
 });
 
 // Function to properly reload your browser

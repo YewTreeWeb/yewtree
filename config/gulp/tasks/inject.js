@@ -1,6 +1,10 @@
 'use strict';
 
-import { task, src, dest } from 'gulp';
+import {
+  task,
+  src,
+  dest
+} from 'gulp';
 import plugins from "gulp-load-plugins";
 
 const $ = plugins({
@@ -12,7 +16,9 @@ const $ = plugins({
 task('inject:head', () => {
   return src('.tmp/src/_includes/head.html')
     .pipe($.plumber())
-    .pipe($.inject(src('.tmp/assets/styles/*.css'), {ignorePath: '.tmp'}))
+    .pipe($.inject(src('.tmp/assets/styles/*.css'), {
+      ignorePath: '.tmp'
+    }))
     .pipe(dest('.tmp/src/_includes'));
 });
 
@@ -20,6 +26,8 @@ task('inject:head', () => {
 task('inject:footer', () => {
   return src('.tmp/src/_layouts/default.html')
     .pipe($.plumber())
-    .pipe($.inject(src('.tmp/assets/js/*.js'), {ignorePath: '.tmp'}))
+    .pipe($.inject(src('.tmp/assets/js/*.js'), {
+      ignorePath: '.tmp'
+    }))
     .pipe(dest('.tmp/src/_layouts'));
 });
