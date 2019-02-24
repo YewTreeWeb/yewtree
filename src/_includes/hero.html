@@ -1,0 +1,28 @@
+{%- assign hero = page.hero -%}
+
+<section class="hero">
+  <header class="hero__header">
+    {%- if hero.subtitle -%}
+        <span class="hero__subtitle">{{ hero.subtitle }}</span>
+    {%- endif -%}
+    <h1 class="hero__title">
+        {{ page.title }}
+        {%- if hero.small -%}
+            <small>{{ hero.small }}</small>
+        {%- endif -%}
+    </h1>
+    <p class="hero__intro">{{ hero.content }}</p>
+    {%- if hero.buttons -%}
+        {%- for button in hero.buttons -%}
+            <div class="hero__cta">
+                <a class="button button--primary anchor" href="{{ button.link }}" role="button">{{ button.text }}</a>
+            </div>
+        {%- endfor -%}
+    {%- endif -%}
+  </header>
+  <div class="hero__content">
+    {%- if hero.image -%}
+        <span class="hero__image fill" data-position="center"><img src="{{ hero.image.src }}" alt="{{ hero.image.alt }}" /></span>
+    {%- endif -%}
+  </div>
+</section>

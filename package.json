@@ -102,7 +102,6 @@
     "imagemin-zopfli": "^6.0.0",
     "lighthouse": "^4.1.0",
     "modernizr": "^3.6.0",
-    "node-sass": "^4.11.0",
     "postcss-calc": "^7.0.1",
     "postcss-css-variables": "^0.11.0",
     "prettier": "^1.16.4",

@@ -128,12 +128,12 @@ task('scripts', (done) => {
       dest: '.tmp/assets/js',
       ext: '.js'
     }))
-    .pipe($.when(!prod, eslint({
+    .pipe($.when(!prod, $.eslint({
       fix: true,
     })))
     .pipe($.when(!prod, $.eslint.format()))
     // if running fix - replace existing file with fixed one
-    .pipe($.when(!prod, $.when(isFixed, gulp.dest('src/assets/js'))))
+    .pipe($.when(!prod, $.when(isFixed, dest('src/assets/js'))))
     .pipe($.when(!prod, $.eslint.failAfterError()))
     .pipe(webpackStream(webpackConfig), webpack)
     .pipe($.when(!prod, $.sourcemaps.init({

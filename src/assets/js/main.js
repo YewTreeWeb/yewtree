@@ -1,5 +1,5 @@
-import 'airbnb-browser-shims';
+import "airbnb-browser-shims";
 
-if (process.env.NODE_ENV !== 'production') {
-    console.log('Looks like we are in development mode!');
+if ("production" !== process.env.NODE_ENV) {
+  console.log("Looks like we are in development mode!");
 }
