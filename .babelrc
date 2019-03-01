@@ -1,6 +1,3 @@
 {
-  "presets": ["env"]
-  // Remove the line below to enable ES2015 support.
-  // "only": ["gulpfile.babel.js"],
-  // "retainLines": true
+  "presets": ["@babel/preset-env", "airbnb"]
 }

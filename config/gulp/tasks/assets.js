@@ -66,7 +66,7 @@ const webpackConfig = {
       options: {
         presets: [
           '@babel/preset-env',
-          'babel-preset-airbnb'
+          'babel-preset-airbnb',
         ]
       }
     }]
@@ -95,7 +95,7 @@ const webpackConfig = {
 // Call project vendors
 const vendors = Object.keys(pkg.dependencies || {});
 
-task('vendor', () => {
+task('vendors', () => {
   if (vendors.length === 0) {
     return new Promise((resolve) => {
       console.log("No dependencies specified");
@@ -106,11 +106,6 @@ task('vendor', () => {
   return src(vendors.map(dependency => './node_modules/' + dependency + '/**/*.*'), {
       base: './node_modules/'
     })
-    .pipe(
-      $.changed("src/assets/vendors", {
-        hasChanged: $.changed.compareContents
-      })
-    )
     .pipe(dest('src/assets/vendors'));
 });
 
@@ -118,23 +113,12 @@ task('vendor', () => {
 // creates a Sourcemap for it
 // 'gulp scripts --prod' -- creates a index.js file from your JavaScript files,
 // minifies, gzips and cache busts it. Does not create a Sourcemap
-task('scripts', (done) => {
+task('scripts', done => {
   // NOTE: The order here is important since it's concatenated in order from
   // top to bottom, so you want vendor scripts etc on top
-  src('src/assets/js/main.js')
+  src(['src/assets/js/vendors.js', 'src/assets/js/main.js'])
     .pipe($.plumber())
     .pipe(named())
-    .pipe($.newer('.tmp/assets/js/main.js', {
-      dest: '.tmp/assets/js',
-      ext: '.js'
-    }))
-    .pipe($.when(!prod, eslint({
-      fix: true,
-    })))
-    .pipe($.when(!prod, $.eslint.format()))
-    // if running fix - replace existing file with fixed one
-    .pipe($.when(!prod, $.when(isFixed, gulp.dest('src/assets/js'))))
-    .pipe($.when(!prod, $.eslint.failAfterError()))
     .pipe(webpackStream(webpackConfig), webpack)
     .pipe($.when(!prod, $.sourcemaps.init({
       loadMaps: true
@@ -177,7 +161,7 @@ task('scripts', (done) => {
 // creates a Sourcemap
 // 'gulp styles --prod' -- creates a CSS file from your SASS, adds prefixes and
 // then min$.whenies, gzips and cache busts it. Does not create a Sourcemap
-task('styles', (done) => {
+task('styles', done => {
   src('src/assets/scss/style.scss')
     .pipe($.plumber())
     .pipe($.when(!prod, $.sourcemaps.init()))
@@ -275,5 +259,5 @@ task('serve', (done) => {
   watch('src/assets/scss/**/*.+(scss|sass)').on('add', series('styles')).on('change', series('styles'));
   // watch('src/assets/images/**/*', series('images', 'upload-images-to-cloudinary', reload));
   watch('src/assets/images/**/*').on('add', series('images', 'cloudinary', reload)).on('change', series('images', 'cloudinary', reload));
-  watch('./node_modules/').on('add', series('vendor', reload)).on('change', series('vendor', reload));
+  watch('./node_modules/').on('add', series('vendors', reload)).on('change', series('vendors', reload));
 });
