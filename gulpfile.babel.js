@@ -39,7 +39,7 @@ task('deploy', series('upload'));
 task('rebuild', series('clean', 'clean:images'));
 
 // 'gulp check' -- checks your site configuration for errors and lint your JS
-task('check', series('jekyll:doctor', 'eslint', 'stylelint'));
+task('check', series('jekyll:doctor', 'eslint', 'stylelint', 'accessibility'));
 
 // 'gulp' -- cleans your assets and gzipped files, creates your assets and
 // injects them into the templates, then builds your site, copied the assets

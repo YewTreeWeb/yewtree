@@ -19,6 +19,7 @@
 title: yewtree
 description: Portfolio website.
 url: https://yewtreeweb.co.uk
+baseurl: /
 lang: en_GB
 
 # Used so Jekyll outputs the site correctly so Gulp can do what it wants

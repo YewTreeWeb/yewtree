@@ -119,6 +119,20 @@ task('scripts', done => {
   src(['src/assets/js/vendors.js', 'src/assets/js/main.js'])
     .pipe($.plumber())
     .pipe(named())
+<<<<<<< HEAD
+=======
+    .pipe($.newer('.tmp/assets/js/main.js', {
+      dest: '.tmp/assets/js',
+      ext: '.js'
+    }))
+    .pipe($.when(!prod, $.eslint({
+      fix: true,
+    })))
+    .pipe($.when(!prod, $.eslint.format()))
+    // if running fix - replace existing file with fixed one
+    .pipe($.when(!prod, $.when(isFixed, dest('src/assets/js'))))
+    .pipe($.when(!prod, $.eslint.failAfterError()))
+>>>>>>> da244835fcfded42605027b87595df02282df769
     .pipe(webpackStream(webpackConfig), webpack)
     .pipe($.when(!prod, $.sourcemaps.init({
       loadMaps: true

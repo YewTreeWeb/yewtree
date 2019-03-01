@@ -34,6 +34,12 @@ if (typeof window !== 'undefined') {
   require('input-placeholder-polyfill');
 
   require('intersection-observer');
+<<<<<<< HEAD
+=======
+
+  // KeyboardEvent.key shim
+  require('shim-keyboard-event-key');
+>>>>>>> da244835fcfded42605027b87595df02282df769
 }
 
 require('raf/polyfill');
@@ -48,4 +54,7 @@ var hasSymbols = typeof Symbol === 'function' && Symbol.iterator;
 if (hasSymbols && typeof TouchList === 'function' && typeof TouchList.prototype[Symbol.iterator] !== 'function') {
   TouchList.prototype[Symbol.iterator] = Array.prototype[Symbol.iterator];
 }
+<<<<<<< HEAD
 
+=======
+>>>>>>> da244835fcfded42605027b87595df02282df769
