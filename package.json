@@ -132,7 +132,6 @@
     "hover.css": "^2.3.2",
     "include-media": "^1.4.9",
     "logrocket": "^0.6.19",
-    "normalize-scss": "^7.0.1",
-    "quicklink": "^1.0.0"
+    "normalize.css": "^8.0.1"
   }
 }

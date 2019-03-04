@@ -25,7 +25,3 @@ if (typeof document !== 'undefined' && !document.contains) {
   document.contains = shim;
   Element.prototype.contains = shim;
 }
-<<<<<<< HEAD
-
-=======
->>>>>>> da244835fcfded42605027b87595df02282df769

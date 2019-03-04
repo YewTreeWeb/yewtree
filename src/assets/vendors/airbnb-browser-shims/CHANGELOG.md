@@ -1,8 +1,6 @@
 Unreleased
 =================
 
-<<<<<<< HEAD
-=======
 3.2.0 / 2019-02-23
 ==================
   * [New] Add KeyboardEvent.key shim (#23)
@@ -11,7 +9,6 @@ Unreleased
   * [Tests] use `npx aud` instead of `npm audit` with hoops
   * [Tests] up to `node` `v11`; only test majors
 
->>>>>>> da244835fcfded42605027b87595df02282df769
 3.1.0 / 2018-12-10
 ==================
   * [New] Add `input-placeholder-polyfill`

@@ -5729,7 +5729,7 @@ gonzales-pe-sl@^4.2.3:
   dependencies:
     minimist "1.1.x"
 
-"gonzales-pe-sl@github:srowhani/gonzales-pe#dev":
+gonzales-pe-sl@srowhani/gonzales-pe#dev:
   version "4.2.3"
   resolved "https://codeload.github.com/srowhani/gonzales-pe/tar.gz/3b052416074edc280f7d04bbe40b2e410693c4a3"
   dependencies:
@@ -9365,11 +9365,6 @@ normalize-range@^0.1.2:
   resolved "https://registry.yarnpkg.com/normalize-range/-/normalize-range-0.1.2.tgz#2d10c06bdfd312ea9777695a4d28439456b75942"
   integrity sha1-LRDAa9/TEuqXd2laTShDlFa3WUI=
 
-normalize-scss@^7.0.1:
-  version "7.0.1"
-  resolved "https://registry.yarnpkg.com/normalize-scss/-/normalize-scss-7.0.1.tgz#74485e82bb5d0526371136422a09fdb868ffc1a4"
-  integrity sha512-qj16bWnYs+9/ac29IgGjySg4R5qQTp1lXfm7ApFOZNVBYFY8RZ3f8+XQNDDLHeDtI3Ba7Jj4+LuPgz9v/fne2A==
-
 normalize-url@2.0.1:
   version "2.0.1"
   resolved "https://registry.yarnpkg.com/normalize-url/-/normalize-url-2.0.1.tgz#835a9da1551fa26f70e92329069a23aa6574d7e6"
@@ -9388,6 +9383,11 @@ normalize-url@^1.4.0:
     prepend-http "^1.0.0"
     query-string "^4.1.0"
     sort-keys "^1.0.0"
+
+normalize.css@^8.0.1:
+  version "8.0.1"
+  resolved "https://registry.yarnpkg.com/normalize.css/-/normalize.css-8.0.1.tgz#9b98a208738b9cc2634caacbc42d131c97487bf3"
+  integrity sha512-qizSNPO93t1YUuUhP22btGOo3chcvDFqFaj2TRybP0DMxkHOCTYwp3n34fel4a31ORXy4m1Xq0Gyqpb5m33qIg==
 
 now-and-later@^2.0.0:
   version "2.0.0"
@@ -10931,11 +10931,6 @@ querystring@0.2.0:
   version "0.2.0"
   resolved "https://registry.yarnpkg.com/querystring/-/querystring-0.2.0.tgz#b209849203bb25df820da756e747005878521620"
   integrity sha1-sgmEkgO7Jd+CDadW50cAWHhSFiA=
-
-quicklink@^1.0.0:
-  version "1.0.0"
-  resolved "https://registry.yarnpkg.com/quicklink/-/quicklink-1.0.0.tgz#71cb32be603d0ded93a7a48cf3c7e101ea4b1f6d"
-  integrity sha512-Zk0+RLevrrrrPzcPO9IKBAbmtFrinDP0ifSxeft5AG9eI+lBsvQ2XFjH7kceuS+LNehtZatQX+3LyEDYAPpmrg==
 
 raf@^3.4.1:
   version "3.4.1"
