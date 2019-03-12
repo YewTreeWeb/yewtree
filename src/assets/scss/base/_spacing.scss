@@ -1,0 +1,138 @@
+/*
+* CSS Variables
+* creates the root variables of the prohject.
+*/
+:root,
+body {
+  --space-unit: 1em;
+  --space-xxxxs: calc(0.125 * var(--space-unit));
+  --space-xxxs: calc(0.25 * var(--space-unit));
+  --space-xxs: calc(0.375 * var(--space-unit));
+  --space-xs: calc(0.5 * var(--space-unit));
+  --space-sm: calc(0.75 * var(--space-unit));
+  --space-md: calc(1.25 * var(--space-unit));
+  --space-lg: calc(2 * var(--space-unit));
+  --space-xl: calc(3.25 * var(--space-unit));
+  --space-xxl: calc(5.25 * var(--space-unit));
+  --space-xxxl: calc(8.5 * var(--space-unit));
+  --space-xxxxl: calc(13.75 * var(--space-unit));
+}
+
+/*
+* SCSS Variables
+* Pulls in the CSS Vairables for easier use.
+*/
+$space-unit: var(--space-unit);
+$space-xxxxs: var(--space-xxxxs);
+$space-xxxs: var(--space-xxxs);
+$space-xxs: var(--space-xxs);
+$space-xs: var(--space-xs);
+$space-sm: var(--space-sm);
+$space-md: var(--space-md);
+$space-lg: var(--space-lg);
+$space-xl: var(--space-xl);
+$space-xxl: var(--space-xxl);
+$space-xxxl: var(--space-xxxl);
+$space-xxxxl: var(--space-xxxxl);
+$component-padding: $space-sm;
+
+// optional - edit space unit and padding of all components at a specific breakpoint
+@supports(--css: variables) {
+  @include breakpoint(md) {
+    body {
+      --space-unit: 1.25em;
+    }
+  }
+}
+
+// margin top
+.margin-top,
+.margin-top--md {
+  margin-top: $space-md;
+}
+
+.margin-top--xxxxs {
+  margin-top: $space-xxxxs;
+}
+
+.margin-top--xxxs {
+  margin-top: $space-xxxs;
+}
+
+.margin-top--xxs {
+  margin-top: $space-xxs;
+}
+
+.margin-top--xs {
+  margin-top: $space-xs;
+}
+
+.margin-top--sm {
+  margin-top: $space-sm;
+}
+
+.margin-top--lg {
+  margin-top: $space-lg;
+}
+
+.margin-top--xl {
+  margin-top: $space-xl;
+}
+
+.margin-top--xxl {
+  margin-top: $space-xxl;
+}
+
+.margin-top--xxxl {
+  margin-top: $space-xxxl;
+}
+
+.margin-top--xxxxl {
+  margin-top: $space-xxxxl;
+}
+
+// margin bottom
+.margin-bottom,
+.margin-bottom--md {
+  margin-bottom: $space-md;
+}
+
+.margin-bottom--xxxxs {
+  margin-bottom: $space-xxxxs;
+}
+
+.margin-bottom--xxxs {
+  margin-bottom: $space-xxxs;
+}
+
+.margin-bottom--xxs {
+  margin-bottom: $space-xxs;
+}
+
+.margin-bottom--xs {
+  margin-bottom: $space-xs;
+}
+
+.margin-bottom--sm {
+  margin-bottom: $space-sm;
+}
+
+.margin-bottom--lg {
+  margin-bottom: $space-lg;
+}
+
+.margin-bottom--xl {
+  margin-bottom: $space-xl;
+}
+
+.margin-bottom--xxl {
+  margin-bottom: $space-xxl;
+}
+
+.margin-bottom--xxxl {
+  margin-bottom: $space-xxxl;
+}
+
+.margin-bottom--xxxxl {
+  margin-bottom: $space-xxxxl;
+}

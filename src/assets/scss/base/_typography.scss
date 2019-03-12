@@ -1,0 +1,273 @@
+/*
+* CSS Variables
+* creates the root variables of the prohject.
+*/
+:root,
+body {
+  // font family
+  --font-primary: sans-serif;
+
+  // body font size
+  --text-base-size: 1em;
+
+  // type scale
+  --text-scale-ratio: 1.2;
+  --text-xs: calc((1em / var(--text-scale-ratio)) / var(--text-scale-ratio));
+  --text-sm: calc(var(--text-xs) * var(--text-scale-ratio));
+  --text-md: calc(var(--text-sm) * var(--text-scale-ratio) * var(--text-scale-ratio));
+  --text-lg: calc(var(--text-md) * var(--text-scale-ratio));
+  --text-xl: calc(var(--text-lg) * var(--text-scale-ratio));
+  --text-xxl: calc(var(--text-xl) * var(--text-scale-ratio));
+  --text-xxxl: calc(var(--text-xxl) * var(--text-scale-ratio));
+
+  // line-height
+  --body-line-height: 1.4;
+  --heading-line-height: 1.2;
+
+  // capital letters - used in combo with the lhCrop mixin
+  --font-primary-capital-letter: 1;
+}
+
+/*
+* SCSS Variables
+* Pulls in the CSS Vairables for easier use.
+*/
+$font-primary: var(--font-primary);
+$text-base: var(--text-base-size);
+$text-ratio: var(--text-scale-ratio);
+$text-xs: var(--text-xs);
+$text-sm: var(--text-sm);
+$text-md: var(--text-md);
+$text-lg: var(--text-lg);
+$text-xl: var(--text-xl);
+$text-xxl: var(--text-xxl);
+$text-xxxl: var(--text-xxxl);
+$line-height: var(--body-line-height);
+$heading-line-height: var(--heading-line-height);
+$capital-letter: var(--font-primary-capital-letter);
+
+@supports(--css: variables) {
+  @include breakpoint(md) {
+    body {
+      --text-base-size: 1.25em;
+      --text-scale-ratio: 1.25;
+    }
+  }
+}
+
+body {
+  font-size: $text-base;
+  font-family: $font-primary;
+  color: $contrast-high;
+  @include fontSmooth;
+}
+
+h1,
+h2,
+h3,
+h4 {
+  color: $contrast-higher;
+  line-height: $heading-line-height;
+}
+
+// text size
+.text--xxxl {
+  font-size: $text-xxxl;
+}
+
+h1,
+.text--xxl {
+  font-size: $text-xxl;
+}
+
+h2,
+.text--xl {
+  font-size: $text-xl;
+}
+
+h3,
+.text--lg {
+  font-size: $text-lg;
+}
+
+h4,
+.text--md {
+  font-size: $text-md;
+}
+
+.text--sm,
+small {
+  font-size: $text-sm;
+}
+
+.text--xs {
+  font-size: $text-xs;
+}
+
+// inline text
+a,
+.link {
+  color: $primary;
+  text-decoration: underline;
+}
+
+mark {
+  background-color: $accent-lighter;
+  color: inherit;
+}
+
+strong {
+  font-weight: bold;
+}
+
+s {
+  text-decoration: line-through;
+}
+
+u {
+  text-decoration: underline;
+}
+
+.text--subtle {
+  color: $contrast-medium;
+}
+
+.text-component {
+  // Local CSS Variables.
+  --line-height-multiplier: 1;
+  --text-vspace-multiplier: 1;
+  --component-body-line-height: calc($line-height * var(--line-height-multiplier, 1));
+  --component-heading-line-height: calc($heading-line-height * var(--line-height-multiplier, 1));
+  // Local SCSS Variables.
+  $line-multiplier: var(--line-height-multiplier);
+  $vspace-multiplier: var(--text-vspace-multiplier);
+  $component-line-height: var(--component-body-line-height);
+  $component-heading-line-height: var(--component-heading-line-height);
+
+  h1,
+  h2,
+  h3,
+  h4 {
+    line-height: $component-heading-line-height;
+    margin-bottom: calc($space-xxxs * $vspace-multiplier);
+  }
+
+  h2,
+  h3,
+  h4 {
+    margin-top: calc($space-sm * $vspace-multiplier);
+  }
+
+  p,
+  blockquote,
+  ul li,
+  ol li {
+    line-height: $component-line-height;
+    color: $contrast-high;
+  }
+
+  ul,
+  ol,
+  p,
+  blockquote {
+    margin-bottom: calc($space-sm * $vspace-multiplier);
+  }
+
+  ul,
+  ol {
+    padding-left: 1em;
+  }
+
+  ul {
+    list-style-type: disc;
+  }
+
+  ol {
+    list-style-type: decimal;
+  }
+
+  em {
+    font-style: italic;
+  }
+
+  blockquote {
+    padding-left: 1em;
+    border-left: 4px solid $contrast-low;
+  }
+
+  hr {
+    background: $contrast-low;
+    height: 1px;
+    margin: calc($space-lg * $vspace-multiplier) auto;
+  }
+
+  >*:first-child {
+    margin-top: 0;
+  }
+
+  >*:last-child {
+    margin-bottom: 0;
+  }
+}
+
+.article.text-component {
+  // line height for article (e.g., blog posts)
+  --line-height-multiplier: 1.13;
+}
+
+// images
+.text-component__img {
+  margin-bottom: calc($space-md * $vspace-multiplier, 1);
+  text-align: center;
+
+  figcaption {
+    text-align: center;
+    font-size: $text-sm;
+    color: $contrast-medium;
+  }
+}
+
+@include breakpoint(sm) {
+
+  .text-component__img--left,
+  .text-component__img--right {
+    width: 45%;
+  }
+
+  .text-component__img--left {
+    float: left;
+    margin-right: calc($space-md * $vspace-multiplier, 1);
+  }
+
+  .text-component__img--right {
+    float: right;
+    margin-left: calc($space-md * $vspace-multiplier, 1);
+  }
+}
+
+@include breakpoint(xl) {
+  .text-component__img--outset {
+    width: calc(100% + 2 * $space-xxl);
+  }
+
+  .text-component__img--outset:not(.text-component__img--right) {
+    margin-left: calc(-1 * $space-xxl);
+  }
+
+  .text-component__img--left,
+  .text-component__img--right {
+    width: 50%;
+  }
+
+  .text-component__img--right.text-component__img--outset {
+    margin-right: calc(-1 * $space-xxl);
+  }
+}
+
+// utility classes
+.truncate {
+  // truncate text if it exceeds its parent
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
