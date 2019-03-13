@@ -59,7 +59,6 @@ body {
   font-size: $text-base;
   font-family: $font-primary;
   color: $contrast-high;
-  @include fontSmooth;
 }
 
 h1,
@@ -128,8 +127,12 @@ u {
   text-decoration: underline;
 }
 
-.text--subtle {
+.text--subtle, .text-component .text--subtle {
   color: $contrast-medium;
+}
+
+.text--inherit, .text-component .text--inherit {
+  color: inherit;
 }
 
 .text-component {
