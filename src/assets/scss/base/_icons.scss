@@ -1,26 +1,3 @@
-/*
-* CSS Variables
-* creates the root variables of the prohject.
-*/
-:root {
-  // size
-  --icon-xs: 16px;
-  --icon-sm: 24px;
-  --icon-md: 32px;
-  --icon-lg: 48px;
-  --icon-xl: 64px;
-}
-
-/*
-* SCSS Variables
-* Pulls in the CSS Vairables for easier use.
-*/
-$icon-xs: var(--icon-xs);
-$icon-sm: var(--icon-sm);
-$icon-md: var(--icon-md);
-$icon-lg: var(--icon-lg);
-$icon-xl: var(--icon-xl);
-
 .icon {
   display: inline-block;
   color: $contrast-higher;

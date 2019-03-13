@@ -48,11 +48,3 @@
   line-height: inherit;
   appearance: none;
 }
-
-// define color css variables
-@mixin defineColorHSL($color, $hue, $saturation, $lightness) {
-  #{$color}: unquote("hsl(#{$hue}, #{$saturation}, #{$lightness})");
-  #{$color}-h: #{$hue};
-  #{$color}-s: #{$saturation};
-  #{$color}-l: #{$lightness};
-}
