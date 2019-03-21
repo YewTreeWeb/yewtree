@@ -75,41 +75,7 @@ body {
   --space-xxl: calc(5.25 * var(--space-unit));
   --space-xxxl: calc(8.5 * var(--space-unit));
   --space-xxxxl: calc(13.75 * var(--space-unit));
-}
-
-/* Grid */
-
-:root {
-  --container-width-xs: 37.5rem; // ~600px
-  --container-width-sm: 45rem;   // ~720px
-  --container-width-md: 64rem;   // ~1024px
-  --container-width-lg: 80rem;   // ~1280px
-  --container-width-xl: 90rem;   // ~1440px
-}
-
-/* Shared Styles */
-
-:root {
-  // radius
-  --radius: 0.25em;
-
-  // box shadow
-  --shadow-sm: 0 1px 1px rgba(0, 0, 0, .2), 0 1px 8px rgba(0, 0, 0, .1); // low depth
-  --shadow-md: 0 1px 8px rgba(0, 0, 0, .1), 0 8px 24px rgba(0, 0, 0, .15); // medium depth
-  --shadow-lg: 0 1px 8px rgba(0, 0, 0, .1), 0 16px 48px rgba(0, 0, 0, .1), 0 24px 60px rgba(0, 0, 0, .1); // high depth
-
-  // animations
-  // credits: https://github.com/ai/easings.net
-  --transition-bounce: cubic-bezier(0.175, 0.885, 0.32, 1.275);
-  --transition-ease-in-out: cubic-bezier(0.645, 0.045, 0.355, 1);
-  --transition-ease-in: cubic-bezier(0.55, 0.055, 0.675, 0.19);
-  --transition-ease-out: cubic-bezier(0.215, 0.61, 0.355, 1);
-}
-
-/* Typography */
-
-:root,
-body {
+  /* Typography */
   // font family
   --font-primary: sans-serif;
 
@@ -134,16 +100,39 @@ body {
   --font-primary-capital-letter: 1;
 }
 
-/* Icons */
+/* Grid */
 
 :root {
-  // size
-  --icon-xs: 16px;
-  --icon-sm: 24px;
-  --icon-md: 32px;
-  --icon-lg: 48px;
-  --icon-xl: 64px;
+  --container-width-xs: 37.5rem; // ~600px
+  --container-width-sm: 45rem;   // ~720px
+  --container-width-md: 64rem;   // ~1024px
+  --container-width-lg: 80rem;   // ~1280px
+  --container-width-xl: 90rem;   // ~1440px
+  /* Shared Styles */
+  // radius
+  --radius: 0.25em;
+
+  // box shadow
+  --shadow-sm: 0 1px 1px rgba(0, 0, 0, .2), 0 1px 8px rgba(0, 0, 0, .1); // low depth
+  --shadow-md: 0 1px 8px rgba(0, 0, 0, .1), 0 8px 24px rgba(0, 0, 0, .15); // medium depth
+  --shadow-lg: 0 1px 8px rgba(0, 0, 0, .1), 0 16px 48px rgba(0, 0, 0, .1), 0 24px 60px rgba(0, 0, 0, .1); // high depth
+
+  // animations
+  // credits: https://github.com/ai/easings.net
+  --transition-bounce: cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  --transition-ease-in-out: cubic-bezier(0.645, 0.045, 0.355, 1);
+  --transition-ease-in: cubic-bezier(0.55, 0.055, 0.675, 0.19);
+  --transition-ease-out: cubic-bezier(0.215, 0.61, 0.355, 1);
+  /* Icons */
+   // size
+   --icon-xs: 16px;
+   --icon-sm: 24px;
+   --icon-md: 32px;
+   --icon-lg: 48px;
+   --icon-xl: 64px;
 }
+
+
 
 /*
 * SCSS Variables
