@@ -1,21 +1,36 @@
 // return css color variable with different opacity value
 @function alpha($color, $opacity) {
-  $color: str-replace($color, 'var(');
-  $color: str-replace($color, ')');
-  $color-h: var(#{$color+'-h'});
-  $color-s: var(#{$color+'-s'});
-  $color-l: var(#{$color+'-l'});
+  $color: str-replace($color, "var(");
+  $color: str-replace($color, ")");
+  $color-h: var(#{$color + "-h"});
+  $color-s: var(#{$color + "-s"});
+  $color-l: var(#{$color + "-l"});
   @return hsla($color-h, $color-s, $color-l, $opacity);
 }
 
 // replace substring with another string
 // credits: https://css-tricks.com/snippets/sass/str-replace-function/
-@function str-replace($string, $search, $replace: '') {
+@function str-replace($string, $search, $replace: "") {
   $index: str-index($string, $search);
 
   @if $index {
-    @return str-slice($string, 1, $index - 1)+$replace+str-replace(str-slice($string, $index + str-length($search)), $search, $replace);
+    @return str-slice($string, 1, $index - 1) + $replace +
+      str-replace(str-slice($string, $index + str-length($search)), $search, $replace);
   }
 
   @return $string;
+}
+
+// return converted hex code into a hsl colour.
+@function hsl($hex) {
+  @return unquote('hsl(#{hue($hex)}, #{saturation($hex)}, #{lightness($hex)})');
+}
+
+// return converted hex code with transparency into a hsla colour.
+@function hsla($hex, $alpha) {
+  @if $alpha >= 0 and $alpha <= 1 {
+    @return unquote('hsla(#{hue($hex)}, #{saturation($hex)}, #{lightness($hex)}, #{$alpha})');
+  } @else {
+    @error 'Transparency must be >= 0 and <= 1';
+  }
 }

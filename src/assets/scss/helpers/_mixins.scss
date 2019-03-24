@@ -48,3 +48,14 @@
   line-height: inherit;
   appearance: none;
 }
+
+// define color css variables.
+@mixin definecolorhsl($color, $hex, $fallback: false) {
+  @if $fallback {
+    #{$color}: $hex;
+  }
+  #{$color}: unquote('hsl(#{hue($hex)}, #{saturation($hex)}, #{lightness($hex)})');
+  #{$color}-h: #{hue($hex)};
+  #{$color}-s: #{saturation($hex)};
+  #{$color}-l: #{lightness($hex)};
+}
