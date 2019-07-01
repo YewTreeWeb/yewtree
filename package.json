@@ -89,7 +89,7 @@
     "postcss-calc": "^7.0.1",
     "postcss-css-variables": "^0.11.0",
     "read-yaml": "^1.1.0",
-    "require-dir": "^0.3.0",
+    "require-dir": "^1.2.0",
     "rev-del": "^2.0.0",
     "rucksack-css": "^1.0.2",
     "shelljs": "^0.7.0",
