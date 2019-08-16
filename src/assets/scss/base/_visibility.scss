@@ -1,0 +1,69 @@
+.is-visible {
+  display: $show !important;
+  visibility: $visible;
+}
+
+.is-hidden {
+  display: $hide !important;
+  visibility: $hidden;
+}
+
+@include breakpoint(xs, "not all") {
+  .display--xs {
+    display: $hide !important;
+  }
+}
+
+@include breakpoint(xs) {
+  .hide--xs {
+    display: $hide !important;
+  }
+}
+
+@include breakpoint(sm, "not all") {
+  .display--sm {
+    display: $hide !important;
+  }
+}
+
+@include breakpoint(sm) {
+  .hide--sm {
+    display: $hide !important;
+  }
+}
+
+@include breakpoint(md, "not all") {
+  .display--md {
+    display: $hide !important;
+  }
+}
+
+@include breakpoint(md) {
+  .hide--md {
+    display: $hide !important;
+  }
+}
+
+@include breakpoint(lg, "not all") {
+  .display--lg {
+    display: $hide !important;
+  }
+}
+
+@include breakpoint(lg) {
+  .hide--lg {
+    display: $hide !important;
+  }
+}
+
+@include breakpoint(xl, "not all") {
+  .display--xl {
+    display: $hide !important;
+  }
+}
+
+@include breakpoint(xl) {
+  .hide--xl {
+    display: $hide !important;
+  }
+}

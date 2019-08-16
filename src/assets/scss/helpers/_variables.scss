@@ -1,0 +1,304 @@
+/*
+* CSS Variables
+* creates the root variables of the prohject.
+*/
+
+/* Colours */
+
+:root,
+[data-theme="default"] {
+  // main
+  @include defineColorHSL(--color-primary-darker, 220, 90%, 36%);
+  @include defineColorHSL(--color-primary-dark, 220, 90%, 46%);
+  @include defineColorHSL(--color-primary, 220, 90%, 56%);
+  @include defineColorHSL(--color-primary-light, 220, 90%, 66%);
+  @include defineColorHSL(--color-primary-lighter, 220, 90%, 76%);
+
+  @include defineColorHSL(--color-accent-darker, 355, 90%, 41%);
+  @include defineColorHSL(--color-accent-dark, 355, 90%, 51%);
+  @include defineColorHSL(--color-accent, 355, 90%, 61%);
+  @include defineColorHSL(--color-accent-light, 355, 90%, 71%);
+  @include defineColorHSL(--color-accent-lighter, 355, 90%, 81%);
+
+  // black + white
+  @include defineColorHSL(--color-black, 240, 8%, 12%);
+  @include defineColorHSL(--color-white, 0, 0%, 100%);
+
+  // feedback
+  @include defineColorHSL(--color-success-darker, 94, 48%, 36%);
+  @include defineColorHSL(--color-success-dark, 94, 48%, 46%);
+  @include defineColorHSL(--color-success, 94, 48%, 56%);
+  @include defineColorHSL(--color-success-light, 94, 48%, 66%);
+  @include defineColorHSL(--color-success-lighter, 94, 48%, 76%);
+
+  @include defineColorHSL(--color-error-darker, 355, 90%, 41%);
+  @include defineColorHSL(--color-error-dark, 355, 90%, 51%);
+  @include defineColorHSL(--color-error, 355, 90%, 61%);
+  @include defineColorHSL(--color-error-light, 355, 90%, 71%);
+  @include defineColorHSL(--color-error-lighter, 355, 90%, 81%);
+
+  @include defineColorHSL(--color-warning-darker, 46, 100%, 41%);
+  @include defineColorHSL(--color-warning-dark, 46, 100%, 51%);
+  @include defineColorHSL(--color-warning, 46, 100%, 61%);
+  @include defineColorHSL(--color-warning-light, 46, 100%, 71%);
+  @include defineColorHSL(--color-warning-lighter, 46, 100%, 81%);
+
+  // color contrasts
+  @include defineColorHSL(--color-bg, 0, 0%, 100%);
+  @include defineColorHSL(--color-contrast-lower, 0, 0%, 95%);
+  @include defineColorHSL(--color-contrast-low, 240, 1%, 83%);
+  @include defineColorHSL(--color-contrast-medium, 240, 1%, 48%);
+  @include defineColorHSL(--color-contrast-high, 240, 4%, 20%);
+  @include defineColorHSL(--color-contrast-higher, 240, 8%, 12%);
+}
+
+:root,
+body {
+  /* Spacing */
+  --space-unit: 1em;
+  --space-xxxxs: calc(0.125 * var(--space-unit));
+  --space-xxxs: calc(0.25 * var(--space-unit));
+  --space-xxs: calc(0.375 * var(--space-unit));
+  --space-xs: calc(0.5 * var(--space-unit));
+  --space-sm: calc(0.75 * var(--space-unit));
+  --space-md: calc(1.25 * var(--space-unit));
+  --space-lg: calc(2 * var(--space-unit));
+  --space-xl: calc(3.25 * var(--space-unit));
+  --space-xxl: calc(5.25 * var(--space-unit));
+  --space-xxxl: calc(8.5 * var(--space-unit));
+  --space-xxxxl: calc(13.75 * var(--space-unit));
+
+  /* Typography */
+  // font family
+  --font-primary: sans-serif;
+
+  // body font size
+  --text-base-size: 1em;
+
+  // type scale
+  --text-scale-ratio: 1.2;
+  --text-xs: calc((1em / var(--text-scale-ratio)) / var(--text-scale-ratio));
+  --text-sm: calc(var(--text-xs) * var(--text-scale-ratio));
+  --text-md: calc(var(--text-sm) * var(--text-scale-ratio) * var(--text-scale-ratio));
+  --text-lg: calc(var(--text-md) * var(--text-scale-ratio));
+  --text-xl: calc(var(--text-lg) * var(--text-scale-ratio));
+  --text-xxl: calc(var(--text-xl) * var(--text-scale-ratio));
+  --text-xxxl: calc(var(--text-xxl) * var(--text-scale-ratio));
+
+  // line-height
+  --body-line-height: 1.4;
+  --heading-line-height: 1.2;
+
+  // capital letters - used in combo with the lhCrop mixin
+  --font-primary-capital-letter: 1;
+}
+
+
+:root {
+  /* Grid */
+  --container-width-xs: 37.5rem; // ~600px
+  --container-width-sm: 45rem; // ~720px
+  --container-width-md: 64rem; // ~1024px
+  --container-width-lg: 80rem; // ~1280px
+  --container-width-xl: 90rem; // ~1440px
+
+  /* Shared Styles */
+  // radius
+  --radius: 0.25em;
+
+  // box shadow
+  --shadow-sm: 0 1px 1px rgba(0, 0, 0, .2), 0 1px 8px rgba(0, 0, 0, .1); // low depth
+  --shadow-md: 0 1px 8px rgba(0, 0, 0, .1), 0 8px 24px rgba(0, 0, 0, .15); // medium depth
+  --shadow-lg: 0 1px 8px rgba(0, 0, 0, .1), 0 16px 48px rgba(0, 0, 0, .1), 0 24px 60px rgba(0, 0, 0, .1); // high depth
+
+  // animations
+  // credits: https://github.com/ai/easings.net
+  --transition-bounce: cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  --transition-ease-in-out: cubic-bezier(0.645, 0.045, 0.355, 1);
+  --transition-ease-in: cubic-bezier(0.55, 0.055, 0.675, 0.19);
+  --transition-ease-out: cubic-bezier(0.215, 0.61, 0.355, 1);
+
+  /* Icons */
+  // size
+  --icon-xs: 16px;
+  --icon-sm: 24px;
+  --icon-md: 32px;
+  --icon-lg: 48px;
+  --icon-xl: 64px;
+
+  // z-index
+  --zindex-header: 2;
+  --zindex-popover: 4;
+  --zindex-fixed-element: 5;
+  --zindex-overlay: 10; // modals and dialogs
+
+  // visibility
+  --display-block: block;
+  --display-none: none;
+  --visibility-visible: visible;
+  --visibility-hidden: hidden;
+
+}
+
+/*
+* SCSS Variables
+* Pulls in the CSS Vairables for easier use.
+*/
+
+/* Colours */
+
+// Main.
+$primary-darker: var(--color-primary-darker);
+$primary-dark: var(--color-primary-dark);
+$primary: var(--color-primary);
+$primary-light: var(--color-primary-light);
+$primary-lighter: var(--color-primary-lighter);
+$primary-a20: var(--color-primary-a20);
+
+$accent-darker: var(--color-accent-darker);
+$accent-dark: var(--color-accent-dark);
+$accent: var(--color-accent);
+$accent-light: var(--color-accent-light);
+$accent-lighter: var(--color-accent-lighter);
+
+// Black & White.
+$black: var(--color-black);
+$black-a10: var(--color-black-a10);
+
+$white: var(--color-white);
+
+// Feedback
+$success-darker: var(--color-success-darker);
+$success-dark: var(--color-success-dark);
+$success: var(--color-success);
+$success-light: var(--color-success-light);
+$success-lighter: var(--color-success-lighter);
+$success-a20: var(--color-success-a20);
+
+$error-darker: var(--color-error-darker);
+$error-dark: var(--color-error-dark);
+$error: var(--color-error);
+$error-light: var(--color-error-light);
+$error-lighter: var(--color-error-lighter);
+$error-a20: var(--color-error-a20);
+
+$warning-darker: var(--color-warning-darker);
+$warning-dark: var(--color-warning-dark);
+$warning: var(--color-warning);
+$warning-light: var(--color-warning-light);
+$warning-lighter: var(--color-warning-lighter);
+$warning-a20: var(--color-warning-a20);
+
+// color contrast
+$bg: var(--color-bg);
+$bg-a00: var(--color-bg-a00);
+$contrast-lower: var(--color-contrast-lower);
+$contrast-low: var(--color-contrast-low);
+$contrast-medium: var(--color-contrast-medium);
+$contrast-high: var(--color-contrast-high);
+$contrast-higher: var(--color-contrast-higher);
+$contrast-higher-a90: var(--color-contrast-higher-a90);
+
+// Semantic
+$border: var(--color-border);
+
+/* Breakpoints */
+
+$breakpoints: (xs: 30rem, // ~480px
+sm: 37.5rem, // ~600px
+md: 64rem, // ~1024px
+lg: 80rem, // ~1280px
+xl: 90rem // ~1440px
+);
+
+$resolution: (120: 120,
+124: 124.8,
+144: 144,
+192: 192);
+
+$ratios: (1_2x: 1.25,
+1_3x: 1.3,
+1_5x: 1.5,
+2x: 2);
+
+/* Spacing */
+
+$space-unit: var(--space-unit);
+$space-xxxxs: var(--space-xxxxs);
+$space-xxxs: var(--space-xxxs);
+$space-xxs: var(--space-xxs);
+$space-xs: var(--space-xs);
+$space-sm: var(--space-sm);
+$space-md: var(--space-md);
+$space-lg: var(--space-lg);
+$space-xl: var(--space-xl);
+$space-xxl: var(--space-xxl);
+$space-xxxl: var(--space-xxxl);
+$space-xxxxl: var(--space-xxxxl);
+$component-padding: $space-sm;
+
+/* Grid */
+
+$container-width-xs: var(--container-width-xs);
+$container-width-sm: var(--container-width-sm);
+$container-width-md: var(--container-width-md);
+$container-width-lg: var(--container-width-lg);
+$container-width-xl: var(--container-width-xl);
+
+/* Shared Styles */
+
+$radius: var(--radius);
+$shadow-sm: var(--shadow-sm);
+$shadow-md: var(--shadow-md);
+$shadow-lg: var(--shadow-lg);
+$bounce: var(--transition-bounce);
+$ease-in-out: var(--transition-ease-in-out);
+$ease-in: var(--transition-ease-in);
+$ease-out: var(--transition-ease-out);
+
+/* Typography */
+
+$font-primary: var(--font-primary);
+$text-base: var(--text-base-size);
+$text-ratio: var(--text-scale-ratio);
+$text-xs: var(--text-xs);
+$text-sm: var(--text-sm);
+$text-md: var(--text-md);
+$text-lg: var(--text-lg);
+$text-xl: var(--text-xl);
+$text-xxl: var(--text-xxl);
+$text-xxxl: var(--text-xxxl);
+$line-height: var(--body-line-height);
+$heading-line-height: var(--heading-line-height);
+$capital-letter: var(--font-primary-capital-letter);
+
+/* Icons */
+
+$icon-xs: var(--icon-xs);
+$icon-sm: var(--icon-sm);
+$icon-md: var(--icon-md);
+$icon-lg: var(--icon-lg);
+$icon-xl: var(--icon-xl);
+
+/* z-index */
+$zindex-header: var(--zindex-header);
+$zindex-popover: var(--zindex-popover);
+$zindex-fixed-el: var(--zindex-fixed-element);
+$zindex-overlay: var(--zindex-overlay);
+
+// visibility
+$show: var(--display-block);
+$hide: var(--display-none);
+$visible: var(--visibility-visible);
+$hidden: var(--visibility-hidden);
+
+
+/*
+* Themes
+* controls the look of the site.
+*/
+
+[data-theme] {
+  background-color: $bg;
+  color: $contrast-high;
+}
