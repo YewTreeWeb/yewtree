@@ -1,0 +1,14 @@
+{
+	"folders": [
+		{
+			"path": "/Users/mat/Sites/jekyll/yewtree"
+		}
+	],
+	"settings": {
+		"html.format.indentHandlebars": true,
+		"html.format.indentInnerHtml": true,
+		"files.associations": {
+		  "*.html": "jekyll"
+		}
+	}
+}

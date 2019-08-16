@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html class="no-js" lang="{{ site.lang }}">
 
   {% include head.html %}
 
@@ -10,14 +10,13 @@
 
     {% include header.html %}
 
-    <div class="wrapper">
+    <main class="wrapper">
       {%- if page.hero -%}
-      <!-- hero -->
         {%- include hero.html -%}
       {%- endif -%}
       <!-- page content -->
       {{ content }}
-    </div>
+    </main>
 
     {% include footer.html %}
 

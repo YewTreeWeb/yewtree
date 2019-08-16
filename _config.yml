@@ -23,8 +23,8 @@ baseurl: /
 lang: en_GB
 
 # Used so Jekyll outputs the site correctly so Gulp can do what it wants
-source: .tmp/src
-destination: .tmp/dist
+source: src
+destination: dist
 include:
   - _pages
   - _headers
