@@ -1,48 +1,138 @@
-// generated on 2019-02-03 using generator-jekyllized 1.0.0-rc.8
-'use strict';
+import { src, dest, watch, series, parallel } from 'gulp'
+import autoprefixer from 'autoprefixer'
+import rucksack from 'rucksack-css'
+import cssvariables from 'postcss-css-variables'
+import calc from 'postcss-calc'
+import webpack from 'webpack'
+import webpackStream from 'webpack-stream'
+import named from 'vinyl-named'
+import browserSync from 'browser-sync'
+import plugins from 'gulp-load-plugins'
+import del from 'del'
+import read from 'read-yaml'
+import shell from 'shelljs'
+import pkg from './package.json'
+import yargs from 'yargs'
+import webpackConfig from './config/webpack.config.js'
 
-import {
-  task,
-  series,
-  parallel
-} from 'gulp';
+const prod = yargs.argv.prod
 
-import requireDir from 'require-dir';
-const tasks = requireDir('./config/gulp/tasks', {
-  recurse: true
-}); // eslint-disable-line
+const $ = plugins({
+  rename: {
+    //  'gulp-shopify-theme': 'shopifytheme',
+    'gulp-group-css-media-queries': 'gcmq',
+    'gulp-sass-glob': 'sassGlob',
+    'gulp-minify-css': 'minifycss',
+    'gulp-shopify-upload': 'gulpShopify',
+    'gulp-rev-replace': 'revReplace',
+    'gulp-rev-delete-original': 'revDel',
+    'gulp-cloudinary-upload': 'cloudinary',
+    'gulp-clean-css': 'cleanCSS'
+  },
+  pattern: ['gulp-*', '*', '-', '@*/gulp{-,.}*'],
+  replaceString: /\bgulp[\-.]/
+})
 
-// 'gulp inject' -- injects your CSS and JS into either the header or the footer
-task('inject', parallel('inject:head', 'inject:footer'));
+const sync = browserSync.create()
+const stream = browserSync.stream
 
-// 'gulp build:site' -- copies, builds, and then copies it again
-task('build:site', series('site:tmp', 'inject', 'site', 'copy:site'));
+// Get Gulp configs.
+const config = read.sync('./config/gulp.config.yml')
 
-// 'gulp assets' -- cleans out your assets and rebuilds them
-// 'gulp assets --prod' -- cleans out your assets and rebuilds them with
-// production settings
-task('assets', series('vendors', 'scripts', parallel('styles', 'fonts', 'images', 'cloudinary:use'), 'copy:assets'));
+/**
+ * Jekyll
+ */
 
-// 'gulp clean' -- erases your assets and gzipped files
-task('clean', parallel('clean:assets', 'clean:gzip', 'clean:dist', 'clean:site'));
+// gulp jekyll runs Jekyll build with development environment
+// gulp jekyll --prod runs Jekyll build with production settings
+export const jekyll = done => {
+  const JEKYLL_ENV = prod ? 'JEKYLL_ENV=production' : ''
+  const build = !prod
+    ? 'jekyll build --verbose --config _config.yml, _config.dev.yml'
+    : 'jekyll build'
 
-// 'gulp build' -- same as 'gulp' but doesn't serve your site in your browser
-// 'gulp build --prod' -- same as above but with production settings
-task('build', series('clean', 'assets', 'build:site', 'html'));
+  shell.exec(JEKYLL_ENV + 'bundle exec ' + build)
+  done()
+}
 
-// You can also just use 'gulp upload' but this way you can see all the main
-// tasks in the gulpfile instead of having to hunt for the deploy tasks
-task('deploy', series('upload'));
+// gulp jekyll_check after production build run tests with html-proofer
+export const jekyll_check = done => {
+  shell.exec('bundle exec rake test')
+  done()
+}
 
-// 'gulp rebuild' -- WARNING: Erases your assets and built site, use only when
-// you need to do a complete rebuild
-task('rebuild', series('clean', 'clean:images'));
+/**
+ * Styles
+ */
+export const sass = done => {
+  src(config.sass.src)
+    .pipe($.plumber())
+    .pipe($.if(!prod, $.sourcemaps.init())) // Start sourcemap.
+    .pipe(
+      $.cssimport({
+        matchPattern: '*.css'
+      })
+    )
+    .pipe($.sassGlob())
+    .pipe(
+      $.sass({
+        precision: 10,
+        outputStyle: 'expanded'
+      })
+    )
+    .pipe(
+      $.size({
+        showFiles: true
+      })
+    )
+    .pipe(
+      $.postcss([
+        cssnext(),
+        rucksack({
+          fallbacks: true
+        }),
+        autoprefixer({
+          grid: true,
+          cascade: false
+        })
+      ])
+    )
+    .pipe($.gcmq())
+    .pipe($.csscomb())
+    .pipe($.cleanCSS())
+    .pipe($.postcss([cssvariables(), calc()]))
+    .pipe($.if(prod, $.minifycss()))
+    .pipe(
+      $.if(
+        prod,
+        $.size({
+          title: 'Minified CSS',
+          showFiles: true
+        })
+      )
+    )
+    .pipe(dest(config.sass.dest))
+    .pipe($.if(!prod, stream))
+    .pipe($.if(!prod, dest(config.sass.tmp)))
+  done()
+}
 
-// 'gulp check' -- checks your site configuration for errors and lint your JS
-task('check', series('jekyll:doctor', 'eslint', 'stylelint', 'accessibility'));
+/**
+ * Scripts
+ */
+export const js = done => {
+  src(config.js.src)
+  .pipe($.plumber())
+  .pipe(webpackStream(webpackConfig), webpack)
+  .pipe(dest(config.js.dest))
+  .pipe($.if(!prod, dest(config.js.tmp)))
+  done()
+}
 
-// 'gulp' -- cleans your assets and gzipped files, creates your assets and
-// injects them into the templates, then builds your site, copied the assets
-// into their directory and serves the site
-// 'gulp --prod' -- same as above but with production settings
-task('default', series('build', 'serve'));
+/**
+ * Reload browser
+ */
+export const reload = done => {
+  browserSync.reload()
+  done()
+}

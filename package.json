@@ -33,6 +33,17 @@
   },
   "license": "ISC",
   "homepage": "https://yewtreeweb.co.uk",
+  "dependencies": {
+    "@sentry/browser": "4.6.4",
+    "airbnb-browser-shims": "^3.1.0",
+    "bourbon": "^5.1.0",
+    "family.scss": "^1.0.8",
+    "hamburgers": "^1.1.3",
+    "hover.css": "^2.3.2",
+    "include-media": "^1.4.9",
+    "logrocket": "^0.6.19",
+    "normalize.css": "^8.0.1"
+  },
   "devDependencies": {
     "@babel/core": "^7.2.2",
     "@babel/preset-env": "^7.3.1",
@@ -54,6 +65,7 @@
     "gulp-accessibility": "^3.1.1",
     "gulp-cache": "^0.4.1",
     "gulp-changed": "^3.2.0",
+    "gulp-clean-css": "^4.2.0",
     "gulp-cloudinary-upload": "^1.0.1",
     "gulp-concat": "^2.6.0",
     "gulp-csscomb": "^3.0.8",
@@ -70,6 +82,7 @@
     "gulp-imagemin": "^3.0.0",
     "gulp-inject": "^4.0.0",
     "gulp-load-plugins": "^1.5.0",
+    "gulp-minify-css": "^1.2.4",
     "gulp-newer": "^1.1.0",
     "gulp-notify": "^3.2.0",
     "gulp-plumber": "^1.2.1",
@@ -101,7 +114,7 @@
     "lighthouse": "^4.1.0",
     "modernizr": "^3.6.0",
     "postcss-calc": "^7.0.1",
-    "postcss-css-variables": "^0.11.0",
+    "postcss-css-variables": "^0.13.0",
     "prettier": "^1.16.4",
     "read-yaml": "^1.1.0",
     "require-dir": "^0.3.0",
@@ -122,16 +135,5 @@
     "webpack-stream": "^5.2.1",
     "workbox-build": "^3.6.3",
     "yargs": "^4.7.0"
-  },
-  "dependencies": {
-    "@sentry/browser": "4.6.4",
-    "airbnb-browser-shims": "^3.1.0",
-    "bourbon": "^5.1.0",
-    "family.scss": "^1.0.8",
-    "hamburgers": "^1.1.3",
-    "hover.css": "^2.3.2",
-    "include-media": "^1.4.9",
-    "logrocket": "^0.6.19",
-    "normalize.css": "^8.0.1"
   }
 }

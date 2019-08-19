@@ -1,0 +1,48 @@
+# This file contains the information needed for Gulp to run.
+#
+# 1. Add all your file names, paths and settings here.
+# 2. Run gulp for development mode and gulp --prod for production mode.
+
+---
+
+## Project syncing
+browsersync:
+  debug:  true
+  notify: true
+  open:   false
+  port:   4000
+  preferences:
+    clicks: false
+    scroll: false
+
+## Project file deleting
+clean:
+  dest: 'dist'
+
+## Image uploading
+cloudinary:
+  account:
+    name: "otty-sleep-ltd"
+    key: "457339221248185"
+    secret: "KM5H8Xb3wVz0hDjD3r04xfLVIW8"
+  dest: 'dist/assets/images'
+  manifest: "config/cloudinary-manifest.json"
+  src: 'src/assets/images/*'
+
+## Images
+image:
+  dest: 'dist/assets/images'
+  src: 'src/assets/images/**/*.+(jpg|jpeg|png|svg|gif)'
+
+## Project scripts
+js:
+  dest: 'dist/assets/js'
+  src: 'src/assets/js'
+  tmp: '.tmp/js'
+
+## Project styles
+sass:
+  dest: 'dist/assets/css'
+  src: 'src/assets/sass'
+  tmp: '.tmp/css'
+

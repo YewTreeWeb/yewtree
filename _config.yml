@@ -16,8 +16,8 @@
 
 # Title, decription, tagline and URL for your site
 # Can be used in your theme by calling 'site.title' and so on
-title: yewtree
-description: Portfolio website.
+title: "YewTree Web"
+description: "Portfolio website."
 url: https://yewtreeweb.co.uk
 baseurl: /
 lang: en_GB
@@ -29,43 +29,6 @@ include:
   - _pages
   - _headers
   - _redirects
-  
-exclude:
-  - assets
-  - Gemfile
-  - Gemfile.lock
-  - node_modules
-  - vendor/bundle/
-  - vendor/cache/
-  - vendor/gems/
-  - vendor/ruby/
-  - package.json
-  - bower.json
-  - .bowerrc
-  - yarn.lock
-  - package-lock.json
-  - .jekyll-assets-cache
-  - .sass-cache/
-  - Rakefile
-  - README.md
-  - gulpfile.js
-  - gulpfile.babel.js
-  - .babelrc.js
-  - markdown.style.rb
-  - .mdlrc
-  - .scss-lint.yml
-  - .eslintignore
-  - .eslintrc.js
-  - .gitattributes
-  - .gitignore
-  - .editorconfig
-  - .travis.yml
-  - .codeclimate.yml
-  - .github/
-  - CHANGELOG.md
-  - workbox-config.js
-  - src/assets/js/sw.js
-  - .tmp/src/assets/js/sw.js
 
 # Same as the title etc for your site but can instead be
 # called by using 'site.author.name' and so on
@@ -103,6 +66,18 @@ redcarpet:
   extensions: ['no_intra_emphasis', 'tables', 'fenced_code_blocks', 'autolink', 'smart',
               'strikethrough', 'superscript', 'underline', 'highlight', 'footnotes']
 highlighter: rouge
+strict_front_matter: true
+
+# Collections
+collections:
+  portfolio:
+    output: true
+    permalink: /:collection/:path/
+    title: "Portfolio"
+  clients:
+    output: true
+    permalink: /:collection/:path/
+    title: "The Grove"
 
 # Extending Jekyll
 plugins:
@@ -111,4 +86,41 @@ plugins:
   - jekyll-paginate
   - jekyll-sitemap
   - jekyll-seo-tag
-  - jekyll-redirect-from
+
+# Eclude files from Jekyll build
+exclude:
+  - assets
+  - Gemfile
+  - Gemfile.lock
+  - node_modules
+  - vendor/bundle/
+  - vendor/cache/
+  - vendor/gems/
+  - vendor/ruby/
+  - package.json
+  - bower.json
+  - .bowerrc
+  - yarn.lock
+  - package-lock.json
+  - .jekyll-assets-cache
+  - .sass-cache/
+  - Rakefile
+  - README.md
+  - gulpfile.js
+  - gulpfile.babel.js
+  - .babelrc.js
+  - markdown.style.rb
+  - .mdlrc
+  - .scss-lint.yml
+  - .eslintignore
+  - .eslintrc.js
+  - .gitattributes
+  - .gitignore
+  - .editorconfig
+  - .travis.yml
+  - .codeclimate.yml
+  - .github/
+  - CHANGELOG.md
+  - workbox-config.js
+  - src/assets/js/sw.js
+  - .tmp/src/assets/js/sw.js
