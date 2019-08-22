@@ -1,10 +1,4 @@
-import {
-  src,
-  dest,
-  watch,
-  series,
-  parallel
-} from 'gulp'
+import { src, dest, watch, series, parallel } from 'gulp'
 import autoprefixer from 'autoprefixer'
 import rucksack from 'rucksack-css'
 import cssvariables from 'postcss-css-variables'
@@ -39,7 +33,8 @@ const $ = plugins({
     'gulp-rev-replace': 'revReplace',
     'gulp-rev-delete-original': 'revDel',
     'gulp-cloudinary-upload': 'cloudinary',
-    'gulp-clean-css': 'cleanCSS'
+    'gulp-clean-css': 'cleanCSS',
+    'gulp-html-autoprefixer': 'htmlAutoprefixer'
   },
   pattern: ['gulp-*', '*', '-', '@*/gulp{-,.}*'],
   replaceString: /\bgulp[\-.]/
@@ -59,9 +54,9 @@ const config = read.sync('./config/gulp.config.yml')
 // gulp jekyll --prod runs Jekyll build with production settings
 export const jekyll = done => {
   const JEKYLL_ENV = prod ? 'JEKYLL_ENV=production' : ''
-  const build = !prod ?
-    'jekyll build --verbose --config _config.yml, _config.dev.yml' :
-    'jekyll build'
+  const build = !prod
+    ? 'jekyll build --verbose --config _config.yml, _config.dev.yml'
+    : 'jekyll build'
 
   shell.exec(JEKYLL_ENV + 'bundle exec ' + build)
   done()
@@ -179,7 +174,8 @@ export const vendorTask = () => {
   }
 
   return src(
-    vendors.map(dependency => './node_modules/' + dependency + '/**/*.*'), {
+    vendors.map(dependency => './node_modules/' + dependency + '/**/*.*'),
+    {
       base: './node_modules/'
     }
   ).pipe(dest(config.vendors.dest))
@@ -196,7 +192,7 @@ export const images = () => {
       $.cache(
         $.imagemin([
           $.imagemin.jpegtran({
-            progressive: true,
+            progressive: true
           }),
           pngquant({
             speed: 1,
@@ -211,7 +207,8 @@ export const images = () => {
             lossy: 2
           }),
           $.imagemin.svgo({
-            plugins: [{
+            plugins: [
+              {
                 removeViewBox: true
               },
               {
@@ -286,6 +283,88 @@ export const cloudinary = () => {
       )
     )
     .pipe(dest(config.cloudinary.dest))
+}
+
+/**
+ * HTML Minify
+ */
+export const html = () => {
+  return src('dist/**/*.html')
+    .pipe($.plumber())
+    .pipe($.htmlAutoprefixer())
+    .pipe(
+      $.if(
+        prod,
+        $.htmlmin({
+          removeComments: true,
+          collapseWhitespace: true,
+          collapseBooleanAttributes: false,
+          removeAttributeQuotes: false,
+          removeRedundantAttributes: false,
+          minifyJS: true,
+          minifyCSS: true
+        })
+      )
+    )
+    .pipe($.if(prod, $.size({ title: 'optimized HTML' })))
+    .pipe(dest('dist'))
+}
+
+/**
+ * Clean
+ */
+export const clean_assets = () => {
+  return del(config.clean.assets)
+}
+export const clean_images = () => {
+  return del(config.clean.images)
+}
+export const clean_dist = () => {
+  return del(config.clean.dist)
+}
+export const clean_purge = () => {
+  return del(config.clean.purge)
+}
+
+/**
+ * Copy
+ */
+export const copy = done => {
+  src(config.copy)
+  .pipe(dest(config.copy.dest))
+}
+
+/**
+ * Fonts
+ */
+export const fonts = done => {
+  src(config.fonts.src)
+  .pipe(dest(config.fonts.dest))
+  .pipe($.size({
+    title: 'Fonts completed'
+  }))
+  done()
+}
+
+/**
+ * Inject
+ */
+export const inject_head = done => {
+  src(config.inject.head.src)
+  .pipe($.plumber())
+  .pipe($.inject(src(config.inject.head.file), {
+    ignorePath: '.tmp'
+  }))
+  .pipe(dest(config.inject.head.dest));
+}
+
+export const inject_footer = done => {
+  src(config.inject.footer.src)
+  .pipe($.plumber())
+  .pipe($.inject(src(config.inject.footer.file), {
+    ignorePath: '.tmp'
+  }))
+  .pipe(dest(config.inject.footer.dest));
 }
 
 /**

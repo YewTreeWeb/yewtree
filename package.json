@@ -78,7 +78,7 @@
     "gulp-group-css-media-queries": "^1.2.2",
     "gulp-gzip": "^1.1.0",
     "gulp-html-autoprefixer": "^0.0.1",
-    "gulp-htmlmin": "^2.0.0",
+    "gulp-htmlmin": "^5.0.1",
     "gulp-if": "^2.0.0",
     "gulp-imagemin": "^3.0.0",
     "gulp-inject": "^4.0.0",

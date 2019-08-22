@@ -89,7 +89,6 @@ plugins:
 
 # Eclude files from Jekyll build
 exclude:
-  - assets
   - Gemfile
   - Gemfile.lock
   - node_modules
@@ -98,8 +97,7 @@ exclude:
   - vendor/gems/
   - vendor/ruby/
   - package.json
-  - bower.json
-  - .bowerrc
+  - yarn-error.log
   - yarn.lock
   - package-lock.json
   - .jekyll-assets-cache
@@ -108,19 +106,20 @@ exclude:
   - README.md
   - gulpfile.js
   - gulpfile.babel.js
-  - .babelrc.js
+  - .babelrc
   - markdown.style.rb
   - .mdlrc
-  - .scss-lint.yml
   - .eslintignore
   - .eslintrc.js
   - .gitattributes
   - .gitignore
   - .editorconfig
+  - .stylelintrc.json
   - .travis.yml
   - .codeclimate.yml
   - .github/
+  - netlify.toml
   - CHANGELOG.md
   - workbox-config.js
-  - src/assets/js/sw.js
-  - .tmp/src/assets/js/sw.js
+  - src/assets/**/*
+  - config/**/*
