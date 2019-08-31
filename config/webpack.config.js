@@ -10,7 +10,7 @@ module.exports = {
 				loader: 'babel-loader',
 				exclude: /node_modules/,
 				options: {
-					presets: [ '@babel/preset-env', 'babel-preset-airbnb', 'babel-preset-shopify/web' ],
+					presets: [ '@babel/preset-env', 'babel-preset-airbnb' ],
 					plugins: [ '@babel/plugin-syntax-dynamic-import', '@babel/plugin-transform-runtime' ]
 				}
 			}
@@ -29,7 +29,7 @@ module.exports = {
 		jquery: 'jQuery',
 	},
 	plugins: [
-		// Set jQuery in global scope
+		// Set dependencies in global scope
 		// https://webpack.js.org/plugins/provide-plugin/
 		new webpack.ProvidePlugin({
 			$: 'jquery',

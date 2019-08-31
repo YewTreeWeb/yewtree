@@ -74,9 +74,7 @@
     "gulp-empty": "^0.1.2",
     "gulp-eslint": "^5.0.0",
     "gulp-ext-replace": "^0.3.0",
-    "gulp-filter": "^5.1.0",
     "gulp-group-css-media-queries": "^1.2.2",
-    "gulp-gzip": "^1.1.0",
     "gulp-html-autoprefixer": "^0.0.1",
     "gulp-htmlmin": "^5.0.1",
     "gulp-if": "^2.0.0",
@@ -84,11 +82,11 @@
     "gulp-inject": "^4.0.0",
     "gulp-load-plugins": "^1.5.0",
     "gulp-minify-css": "^1.2.4",
-    "gulp-newer": "^1.1.0",
     "gulp-notify": "^3.2.0",
     "gulp-plumber": "^1.2.1",
     "gulp-postcss": "^6.0.0",
     "gulp-pretty-data": "^0.1.2",
+    "gulp-pug": "^4.0.1",
     "gulp-rename": "^1.2.2",
     "gulp-replace": "^1.0.0",
     "gulp-rev": "^7.0.0",
@@ -97,7 +95,6 @@
     "gulp-rsync": "^0.0.6",
     "gulp-sass": "^2.1.1",
     "gulp-sass-glob": "^1.0.9",
-    "gulp-sass-lint": "^1.4.0",
     "gulp-size": "^2.0.0",
     "gulp-sourcemaps": "^1.3.0",
     "gulp-stylelint": "^8.0.0",
@@ -122,7 +119,6 @@
     "require-dir": "^0.3.0",
     "rev-del": "^2.0.0",
     "rucksack-css": "^1.0.2",
-    "sass-lint-auto-fix": "^0.15.1",
     "shelljs": "^0.7.0",
     "ssri": "^6.0.1",
     "stylelint-config-prettier": "^4.0.0",
@@ -137,5 +133,12 @@
     "webpack-stream": "^5.2.1",
     "workbox-build": "^3.6.3",
     "yargs": "^4.7.0"
-  }
+  },
+  "browserslist": [
+    "last 2 version",
+    "> 1%",
+    "IE 10",
+    "maintained node versions",
+    "not dead"
+  ]
 }

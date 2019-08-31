@@ -330,8 +330,7 @@ export const clean_purge = () => {
  * Copy
  */
 export const copy = done => {
-  src(config.copy)
-  .pipe(dest(config.copy.dest))
+  src(config.copy).pipe(dest(config.copy.dest))
 }
 
 /**
@@ -339,32 +338,13 @@ export const copy = done => {
  */
 export const fonts = done => {
   src(config.fonts.src)
-  .pipe(dest(config.fonts.dest))
-  .pipe($.size({
-    title: 'Fonts completed'
-  }))
+    .pipe(dest(config.fonts.dest))
+    .pipe(
+      $.size({
+        title: 'Fonts completed'
+      })
+    )
   done()
-}
-
-/**
- * Inject
- */
-export const inject_head = done => {
-  src(config.inject.head.src)
-  .pipe($.plumber())
-  .pipe($.inject(src(config.inject.head.file), {
-    ignorePath: '.tmp'
-  }))
-  .pipe(dest(config.inject.head.dest));
-}
-
-export const inject_footer = done => {
-  src(config.inject.footer.src)
-  .pipe($.plumber())
-  .pipe($.inject(src(config.inject.footer.file), {
-    ignorePath: '.tmp'
-  }))
-  .pipe(dest(config.inject.footer.dest));
 }
 
 /**
@@ -373,4 +353,83 @@ export const inject_footer = done => {
 export const reload = done => {
   sync.reload()
   done()
+}
+
+/**
+ * Watch and live reload
+ */
+export const serve = done => {
+  sync.init({
+    port: config.browsersync.port,
+    ui: {
+      port: config.browsersync.port + 1
+    },
+    server: {
+      baseDir: ['dist', 'tmp']
+    },
+    logFileChanges: !!config.browsersync.debug,
+    logLevel: config.browsersync.debug ? 'debug' : '',
+    injectChanges: true,
+    notify: config.browsersync.notify,
+    ghostMode: {
+      clicks: config.browsersync.preferences.clicks,
+      scroll: config.browsersync.preferences.scroll
+    },
+    open: config.browsersync.open // Toggle to automatically open page when starting.
+  })
+
+  done()
+
+  watch(config.watch.scss)
+    .on('add', sass)
+    .on('change', sass)
+  watch(config.watch.js)
+    .on('add', series(js, reload))
+    .on('change', series(js, reload))
+  watch(config.watch.jekyll)
+    .on('add', series(jekyll, reload))
+    .on('change', series(jekyll, reload))
+  watch(config.watch.fonts)
+    .on('add', series(fonts, reload))
+    .on('change', series(fonts, reload))
+  watch(config.watch.images, series(images, webp, reload))
+}
+
+/**
+ * Deploy
+ */
+export const deploy = done => {
+  const live = (prod) ? 'netlify deploy --prod' : 'netlify deploy'
+  shell.exec(live)
+  done()
+}
+
+/**
+ * Build site
+ */
+export const build = done => {
+  console.log(prod ? 'Running build in production' : 'Running build in development')
+  series(
+    clean_dist,
+    jekyll,
+    parallel(sass, js, images, html, fonts),
+    cloudinary,
+    webp, 
+    deploy
+  )
+  done()
+}
+
+/**
+ * Default
+ */
+export const dev = done => {
+  console.log(prod ? 'Running Gulp in production' : 'Running Gulp in development')
+  series(
+    clean_dist,
+    jekyll,
+    parallel(copy, images, fonts),
+    webp,
+    serve
+  )
 }
