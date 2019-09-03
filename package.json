@@ -114,6 +114,7 @@
     "modernizr": "^3.6.0",
     "postcss-calc": "^7.0.1",
     "postcss-css-variables": "^0.13.0",
+    "postcss-cssnext": "^3.1.0",
     "prettier": "^1.16.4",
     "read-yaml": "^1.1.0",
     "require-dir": "^0.3.0",
@@ -137,8 +138,6 @@
   "browserslist": [
     "last 2 version",
     "> 1%",
-    "IE 10",
-    "maintained node versions",
-    "not dead"
+    "IE 10"
   ]
 }

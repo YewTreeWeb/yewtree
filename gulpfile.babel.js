@@ -1,8 +1,15 @@
-import { src, dest, watch, series, parallel } from 'gulp'
+import {
+  src,
+  dest,
+  watch,
+  series,
+  parallel
+} from 'gulp'
 import autoprefixer from 'autoprefixer'
 import rucksack from 'rucksack-css'
 import cssvariables from 'postcss-css-variables'
 import calc from 'postcss-calc'
+import cssnext from 'postcss-cssnext'
 import webpack from 'webpack'
 import webpackStream from 'webpack-stream'
 import named from 'vinyl-named'
@@ -28,10 +35,8 @@ const $ = plugins({
     //  'gulp-shopify-theme': 'shopifytheme',
     'gulp-group-css-media-queries': 'gcmq',
     'gulp-sass-glob': 'sassGlob',
-    'gulp-minify-css': 'minifycss',
     'gulp-shopify-upload': 'gulpShopify',
     'gulp-rev-replace': 'revReplace',
-    'gulp-rev-delete-original': 'revDel',
     'gulp-cloudinary-upload': 'cloudinary',
     'gulp-clean-css': 'cleanCSS',
     'gulp-html-autoprefixer': 'htmlAutoprefixer'
@@ -47,6 +52,14 @@ const stream = sync.stream()
 const config = read.sync('./config/gulp.config.yml')
 
 /**
+ * Environment
+ */
+export const env = done => {
+  console.log(prod ? 'Running Gulp in production' : 'Running Gulp in development')
+  done()
+}
+
+/**
  * Jekyll
  */
 
@@ -54,9 +67,9 @@ const config = read.sync('./config/gulp.config.yml')
 // gulp jekyll --prod runs Jekyll build with production settings
 export const jekyll = done => {
   const JEKYLL_ENV = prod ? 'JEKYLL_ENV=production' : ''
-  const build = !prod
-    ? 'jekyll build --verbose --config _config.yml, _config.dev.yml'
-    : 'jekyll build'
+  const build = !prod ?
+    'jekyll build --verbose --config _config.yml, _config.dev.yml' :
+    'jekyll build'
 
   shell.exec(JEKYLL_ENV + 'bundle exec ' + build)
   done()
@@ -101,14 +114,14 @@ export const sass = done => {
         autoprefixer({
           grid: true,
           cascade: false
-        })
+        }),
+        cssvariables(),
+        calc()
       ])
     )
     .pipe($.gcmq())
     .pipe($.csscomb())
-    .pipe($.cleanCSS())
-    .pipe($.postcss([cssvariables(), calc()]))
-    .pipe($.if(prod, $.minifycss()))
+    .pipe($.if(prod, $.cleanCSS()))
     .pipe(
       $.if(
         prod,
@@ -174,8 +187,7 @@ export const vendorTask = () => {
   }
 
   return src(
-    vendors.map(dependency => './node_modules/' + dependency + '/**/*.*'),
-    {
+    vendors.map(dependency => './node_modules/' + dependency + '/**/*.*'), {
       base: './node_modules/'
     }
   ).pipe(dest(config.vendors.dest))
@@ -207,8 +219,7 @@ export const images = () => {
             lossy: 2
           }),
           $.imagemin.svgo({
-            plugins: [
-              {
+            plugins: [{
                 removeViewBox: true
               },
               {
@@ -233,7 +244,7 @@ export const images = () => {
 /**
  * Convert to .webp
  */
-export const webp = () => {
+export const webpImg = () => {
   return src(config.image.webp)
     .pipe($.plumber())
     .pipe($.changed(config.image.dest))
@@ -306,7 +317,9 @@ export const html = () => {
         })
       )
     )
-    .pipe($.if(prod, $.size({ title: 'optimized HTML' })))
+    .pipe($.if(prod, $.size({
+      title: 'optimized HTML'
+    })))
     .pipe(dest('dist'))
 }
 
@@ -320,7 +333,7 @@ export const clean_images = () => {
   return del(config.clean.images)
 }
 export const clean_dist = () => {
-  return del(config.clean.dist)
+  return del(config.clean.dest)
 }
 export const clean_purge = () => {
   return del(config.clean.purge)
@@ -407,29 +420,25 @@ export const deploy = done => {
 /**
  * Build site
  */
-export const build = done => {
-  console.log(prod ? 'Running build in production' : 'Running build in development')
-  series(
-    clean_dist,
-    jekyll,
-    parallel(sass, js, images, html, fonts),
-    cloudinary,
-    webp, 
-    deploy
-  )
-  done()
-}
+export const build = series(
+  env,
+  clean_dist,
+  jekyll,
+  parallel(sass, js, images, html, fonts),
+  parallel(cloudinary, webp),
+  deploy
+)
 
 /**
  * Default
  */
-export const dev = done => {
-  console.log(prod ? 'Running Gulp in production' : 'Running Gulp in development')
-  series(
-    clean_dist,
-    jekyll,
-    parallel(copy, images, fonts),
-    webp,
-    serve
-  )
-}
+export const dev = series(
+  env,
+  clean_dist,
+  jekyll,
+  parallel(sass, js, images, fonts),
+  parallel(copy, webpImg),
+  serve
+)
+
+export default dev
