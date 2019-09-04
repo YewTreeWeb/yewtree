@@ -80,7 +80,8 @@ export const jekyll = done => {
 
 // gulp jekyll_check after production build run tests with html-proofer
 export const jekyll_check = done => {
-  shell.exec('bundle exec rake test')
+  sshell.exec("gulp build --prod")
+  shell.exec("bundle exec rake test")
   done()
 }
 
