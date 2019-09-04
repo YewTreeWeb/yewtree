@@ -21,6 +21,7 @@ description: "Portfolio website."
 url: https://yewtreeweb.co.uk
 baseurl: /
 lang: en_GB
+words_per_minute: 200
 
 # Used so Jekyll outputs the site correctly so Gulp can do what it wants
 source: src
@@ -86,6 +87,10 @@ plugins:
   - jekyll-paginate
   - jekyll-sitemap
   - jekyll-seo-tag
+  - jekyll-include-cache
+  - jekyll-algolia
+  - jekyll/tagging
+  - jekyll-tagging-related_posts
 
 # Eclude files from Jekyll build
 exclude:

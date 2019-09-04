@@ -67,8 +67,11 @@ export const env = done => {
 // gulp jekyll --prod runs Jekyll build with production settings
 export const jekyll = done => {
   const JEKYLL_ENV = prod ? 'JEKYLL_ENV=production' : ''
+  const verbose = ( config.jekyll.debug ) ? '--verbose' : ''
+  const silent = ( config.jekyll.silent ) ? '--quiet' : ''
+  const inc = ( config.jekyll.incremental ) ? '--incremental' : ''
   const build = !prod ?
-    'jekyll build --verbose --config _config.yml, _config.dev.yml' :
+    'jekyll build ' + verbose + inc + ' --config _config.yml, _config.dev.yml' + silent :
     'jekyll build'
 
   shell.exec(JEKYLL_ENV + 'bundle exec ' + build)
@@ -245,7 +248,7 @@ export const images = () => {
  * Convert to .webp
  */
 export const webpImg = () => {
-  return src(config.image.webp)
+  return src(config.image.src)
     .pipe($.plumber())
     .pipe($.changed(config.image.dest))
     .pipe(
@@ -326,17 +329,11 @@ export const html = () => {
 /**
  * Clean
  */
-export const clean_assets = () => {
-  return del(config.clean.assets)
-}
-export const clean_images = () => {
-  return del(config.clean.images)
-}
 export const clean_dist = () => {
   return del(config.clean.dest)
 }
-export const clean_purge = () => {
-  return del(config.clean.purge)
+export const clean_cache = () => {
+  $.cache.clearAll()
 }
 
 /**
@@ -378,7 +375,7 @@ export const serve = done => {
       port: config.browsersync.port + 1
     },
     server: {
-      baseDir: ['dist', 'tmp']
+      baseDir: 'dist'
     },
     logFileChanges: !!config.browsersync.debug,
     logLevel: config.browsersync.debug ? 'debug' : '',
@@ -422,10 +419,10 @@ export const deploy = done => {
  */
 export const build = series(
   env,
-  clean_dist,
+  parallel(clean_dist, clean_cache),
   jekyll,
   parallel(sass, js, images, html, fonts),
-  parallel(cloudinary, webp),
+  parallel(cloudinary, webpImg),
   deploy
 )
 
