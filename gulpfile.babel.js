@@ -67,9 +67,9 @@ export const env = done => {
 // gulp jekyll --prod runs Jekyll build with production settings
 export const jekyll = done => {
   const JEKYLL_ENV = prod ? 'JEKYLL_ENV=production' : ''
-  const verbose = ( config.jekyll.debug ) ? '--verbose' : ''
-  const silent = ( config.jekyll.silent ) ? '--quiet' : ''
-  const inc = ( config.jekyll.incremental ) ? '--incremental' : ''
+  const verbose = (config.jekyll.debug) ? '--verbose' : ''
+  const silent = (config.jekyll.silent) ? '--quiet' : ''
+  const inc = (config.jekyll.incremental) ? '--incremental' : ''
   const build = !prod ?
     'jekyll build ' + verbose + inc + ' --config _config.yml, _config.dev.yml' + silent :
     'jekyll build'
@@ -80,7 +80,7 @@ export const jekyll = done => {
 
 // gulp jekyll_check after production build run tests with html-proofer
 export const jekyll_check = done => {
-  sshell.exec("gulp build --prod")
+  shell.exec("gulp build --prod")
   shell.exec("bundle exec rake test")
   done()
 }
@@ -234,7 +234,9 @@ export const images = () => {
           mozjpeg({
             quality: 90
           })
-        ])
+        ], {
+          verbose: true
+        })
       )
     )
     .pipe(dest(config.image.dest))
@@ -249,7 +251,7 @@ export const images = () => {
  * Convert to .webp
  */
 export const webpImg = () => {
-  return src(config.image.src)
+  return src(config.image.webp)
     .pipe($.plumber())
     .pipe($.changed(config.image.dest))
     .pipe(
@@ -265,6 +267,27 @@ export const webpImg = () => {
     .pipe(
       $.size({
         title: 'Coverted to webp'
+      })
+    )
+    .pipe(dest(config.image.dest))
+}
+
+/**
+ * Icons
+ */
+export const icons = () => {
+  return src(config.image.icons)
+    .pipe($.svgmin())
+    .pipe($.rename({
+      prefix: "icon-"
+    }))
+    .pipe($.svgstore({
+      fileName: "icons.svg",
+      inlineSvg: true
+    }))
+    .pipe(
+      $.size({
+        showFiles: true
       })
     )
     .pipe(dest(config.image.dest))
@@ -341,7 +364,8 @@ export const clean_cache = () => {
  * Copy
  */
 export const copy = done => {
-  src(config.copy).pipe(dest(config.copy.dest))
+  src(config.copy.src).pipe(dest(config.copy.dest))
+  done()
 }
 
 /**
@@ -403,7 +427,7 @@ export const serve = done => {
   watch(config.watch.fonts)
     .on('add', series(fonts, reload))
     .on('change', series(fonts, reload))
-  watch(config.watch.images, series(images, webp, reload))
+  watch(config.watch.images, series(images, parallel(webpImg, icons), reload))
 }
 
 /**

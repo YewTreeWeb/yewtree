@@ -126,5 +126,6 @@ exclude:
   - netlify.toml
   - CHANGELOG.md
   - workbox-config.js
-  - src/assets/**/*
+  - assets
+  - .tmp/
   - config/**/*

@@ -1,16 +1,17 @@
 <!DOCTYPE html>
-<html class="no-js" lang="{{ site.lang }}">
+<html class="no-js" lang="{{ site.lang | default: 'en-GB' }}">
 
   {% include head.html %}
 
-  <body>
+  <body class="layout__{{ page.layout | default: layout.layout }}{%- if page.classes or layout.classes -%}{{ page.classes | default: layout.classes | join: ' ' | prepend: ' ' }}{%- endif -%} {{ page.title | slugify }}">
     <!--[if lte IE 9]>
       <p class="browserupgrade">You are using an <strong>outdated</strong> browser. Please <a href="https://browsehappy.com/">upgrade your browser</a> to improve your experience and security.</p>
     <![endif]-->
+    {%- include_cached skip-links.html -%}
 
-    {% include header.html %}
+    {%- include header.html -%}
 
-    <main class="wrapper">
+    <main class="{{ page.layout | default: layout.layout }} wrapper">
       {%- if page.hero -%}
         {%- include hero.html -%}
       {%- endif -%}
@@ -18,12 +19,9 @@
       {{ content }}
     </main>
 
-    {% include footer.html %}
+    {%- include_cached footer.html -%}
 
     <!-- JS -->
-
-    <!-- inject:js -->
-    <!-- endinject -->
 
     {%- if jekyll.environment == "production" -%}
       <!-- Google Analytics: change UA-XXXXX-Y to be your site's ID. -->
