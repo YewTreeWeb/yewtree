@@ -1,21 +1,14 @@
 <header class="site-header">
 
-  <div class="wrapper">
+  <section class="site-header__inner container">
+    <div class="site-header__logo"><a href="{{ site.baseurl }}">YTW</a></div>
 
-    <a class="site-title" href="{{ site.baseurl }}">{{ site.title }}</a>
-
-    <button class="hamburger hamburger--emphatic" type="button" aria-label="Menu" aria-controls="navigation">
-      <span class="hamburger-box">
-        <span class="hamburger-inner"></span>
-      </span>
+    <button class="btn btn--subtle main-header__nav-trigger js-main-header__nav-trigger" aria-label="Toggle menu" aria-expanded="false" aria-controls="main-header-nav">
+        <i class="main-header__nav-trigger-icon" aria-hidden="true"></i>
+        <span>Menu</span>
     </button>
-    <nav id="navigation" class="site-nav">
-      <ul>
-        <li><a href="{{ site.baseurl }}" {% if page.url == site.baseurl %}class="active"{% endif %}>Home</a></li>
-        <li><a href="/blog.html" {% if page.url == "/blog.html" %}class="active"{% endif %}>Blog</a></li>
-      </ul>
-    </nav>
 
-  </div>
+    {%- include_cached navigation.html -%}
+  </section>
 
 </header>

@@ -1,0 +1,10 @@
+<nav id="site-nav" class="menu" itemscope itemtype="http://schema.org/SiteNavigationElement" aria-label="Main navigation" role="navigation">
+    <div id="site-nav-label" class="menu__label">Main menu</div>
+    <ul class="menu__list">
+        {%- for item in site.data.navigation -%}
+            <li class="menu__item">
+                <a class="menu__link{%- if item.link == page.url or item.link == site.baseurl -%} menu__link--active{%- endif -%}" href="{{ item.link | relative_url }}" itemprop="url">{{ item.name }}</a>
+            </li>
+        {%- endfor -%}
+    </ul>
+</nav>

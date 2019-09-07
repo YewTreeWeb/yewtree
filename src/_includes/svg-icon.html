@@ -1,3 +1,5 @@
+{%- assign hidden = include.hidden | default: false -%}
+
 {%- if include.w -%}
     {%- assign width = include.w | prepend: 'width="' | append: 'px"' -%}
 {%- endif -%}
