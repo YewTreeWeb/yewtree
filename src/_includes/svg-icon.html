@@ -1,0 +1,19 @@
+{%- if include.w -%}
+    {%- assign width = include.w | prepend: 'width="' | append: 'px"' -%}
+{%- endif -%}
+{%- if include.h -%}
+    {%- assign height = include.h | prepend: 'height="' | append: 'px"' -%}
+{%- endif -%}
+{%- if include.hidden == true -%}
+    {%- assign aria = 'aria-hidden="true"'  -%}
+{%- else -%}
+    {%- assign aria = 'aria-labelledby="svgTitle svgDesc"'  -%}
+{%- endif -%}
+
+<svg class="icon" width height aria{%- if include.hidden != true -%} role="img"{%- endif -%}>
+    <title {%- if include.hidden != true -%}id="svgTitle"{%- endif -%}>{{ include.title }}</title>
+    {%- if include.hidden != true -%}
+        <desc id="svgDesc">{{ include.desc }}</desc>
+    {%- endif -%}
+    <use xlink:href="{{ 'icons.svg#' | prepend: 'assets/icons/' | relative_url | append: include.icon }}"></use>
+</svg>

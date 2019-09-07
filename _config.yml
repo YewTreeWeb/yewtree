@@ -19,8 +19,8 @@
 title: "YewTree Web"
 description: "Portfolio website."
 url: https://yewtreeweb.co.uk
-baseurl: /
-lang: en_GB
+baseurl: '/'
+lang: en-GB
 words_per_minute: 200
 
 # Used so Jekyll outputs the site correctly so Gulp can do what it wants
@@ -69,12 +69,35 @@ redcarpet:
 highlighter: rouge
 strict_front_matter: true
 
+# Favicons
+favicon_version: '1.0'
+
+# Site analytics
+google_site_verification: "geapSKtvpBNDSfXVmF09E9CnaHGglbO61r4XgLZtEmo"
+bing_site_verification: "D81F4C18A6CB3018F64D7C827D953DFD"
+alexa_site_verification: "Y5DYjZ4VWlrQzBP5kcQJeOKLNas"
+yandex_site_verification: "55a5419baf76a498"
+
+google_ad-client: "ca-pub-7328585512091257"
+google_ad-slot: "3049671934"
+google_analytics: "UA-2011187-1"
+
+pingback_url: "https://webmention.io/mademistakes.com/xmlrpc"
+webmention_url: "https://webmention.io/mademistakes.com/webmention"
+token_endpoint_url: "https://tokens.indieauth.com/token"
+authorization_endpoint_url: "https://indieauth.com/auth"
+
+# reCAPTCHA keys
+reCaptcha:
+  siteKey: "6LdRBykTAAAAAFB46MnIu6ixuxwu9W1ihFF8G60Q"
+  secret: "PznnZGu3P6eTHRPLORniSq+J61YEf+A9zmColXDM5icqF49gbunH51B8+h+i2IvewpuxtA9TFoK68TuhUp/X3YKmmqhXasegHYabY50fqF9nJh9npWNhvITdkQHeaOqnFXUIwxfiEeUt49Yoa2waRR7a5LdRAP3SVM8hz0KIBT4="
+
 # Collections
 collections:
   portfolio:
     output: true
     permalink: /:collection/:path/
-    title: "Portfolio"
+    title: "The Wood"
   clients:
     output: true
     permalink: /:collection/:path/

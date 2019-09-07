@@ -37,6 +37,9 @@
   <!-- Disable tap highlight on IE -->
   <meta name="msapplication-tap-highlight" content="no">
 
+  <!-- Disable the automatic detection and formatting on Safari -->
+  <meta name="format-detection" content="telephone=no">
+
   <!-- Icons -->
   {%- include_cached favicons.html -%}
 
@@ -48,21 +51,25 @@
   <!-- CSS -->
   <link rel="stylesheet" href="{{ '/assets/styles/normalize.css' | relative_url }}">
 
-  {% if site.pingback_url %}
+  {%- if site.pingback_url -%}
     <link rel="pingback" href="{{ site.pingback_url }}">
-  {% endif %}
+  {%- endif %}
 
-  {% if site.webmention_url %}
+  {%- if site.webmention_url -%}
     <link rel="webmention" href="{{ site.webmention_url }}">
-  {% endif %}
+  {%- endif %}
 
-  {% if site.micropub_url %}
-    <link rel="micropub" href="{{ site.micropub_url }}">
-  {% endif %}
+  {%- if site.token_endpoint_url -%}
+    <link rel="token_endpoint" href="{{ site.token_endpoint_url }}">
+  {%- endif %}
 
-  {% if site.plugins contains 'jekyll-sitemap' %}
+  {%- if site.authorization_endpoint_url -%}
+    <link rel="authorization_endpoint" href="{{ site.authorization_endpoint_url }}">
+  {%- endif %}
+
+  {%- if site.plugins contains 'jekyll-sitemap' -%}
     <link rel="sitemap" type="application/xml" title="Sitemap" href="{{ 'sitemap.xml' | relative_url }}">
-  {% endif %}
+  {%- endif -%}
 
   <link rel="alternate" title="{{ site.title }} feed" type="application/atom+xml" href="{{ 'atom.xml' | absolute_url }}">
   <link rel="alternate" title="{{ site.title }} feed" type="application/json" href="{{ 'feed.json' | absolute_url }}">

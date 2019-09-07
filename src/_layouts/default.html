@@ -12,10 +12,6 @@
     {%- include header.html -%}
 
     <main class="{{ page.layout | default: layout.layout }} wrapper">
-      {%- if page.hero -%}
-        {%- include hero.html -%}
-      {%- endif -%}
-      <!-- page content -->
       {{ content }}
     </main>
 
@@ -31,7 +27,7 @@
         };
         ga.q = [];
         ga.l = +new Date;
-        ga('create', 'UA-XXXXX-Y', 'auto');
+        ga('create', '{{ site.google_analytics }}', 'auto');
         ga('send', 'pageview')
       </script>
       <script src="https://www.google-analytics.com/analytics.js" async defer></script>

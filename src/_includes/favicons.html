@@ -1,5 +1,9 @@
-{%- assign  | prepend: src | relative_url | append: favicon_version = '/assets/images/icons/favicons' }} -%}
-{%- assign favicon_version = site.favicon_version | default: '9BPnoQEY43' | prepend: '?v=' -%}
+{%- assign  | prepend: src | relative_url | append: favicon_version = '/assets/images/icons/favicons' -%}
+{%- if jekyll.environment != 'production' -%}
+    {%- assign favicon_version = site.favicon_version | default: '1.0' | prepend: '?v=' -%}
+{%- else -%}
+    {%- assign favicon_version = '' -%}
+{%- endif -%}
 
 <link rel="apple-touch-icon" sizes="57x57" href="{{ '/apple-icon-57x57.png' | prepend:  | prepend: src | relative_url | append: favicon_version | relative_url | append: favicon_version }}">
 <link rel="apple-touch-icon" sizes="60x60" href="{{ '/apple-icon-60x60.png' | prepend: src | relative_url | append: favicon_version }}">
