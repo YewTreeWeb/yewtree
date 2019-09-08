@@ -2,8 +2,22 @@
     <div id="site-nav-label" class="menu__label">Main menu</div>
     <ul class="menu__list">
         {%- for item in site.data.navigation -%}
-            <li class="menu__item">
+            <li class="menu__item{%- if item.sub -%} has_submenu{%- endif -%}">
                 <a class="menu__link{%- if item.link == page.url or item.link == site.baseurl -%} menu__link--active{%- endif -%}" href="{{ item.link | relative_url }}" itemprop="url">{{ item.name }}</a>
+                {%- if item.sub -%}
+                <div class="menu__sublist">
+                    <ul class="subitems">
+                    {%- for sub in item.sub -%}
+                        {%- assign col = forloop.index | modulo: 8 -%}
+                        <li class="subitems__item"><a href="{{ sub.link }}" class="subitems__link{% if sub.link == page.url %} subitems__link--active{% endif %}" itemprop="url"><span class="strike">{{ sub.name }}</span></a>
+                        {%- if col == 4 -%}
+                            </li></ul><ul class="subitems">
+                        {%- endif -%}
+                        </li>
+                    {%- endfor -%}
+                    </ul>
+                </div>
+                {%- endif -%}
             </li>
         {%- endfor -%}
     </ul>

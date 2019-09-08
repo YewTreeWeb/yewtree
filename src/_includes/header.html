@@ -1,14 +1,21 @@
 <header class="site-header">
 
   <section class="site-header__inner container">
-    <div class="site-header__logo"><a href="{{ site.baseurl }}">YTW</a></div>
+    <div class="site-header__logo"><a href="{{ site.baseurl | default: site.url }}">YTW</a></div>
 
-    <button class="btn btn--subtle main-header__nav-trigger js-main-header__nav-trigger" aria-label="Toggle menu" aria-expanded="false" aria-controls="main-header-nav">
-        <i class="main-header__nav-trigger-icon" aria-hidden="true"></i>
-        <span>Menu</span>
+    <button class="btn btn--subtle main-header__nav-trigger js-main-header__nav-trigger" aria-label="Toggle menu"
+      aria-expanded="false" aria-controls="main-header-nav">
+      <i class="main-header__nav-trigger-icon" aria-hidden="true"></i>
+      <span>Menu</span>
     </button>
 
     {%- include_cached navigation.html -%}
+
+    <div class="switch">
+      <input class="switch__input" type="checkbox" id="theme-toggle">
+      <label aria-hidden="true" class="switch__label" for="theme-toggle">Off</label>
+      <div aria-hidden="true" class="switch__marker"></div>
+    </div>
   </section>
 
 </header>
