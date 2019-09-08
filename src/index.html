@@ -1,36 +1,13 @@
 ---
 layout: default
 title: YewTree Web
-hero:
-  subtitle: Mathew Teague
-  small: Full Stack Developer
-  content: I love all things development! I'm very much a generlist in terms of my skill set. This skill set allows me to
-        constantly keep learning the latest trends and technologies in web development. I'm currently a senior developer
-        working with Shopify and WordPress on a daily basis.
-  buttons:
-    -
-      text: Get in touch
-      link: '#quick-contact'
-  image:
-    src: https://res.cloudinary.com/mat-teague/image/upload/c_scale,dpr_auto,f_auto,fl_progressive,w_auto/Main/annie-spratt-605838-unsplash.jpg
-    alt: Person at desk, working on a laptop.
+subtitle: Mathew Teague
+heading:
+  - 'WordPress & Shopify Developer'
+  - 'Full Stack Developer'
 ---
 
-<div class="home">
-
-  <h1 class="page-heading">Posts</h1>
-
-  <ul class="post-list">
-    {% for post in site.posts %}
-      <li>
-        <span class="post-meta">{{ post.date | date: "%b %-d, %Y" }}</span>
-
-        <h2>
-          <a class="post-link" href="{{ post.url | prepend: site.baseurl }}">{{ post.title }}</a>
-        </h2>
-      </li>
-    {% endfor %}
-  </ul>
-
-  <p class="rss-subscribe">subscribe <a href="{{ "/feed.xml" | prepend: site.baseurl }}">via RSS</a></p>
-</div>
+{%- include hero.html -%}
+<section class="about"></section>
+<section class="projects"></section>
+<section class="testimonials"></section>

@@ -3,7 +3,7 @@
 
   {%- include head.html -%}
 
-  <body class="layout__{{ page.layout | default: layout.layout }}{% if page.classes or layout.classes %}{{ page.classes | default: layout.classes | join: ' ' | prepend: ' ' }}{% endif %} {{ page.title | slugify }}">
+  <body class="layout-{{ page.layout | default: layout.layout }}{% if page.classes or layout.classes %}{{ page.classes | default: layout.classes | join: ' ' | prepend: ' ' }}{% endif %} {{ page.title | slugify }}">
     <!--[if lte IE 9]>
       <p class="browserupgrade">You are using an <strong>outdated</strong> browser. Please <a href="https://browsehappy.com/">upgrade your browser</a> to improve your experience and security.</p>
     <![endif]-->
@@ -11,7 +11,7 @@
 
     {%- include header.html -%}
 
-    <main class="{{ page.layout | default: layout.layout }} wrapper">
+    <main class="layout-{{ page.layout | default: layout.layout }} wrapper">
       {{ content }}
     </main>
 

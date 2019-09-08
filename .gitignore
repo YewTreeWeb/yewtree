@@ -22,6 +22,7 @@ dist/
 .sass-cache/
 .jekyll-cache/
 .jekyll-metadata
+vendors/
 
 ### Linux ###
 *~

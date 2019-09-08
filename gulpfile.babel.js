@@ -427,7 +427,8 @@ export const serve = done => {
   watch(config.watch.fonts)
     .on('add', series(fonts, reload))
     .on('change', series(fonts, reload))
-  watch(config.watch.images, series(images, parallel(webpImg, icons), reload))
+  watch(config.watch.images, series(images, webpImg, reload))
+  watch(config.watch.icons, series(icons, reload))
 }
 
 /**
@@ -446,6 +447,7 @@ export const build = series(
   env,
   parallel(clean_dist, clean_cache),
   jekyll,
+  vendorTask,
   parallel(sass, js, images, html, fonts),
   parallel(cloudinary, webpImg),
   deploy
@@ -458,6 +460,7 @@ export const dev = series(
   env,
   clean_dist,
   jekyll,
+  vendorTask,
   parallel(sass, js, images, fonts),
   parallel(copy, webpImg),
   serve

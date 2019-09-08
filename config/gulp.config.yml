@@ -43,8 +43,12 @@ fonts:
 image:
   dest: 'dist/assets/images'
   icons: 'src/assets/images/icons/*.svg'
-  src: 'src/assets/images/**/*.+(jpg|jpeg|png|svg|gif)'
-  webp: 'src/assets/images/**/*.+(jpg|jpeg|png)'
+  src: 
+    - 'src/assets/images/**/*.+(jpg|jpeg|png|svg|gif)'
+    - '!src/assets/images/icons/*'
+  webp:
+    - 'src/assets/images/**/*.+(jpg|jpeg|png)'
+    - '!src/assets/images/icons/*'
 
 ## Jekyll
 jekyll:
@@ -80,5 +84,6 @@ watch:
     - 'src/**/*.txt'
   js: 'src/assets/js/**/*.js'
   images: 'src/assets/images/**/*'
+  icons: 'src/assets/images/icons/*'
   scss: 'src/assets/scss/**/*.scss'
 
