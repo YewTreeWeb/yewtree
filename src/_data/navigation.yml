@@ -1,0 +1,19 @@
+- link: /portfolio/
+  name: The Wood
+  sub:
+    - link: /portfolio/agency/
+      name: Agency
+    - link: /portfolio/personal/
+      name: Personal
+    - link: /portfolio/photography/
+      name: Photography
+    - link: /portfolio/designs/
+      name: Designs
+- link: /affiliate/
+  name: The Grove
+- link: /about/
+  name: The Roots
+- link: /blog/
+  name: Blog
+- link: /contact/
+  name: Contact

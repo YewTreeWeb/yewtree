@@ -98,10 +98,6 @@ collections:
     output: true
     permalink: /:collection/:path/
     title: "The Wood"
-  clients:
-    output: true
-    permalink: /:collection/:path/
-    title: "The Grove"
 
 # Extending Jekyll
 plugins:
