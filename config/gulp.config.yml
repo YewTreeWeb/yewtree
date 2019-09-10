@@ -33,6 +33,10 @@ cloudinary:
 copy:
   dest: 'dist/assets/'
   src: '.tmp/**/*'
+  vendors:
+    src: 'src/assets/vendors/normalize.css/normalize.css'
+    css: 'dist/assets/css'
+    js: 'dist/assets/js'
 
 ### Fonts
 fonts:

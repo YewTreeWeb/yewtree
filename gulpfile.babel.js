@@ -9,7 +9,6 @@ import autoprefixer from 'autoprefixer'
 import rucksack from 'rucksack-css'
 import cssvariables from 'postcss-css-variables'
 import calc from 'postcss-calc'
-import cssnext from 'postcss-cssnext'
 import webpack from 'webpack'
 import webpackStream from 'webpack-stream'
 import named from 'vinyl-named'
@@ -32,10 +31,8 @@ const prod = yargs.argv.prod
 
 const $ = plugins({
   rename: {
-    //  'gulp-shopify-theme': 'shopifytheme',
     'gulp-group-css-media-queries': 'gcmq',
     'gulp-sass-glob': 'sassGlob',
-    'gulp-shopify-upload': 'gulpShopify',
     'gulp-rev-replace': 'revReplace',
     'gulp-cloudinary-upload': 'cloudinary',
     'gulp-clean-css': 'cleanCSS',
@@ -46,7 +43,6 @@ const $ = plugins({
 })
 
 const sync = browserSync.create()
-const stream = sync.stream()
 
 // Get Gulp configs.
 const config = read.sync('./config/gulp.config.yml')
@@ -88,8 +84,8 @@ export const jekyll_check = done => {
 /**
  * Styles
  */
-export const sass = done => {
-  src(config.sass.src)
+export const sass = () => {
+  return src(config.sass.src)
     .pipe($.plumber())
     .pipe($.if(!prod, $.sourcemaps.init())) // Start sourcemap.
     .pipe(
@@ -101,7 +97,9 @@ export const sass = done => {
     .pipe(
       $.sass({
         precision: 10,
-        outputStyle: 'expanded'
+        outputStyle: 'expanded',
+        includePaths: ['scss'],
+        onError: sync.notify
       })
     )
     .pipe(
@@ -111,7 +109,6 @@ export const sass = done => {
     )
     .pipe(
       $.postcss([
-        cssnext(),
         rucksack({
           fallbacks: true
         }),
@@ -125,7 +122,21 @@ export const sass = done => {
     )
     .pipe($.gcmq())
     .pipe($.csscomb())
-    .pipe($.if(prod, $.cleanCSS()))
+    .pipe($.cleanCSS({
+      level: {
+        1: {
+          all: true,
+          normalizeUrls: false
+        },
+        2: {
+          all: false,
+          removeEmpty: true,
+          removeDuplicateFontRules: true,
+          removeDuplicateMediaBlocks: true,
+          removeDuplicateRules: true
+        }
+      }
+    }))
     .pipe(
       $.if(
         prod,
@@ -136,16 +147,15 @@ export const sass = done => {
       )
     )
     .pipe(dest(config.sass.dest))
-    .pipe($.if(!prod, stream))
-    .pipe($.if(!prod, dest(config.sass.tmp)))
-  done()
+    .pipe($.if(!prod, sync.stream()))
+    .pipe($.if(!prod, dest(config.sass.tmp)));
 }
 
 /**
  * Scripts
  */
-export const js = done => {
-  src(config.js.src)
+export const js = () => {
+  return src(config.js.src)
     .pipe($.plumber())
     .pipe(named())
     .pipe(
@@ -174,7 +184,6 @@ export const js = done => {
     )
     .pipe(dest(config.js.dest))
     .pipe($.if(!prod, dest(config.js.tmp)))
-  done()
 }
 
 /**
@@ -277,6 +286,7 @@ export const webpImg = () => {
  */
 export const icons = () => {
   return src(config.image.icons)
+    .pipe($.plumber())
     .pipe($.svgmin())
     .pipe($.rename({
       prefix: "icon-"
@@ -356,6 +366,9 @@ export const html = () => {
 export const clean_dist = () => {
   return del(config.clean.dest)
 }
+export const clean_tmp = () => {
+  return del('.tmp')
+}
 export const clean_cache = () => {
   $.cache.clearAll()
 }
@@ -364,7 +377,17 @@ export const clean_cache = () => {
  * Copy
  */
 export const copy = done => {
-  src(config.copy.src).pipe(dest(config.copy.dest))
+  src(config.copy.src)
+    .pipe(dest(config.copy.dest))
+  done()
+}
+export const copyVendors = done => {
+  src(config.copy.vendors.src)
+    .pipe($.plumber())
+    .pipe($.if('*.css', $.cleanCSS()))
+    .pipe($.if('*.js', $.uglify()))
+    .pipe($.if('*.css', dest(config.copy.vendors.css)))
+    .pipe($.if('*.js', dest(config.copy.vendors.js)))
   done()
 }
 
@@ -373,6 +396,7 @@ export const copy = done => {
  */
 export const fonts = done => {
   src(config.fonts.src)
+    .pipe($.plumber())
     .pipe(dest(config.fonts.dest))
     .pipe(
       $.size({
@@ -400,9 +424,9 @@ export const serve = done => {
       port: config.browsersync.port + 1
     },
     server: {
-      baseDir: 'dist'
+      baseDir: ['dist', '.tmp']
     },
-    logFileChanges: !!config.browsersync.debug,
+    logFileChanges: true,
     logLevel: config.browsersync.debug ? 'debug' : '',
     injectChanges: true,
     notify: config.browsersync.notify,
@@ -422,8 +446,8 @@ export const serve = done => {
     .on('add', series(js, reload))
     .on('change', series(js, reload))
   watch(config.watch.jekyll)
-    .on('add', series(jekyll, reload))
-    .on('change', series(jekyll, reload))
+    .on('add', series(jekyll, copyVendors, reload))
+    .on('change', series(jekyll, copyVendors, reload))
   watch(config.watch.fonts)
     .on('add', series(fonts, reload))
     .on('change', series(fonts, reload))
@@ -448,6 +472,7 @@ export const build = series(
   parallel(clean_dist, clean_cache),
   jekyll,
   vendorTask,
+  copyVendors,
   parallel(sass, js, images, html, fonts),
   parallel(cloudinary, webpImg),
   deploy
@@ -460,9 +485,10 @@ export const dev = series(
   env,
   clean_dist,
   jekyll,
-  vendorTask,
-  parallel(sass, js, images, fonts),
-  parallel(copy, webpImg),
+  copy,
+  parallel(vendorTask, clean_tmp),
+  parallel(copyVendors, sass, js, images, fonts),
+  webpImg,
   serve
 )
 

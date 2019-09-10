@@ -1,0 +1,15 @@
+/// Helper files.
+@import './helpers/functions';
+@import './helpers/variables';
+@import './helpers/mixins';
+/// Reset css.
+@import '../vendors/codyhouse-framework/main/assets/css/base/reset';
+/// Base files for project
+@import './base/colours';
+@import './base/*';
+/// Layouts - sections for the site.
+@import './layout/*';
+/// Components - snippets for the site.
+@import './components/*';
+/// Templates - unique layout styling.
+@import './templates/*';
