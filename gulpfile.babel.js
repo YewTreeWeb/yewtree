@@ -296,6 +296,15 @@ export const icons = () => {
       inlineSvg: true
     }))
     .pipe(
+      $.cheerio({
+        run: function($, file) {
+          $("svg").attr("style", "display:none");
+          $("[fill]").removeAttr("fill");
+        },
+        parserOptions: { xmlMode: true }
+      })
+    )
+    .pipe(
       $.size({
         showFiles: true
       })

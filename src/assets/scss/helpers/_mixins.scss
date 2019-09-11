@@ -2,3 +2,238 @@
 @import '../../vendors/codyhouse-framework/main/assets/css/base/mixins';
 
 /// Custom mixins
+
+// Vendor prefixes
+@mixin prefix($property, $value, $vendors: webkit moz ms o, $default: true) {
+  @if $vendors {
+    @each $vendor in $vendors {
+      #{"-" + $vendor + "-" + $property}: #{$value};
+    }
+  }
+
+  @if $default {
+    #{$property}: #{$value};
+  }
+}
+
+// Detect user agent.
+@mixin browser($browsers: Mozilla Safari Opera Edge Firefox MSIE Chrome) {
+  @each $browser in $browsers {
+    html[data-browser*="#{$browser}"] & {
+      @content;
+    }
+  }
+}
+
+// Create font-face 
+@mixin font-face($font-name, $file-name, $local-name: (0, 0), $weight: normal, $style: normal, $display: optional, $fallback: false) {
+
+  @font-face {
+    font-family: quote($font-name);
+    font-weight: $weight;
+    font-style: $style;
+    font-display: $display;
+
+    @if ($fallback) {
+      src: url($file-name + '.eot');
+
+      @if (nth($local-name, 1)==null or nth($local-name, 1)==0 and nth($local-name, 2)==null or nth($local-name, 2)==0) {
+        src: local(nth($local-name, 1)),
+        local(nth($local-name, 2)),
+        url($file-name + '.eot?#iefix') format('embedded-opentype'),
+        url($file-name + '.woff2') format('woff2'),
+        url($file-name + '.woff') format('woff'),
+        url($file-name + '.ttf') format('truetype'),
+        url($file-name + '.svg##{$font-name}') format('svg');
+      }
+
+      @else {
+        src: url($file-name + '.eot?#iefix') format('embedded-opentype'),
+        url($file-name + '.woff2') format('woff2'),
+        url($file-name + '.woff') format('woff'),
+        url($file-name + '.ttf') format('truetype'),
+        url($file-name + '.svg##{$font-name}') format('svg');
+      }
+    }
+
+    @else {
+      @if (nth($local-name, 1)==null or nth($local-name, 1)==0 and nth($local-name, 2)==null or nth($local-name, 2)==0) {
+        src: local(nth($local-name, 1)),
+          local(nth($local-name, 2)),
+          url($file-name + '.woff2') format('woff2'),
+          url($file-name + '.woff') format('woff');
+      }
+
+      @else {
+        src: url($file-name + '.woff2') format('woff2'),
+          url($file-name + '.woff') format('woff');
+      }
+    }
+  }
+}
+
+// Sets the `max-width` and `max-height` of the element in one statement.
+@mixin size($width, $height: $width, $type: null) {
+
+  @if ($width !=null and $width !=0) {
+    @if ($type=='max') {
+      max-width: $width;
+    }
+
+    @else if ($type=='min') {
+      min-width: $width;
+    }
+
+    @else {
+      width: $width;
+    }
+  }
+
+  @else {
+    @error "`#{$width}` is not a valid length for the `$width` argument.";
+  }
+
+  @if ($height !=null and $height !=0) {
+    @if ($type=='max') {
+      max-height: $height;
+    }
+
+    @else if ($type=='min') {
+      min-height: $height;
+    }
+
+    @else {
+      height: $height;
+    }
+  }
+
+  @else {
+    @error "`#{$height}` is not a valid length for the `$height` argument "+"in the `max-size` mixin.";
+  }
+}
+
+// Create fluid responsive sizes.
+@mixin fluid-type($type, $min-size, $max-size, $min-vw, $max-vw) {
+  $type: $min-size;
+
+  @media only screen and (min-width: $min-vw) {
+    $type: calc(#{$min-size} + #{strip-unit($max-size - $min-size)} * ((100vw - #{$min-vw}) / #{strip-unit($max-vw - $min-vw)}));
+  }
+
+  @media only screen and (min-width: $max-vw) {
+    $type: $max-size;
+  }
+}
+
+// Create placeholder.
+@mixin placeholder {
+  &.placeholder {
+    @content;
+  }
+
+  &:-moz-placeholder {
+    @content;
+  }
+
+  &::-moz-placeholder {
+    @content;
+  }
+
+  &:-ms-input-placeholder {
+    @content;
+  }
+
+  &::-webkit-input-placeholder {
+    @content;
+  }
+}
+
+// Trigger hardware acceleration.
+@mixin hardware($will-change: auto, $perspective: 1000) {
+  backface-visibility: hidden;
+  will-change: $will-change;
+  perspective: $perspective;
+}
+
+// Add retina media query.
+@mixin retina($ratio) {
+
+  @if map-has-key($ratios, #{2x}) or map-has-key($ratios, #{1-2x}) or map-has-key($ratios, #{1-3x}) or map-has-key($ratios, #{1-5x}) {
+    $ratio: map-get($ratios, $ratio);
+
+    @media only screen and (-webkit-min-device-pixel-ratio: nth($ratio, 1)),
+    only screen and (min--moz-device-pixel-ratio: nth($ratio, 1)),
+    only screen and (-o-min-device-pixel-ratio: #{nth($ratio, 1)}/1),
+    only screen and (min-device-pixel-ratio: nth($ratio, 1)),
+    only screen and (min-resolution: #{nth($ratio, 2)}dpi),
+    only screen and (min-resolution: #{nth($ratio, 1)}dppx) {
+      @content;
+    }
+
+  }
+
+  @else {
+    @warn "There were no keys that match! Using default 2x ratio.";
+
+    @media only screen and (-webkit-min-device-pixel-ratio: 2),
+    only screen and (min--moz-device-pixel-ratio: 2),
+    only screen and (-o-min-device-pixel-ratio: 2/1),
+    only screen and (min-device-pixel-ratio: 2),
+    only screen and (min-resolution: 192dpi),
+    only screen and (min-resolution: 2dppx) {
+      @content;
+    }
+  }
+}
+
+// Adding Truncation.
+@mixin truncate($truncation-boundary) {
+  max-width: $truncation-boundary;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+// Maintain aspect ratio.
+@mixin aspect-ratio($width, $height) {
+  position: relative;
+
+  &::before {
+    display: block;
+    content: "";
+    width: 100%;
+    padding-top: ($height / $width) * 100%;
+  }
+
+  >.content {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+  }
+}
+
+// Centering
+@mixin center($horizontal: true, $vertical: true) {
+  position: absolute;
+
+  @if ($horizontal and $vertical) {
+    top: 50%;
+    @include prefix(transform, translateY(-50%));
+    left: 0;
+    right: 0;
+    margin: 0 auto;
+  }
+
+  @else if ($horizontal) {
+    left: 0;
+    right: 0;
+    margin: 0 auto;
+  }
+
+  @else if ($vertical) {
+    top: 50%;
+    @include prefix(transform, translateY(-50%));
+  }
+}

@@ -78,6 +78,7 @@
     "gulp-accessibility": "^3.1.1",
     "gulp-cache": "^0.4.1",
     "gulp-changed": "^3.2.0",
+    "gulp-cheerio": "^0.6.3",
     "gulp-clean-css": "^4.2.0",
     "gulp-cloudinary-upload": "^1.0.1",
     "gulp-concat": "^2.6.0",

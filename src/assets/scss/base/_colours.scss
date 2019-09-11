@@ -1,0 +1,21 @@
+:root,
+[data-theme="default"] {
+  @each $name, $colour in $colours {
+    --colour-#{$name}: #{hex2hsl($colour)};
+  }
+}
+
+[data-theme="dark"] {
+  @each $name, $colour in $dark-colours {
+    --colour-#{$name}: #{hex2hsl($colour)};
+  }
+}
+
+/* Dark mode */
+@media (prefers-color-scheme: dark) {
+  :root {
+    @each $name, $colour in $dark-colours {
+      --colour-#{$name}: #{hex2hsl($colour)};
+    }
+  }
+}
