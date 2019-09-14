@@ -435,7 +435,6 @@ export const serve = done => {
     server: {
       baseDir: ['dist', '.tmp']
     },
-    logFileChanges: true,
     logLevel: config.browsersync.debug ? 'debug' : '',
     injectChanges: true,
     notify: config.browsersync.notify,

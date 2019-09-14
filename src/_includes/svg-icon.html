@@ -12,8 +12,8 @@
     {%- assign aria = 'aria-labelledby="svgTitle svgDesc"'  -%}
 {%- endif -%}
 
-<svg class="icon" width height aria{% if include.hidden != true %} role="img"{% endif %}>
-    <title {% if include.hidden != true %}id="svgTitle"{% endif %}>{{ include.title }}</title>
+<svg class="icon" {{ width }} {{ height }} {{ aria }}{% if include.hidden != true %} role="img"{% endif %}>
+    <title{% if include.hidden != true %} id="svgTitle"{% endif %}>{{ include.title }}</title>
     {%- if include.hidden != true -%}
         <desc id="svgDesc">{{ include.desc }}</desc>
     {%- endif -%}
