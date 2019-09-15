@@ -71,6 +71,7 @@ strict_front_matter: true
 
 # Favicons
 favicon_version: '1.0'
+theme_colour: "#242830"
 
 # Site analytics
 google_site_verification: "geapSKtvpBNDSfXVmF09E9CnaHGglbO61r4XgLZtEmo"
