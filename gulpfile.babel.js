@@ -98,7 +98,6 @@ export const sass = () => {
       $.sass({
         precision: 10,
         outputStyle: 'expanded',
-        includePaths: ['scss'],
         onError: sync.notify
       })
     )
@@ -115,9 +114,7 @@ export const sass = () => {
         autoprefixer({
           grid: true,
           cascade: false
-        }),
-        cssvariables(),
-        calc()
+        })
       ])
     )
     .pipe($.gcmq())
@@ -221,7 +218,7 @@ export const images = () => {
           }),
           pngquant({
             speed: 1,
-            quality: 98 // lossy settings
+            quality: [0.5, 0.5] // lossy settings
           }),
           zopfli({
             more: true
@@ -262,7 +259,6 @@ export const images = () => {
 export const webpImg = () => {
   return src(config.image.webp)
     .pipe($.plumber())
-    .pipe($.changed(config.image.dest))
     .pipe(
       $.cache(
         $.imagemin([
@@ -378,8 +374,9 @@ export const clean_dist = () => {
 export const clean_tmp = () => {
   return del('.tmp')
 }
-export const clean_cache = () => {
+export const clean_cache = (done) => {
   $.cache.clearAll()
+  done();
 }
 
 /**
@@ -407,6 +404,7 @@ export const fonts = done => {
   src(config.fonts.src)
     .pipe($.plumber())
     .pipe(dest(config.fonts.dest))
+    .pipe($.if(!prod, dest('.tmp/fonts')))
     .pipe(
       $.size({
         title: 'Fonts completed'
@@ -433,7 +431,7 @@ export const serve = done => {
       port: config.browsersync.port + 1
     },
     server: {
-      baseDir: ['dist', '.tmp']
+      baseDir: 'dist'
     },
     logLevel: config.browsersync.debug ? 'debug' : '',
     injectChanges: true,
@@ -454,8 +452,8 @@ export const serve = done => {
     .on('add', series(js, reload))
     .on('change', series(js, reload))
   watch(config.watch.jekyll)
-    .on('add', series(jekyll, copyVendors, reload))
-    .on('change', series(jekyll, copyVendors, reload))
+    .on('add', series(jekyll, copyVendors, parallel(copy, images), parallel(webpImg, icons, fonts), reload))
+    .on('change', series(jekyll, copyVendors, parallel(copy, images), parallel(webpImg, icons, fonts), reload))
   watch(config.watch.fonts)
     .on('add', series(fonts, reload))
     .on('change', series(fonts, reload))
@@ -494,9 +492,9 @@ export const dev = series(
   clean_dist,
   jekyll,
   copy,
-  parallel(vendorTask, clean_tmp),
+  vendorTask,
   parallel(copyVendors, sass, js, images, fonts),
-  webpImg,
+  parallel(webpImg, icons),
   serve
 )
 

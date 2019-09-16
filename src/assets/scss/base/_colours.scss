@@ -3,6 +3,9 @@
   @each $name, $colour in $colours {
     --colour-#{$name}: #{hex2hsl($colour)};
   }
+  @each $name, $colour in $light-colours {
+    --colour-#{$name}: #{hex2hsl($colour)};
+  }
 }
 
 [data-theme="dark"] {

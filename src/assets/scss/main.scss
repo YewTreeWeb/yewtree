@@ -1,4 +1,5 @@
 /// Vendors
+@import '../vendors/bulma/bulma.sass';
 @import '../vendors/include-media/dist/include-media';
 /// Helper files.
 @import './helpers/functions';
@@ -7,7 +8,6 @@
 /// Reset css.
 @import '../vendors/codyhouse-framework/main/assets/css/base/reset';
 /// Base files for project
-@import './base/colours';
 @import './base/*';
 /// Layouts - sections for the site.
 @import './layout/*';
@@ -15,3 +15,7 @@
 @import './components/*';
 /// Templates - unique layout styling.
 @import './templates/*';
+
+body{
+    font-family: "Lombok", system-ui, sans-serif;
+}

@@ -53,6 +53,7 @@ image:
   webp:
     - 'src/assets/images/**/*.+(jpg|jpeg|png)'
     - '!src/assets/images/icons/*'
+    - '!src/assets/images/favicons/*'
 
 ## Jekyll
 jekyll:

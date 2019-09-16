@@ -1,17 +1,3 @@
-/// Retrieve color from $colors map ie. `color(base, primary)`.
-@function color($color-name, $color-variant:null) {
-
-  // color variant is optional
-  @if ($color-variant !=null) {
-    // map inception
-    @return map-get(map-get($colors, $color-name), $color-variant);
-  }
-
-  @else {
-    @return map-get($colors, $color-name);
-  }
-}
-
 /// Convert Hex to HSL color.
 @function hex2hsl($colour) {
   @return unquote("hsl(#{hue($colour)}, #{saturation($colour)}, #{lightness($colour)})"
@@ -99,7 +85,7 @@
   @return $value / ($value * 0 + 1);
 }
 
-/// Get colour variables
+/// Retrieve colour from $colors map ie. `color(base, primary)`.
 @function color($color-name, $color-variant:null, $true-val:false) {
 
   // if we are returning the true color value
