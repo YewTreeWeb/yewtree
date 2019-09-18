@@ -1,0 +1,59 @@
+/// Global
+body {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  font-family: $family-base;
+  line-height: 1;
+  font-weight: $weight-light;
+  font-size: em($font-base);
+}
+
+@each $heading, $size in $headings {
+  #{$heading} {
+    font-size: em($size);
+    line-height: 1.5;
+    letter-spacing: 0.075em;
+    font-weight: $weight;
+    font-family: $family-base;
+  }
+}
+
+%banner-font {
+  font-family: $family-banner;
+}
+
+sub {
+  font-size: 0.8rem;
+  position: relative;
+  top: 0.5rem;
+}
+
+sup {
+  font-size: 0.8rem;
+  position: relative;
+  top: -0.5rem;
+}
+
+code {
+  border: solid 2px;
+  font-size: 0.9rem;
+  margin: 0 0.25rem;
+  padding: 0.25rem 0.65rem;
+}
+
+pre {
+  -webkit-overflow-scrolling: touch;
+  font-size: 0.9rem;
+
+  code {
+    display: block;
+    line-height: 1.75;
+    padding: 1rem 1.5rem;
+    overflow-x: auto;
+  }
+}
+
+hr {
+  border: 0;
+  border-bottom: solid 2px;
+}

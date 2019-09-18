@@ -70,7 +70,9 @@ js:
 ## Project styles
 sass:
   dest: 'dist/assets/css'
-  src: 'src/assets/scss/main.scss'
+  src:
+    - 'src/assets/scss/main.scss'
+    - 'src/assets/scss/font.scss'
   tmp: '.tmp/css'
 
 ### Vendor assets

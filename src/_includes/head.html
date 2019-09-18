@@ -46,12 +46,13 @@
   {%- include_cached favicons.html -%}
 
   <!-- Precalling assets -->
-  {%- include_cached precalling.html -%}
+  {%- include precalling.html -%}
 
   <script>document.getElementsByTagName("html")[0].className += "js";</script>
   
   <!-- CSS -->
   <link rel="stylesheet" href="{{ '/assets/css/normalize.css' | relative_url }}">
+  <link rel="stylesheet" href="{{ '/assets/css/font.css' | relative_url }}">
   <link rel="stylesheet" href="{{ '/assets/css/main.css' | relative_url }}">
 
   {%- if jekyll.enviornment == 'production' -%}

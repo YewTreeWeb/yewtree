@@ -1,3 +1,4 @@
+/// Colours
 $colours: (
   black: #000,
   white: #fff,
@@ -19,3 +20,19 @@ $dark-colours: (
   secondary: #ededed,
   secondary-light: #f8f8f8
 );
+
+/// Font
+$family-base: quote(Barlow), system-ui, sans-serif;
+$family-banner: quote(Lombok), system-ui, sans-serif;
+
+$headings: (h1: 40px, h2: 35px, h3: 30px, h4: 25px, h5: 20px, h6: 18px);
+
+$font-md: 17px;
+$font-base: 16px;
+$font-sm: 14px;
+$font-xs: 12px;
+$font-hero: 122px;
+
+$weight: 400;
+$weight-light: 300;
+$weight-medium: 500;

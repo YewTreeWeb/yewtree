@@ -97,7 +97,7 @@
 }
 
 // Create fluid responsive sizes.
-@mixin fluid-type($type, $min-size, $max-size, $min-vw, $max-vw) {
+@mixin fluid($type, $min-size, $max-size, $min-vw, $max-vw) {
   $type: $min-size;
 
   @media only screen and (min-width: $min-vw) {
