@@ -1,0 +1,5 @@
+.hero{
+    &__body{
+        @extend .hero-body;
+    }
+}

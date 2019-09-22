@@ -1,9 +1,4 @@
-/// Import mixins from codyhouse.
-// @import '../../vendors/codyhouse-framework/main/assets/css/base/mixins';
-
-/// Custom mixins
-
-// Vendor prefixes
+/// Vendor prefixes
 @mixin prefix($property, $value, $vendors: webkit moz ms o, $default: true) {
   @if $vendors {
     @each $vendor in $vendors {
@@ -16,7 +11,7 @@
   }
 }
 
-// Detect user agent.
+/// Detect user agent.
 @mixin browser($browsers: Mozilla Safari Opera Edge Firefox MSIE Chrome) {
   @each $browser in $browsers {
     html[data-browser*='#{$browser}'] & {
@@ -25,7 +20,13 @@
   }
 }
 
-// Create font-face
+/// Data tags.
+@mixin data($data) {
+  html[data-browser*='#{$data}'] & {
+    @content;
+  }
+}
+
 @mixin font-face(
   $font-name,
   $file-name,
@@ -69,7 +70,7 @@
   }
 }
 
-// Sets the `max-width` and `max-height` of the element in one statement.
+/// Sets the `max-width` and `max-height` of the element in one statement.
 @mixin size($width, $height: $width, $type: null) {
   @if ($width !=null and $width !=0) {
     @if ($type== 'max') {
@@ -80,7 +81,7 @@
       width: $width;
     }
   } @else {
-    @error "`#{$width}` is not a valid length for the `$width` argument.";
+    @warn "`#{$width}` is not a valid length for the `$width` argument.";
   }
 
   @if ($height !=null and $height !=0) {
@@ -92,11 +93,11 @@
       height: $height;
     }
   } @else {
-    @error "`#{$height}` is not a valid length for the `$height` argument "+"in the `max-size` mixin.";
+    @warn "`#{$height}` is not a valid length for the `$height` argument "+"in the `max-size` mixin.";
   }
 }
 
-// Create fluid responsive sizes.
+/// Create fluid responsive sizes.
 @mixin fluid($type, $min-size, $max-size, $min-vw, $max-vw) {
   $type: $min-size;
 
@@ -112,7 +113,7 @@
   }
 }
 
-// Create placeholder.
+/// Create placeholder.
 @mixin placeholder {
   &.placeholder {
     @content;
@@ -135,14 +136,14 @@
   }
 }
 
-// Trigger hardware acceleration.
+/// Trigger hardware acceleration.
 @mixin hardware($will-change: auto, $perspective: 1000) {
   backface-visibility: hidden;
   will-change: $will-change;
   perspective: $perspective;
 }
 
-// Add retina media query.
+/// Add retina media query.
 @mixin retina($ratio) {
   @if map-has-key($ratios, #{2x}) or
     map-has-key($ratios, #{1-2x}) or
@@ -173,7 +174,7 @@
   }
 }
 
-// Adding Truncation.
+/// Adding Truncation.
 @mixin truncate($truncation-boundary) {
   max-width: $truncation-boundary;
   white-space: nowrap;
@@ -181,7 +182,7 @@
   text-overflow: ellipsis;
 }
 
-// Maintain aspect ratio.
+/// Maintain aspect ratio.
 @mixin aspect-ratio($width, $height) {
   position: relative;
 
@@ -201,7 +202,7 @@
   }
 }
 
-// Centering
+/// Centering
 @mixin center($horizontal: true, $vertical: true) {
   position: absolute;
 
@@ -218,5 +219,58 @@
   } @else if ($vertical) {
     top: 50%;
     @include prefix(transform, translateY(-50%));
+  }
+}
+
+/// Clearfix
+@mixin clearfix() {
+  @supports (display: flow-root) {
+    display: flow-root;
+  }
+  @supports not (display: flow-root) {
+    &::after {
+      display: block;
+      clear: both;
+      content: '';
+    }
+  }
+}
+
+/// Font settings
+@mixin font($size: false, $family: false, $weight: false, $line: false) {
+  @if ($size) {
+    font-size: $size;
+  }
+  @if ($family) {
+    font-family: $family;
+  }
+  @if ($weight) {
+    font-weight: $weight;
+  }
+  @if ($line) {
+    line-height: $line;
+  }
+}
+
+/// Hover, Active, Focus.
+@mixin call-to-action($hover: true, $active: true, $focus: true){
+  @if ($hover, $active, $focus){
+    &:hover, &:active, &:focus{
+      @content;
+    }
+  } @else if ($hover) {
+    &:hover{
+      @content;
+    }
+  } @else if ($active) {
+    &:active{
+      @content;
+    }
+  } @else if ($focus) {
+    &:focus{
+      @content;
+    }
+  } @else {
+    @error "A valid hover and/or active and/or focus is required.";
   }
 }

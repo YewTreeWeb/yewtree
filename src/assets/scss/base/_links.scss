@@ -1,0 +1,20 @@
+a {
+  position: relative;
+  color: v(colour-text-secondary);
+  &::before {
+    content: '';
+    @include center(true, false);
+    bottom: 0;
+    height: 2px;
+    background-color: v(colour-accent);
+    @include prefix(transform-origin, bottom right);
+    @include prefix(transform, scaleX(0));
+    @include prefix(transform, 0.5s ease);
+  }
+  @include call-to-action(true, false, false) {
+    &::before {
+        @include prefix(transform-origin, bottom left);
+        @include prefix(transform, scaleX(1));
+    }
+  }
+}

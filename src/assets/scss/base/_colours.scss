@@ -1,5 +1,5 @@
 :root,
-[data-theme="default"] {
+[data-theme="light"] {
   @each $name, $colour in $colours {
     --colour-#{$name}: #{hex2hsl($colour)};
   }

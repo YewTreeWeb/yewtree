@@ -1,0 +1,39 @@
+.btn,
+%btn {
+  background-color: v(colour-accent);
+  text-align: center;
+  color: v(colour-text-accent);
+  text-transform: uppercase;
+  z-index: 1;
+  position: relative;
+  @include font(_heading(h6), $family-base);
+  padding: 0.5em 1em;
+  outline: none;
+  border: none;
+  overflow: hidden;
+  @include prefix(transition, color 0.4s ease-in-out);
+  width: fit-content;
+  max-width: 232px;
+  height: unset;
+  box-shadow: 0 em(1px) em(1px) v(colour-accent-dark);
+  &::before {
+    content: '';
+    z-index: -1;
+    position: absolute;
+    top: 100%;
+    left: 100%;
+    @include size(1em);
+    @include prefix(border-radius, 50%);
+    background-color: v(colour-primary);
+    transform-origin: center;
+    @include prefix(transform, translate3d(-50%, -50%, 0) scale3d(0, 0, 0));
+    @include prefix(transition, transform 0.45s ease-in-out);
+  }
+  @include call-to-action(true, false, false){
+    cursor: pointer;
+    color: v(colour-text);
+    &::before{
+        @include prefix(transform, translate3d(-50%, -50%, 0) scale3d(15, 15, 15));
+    }
+  }
+}

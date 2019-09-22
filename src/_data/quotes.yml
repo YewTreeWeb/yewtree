@@ -1,12 +1,12 @@
-Home: 
- - quote: "The best way to predict the future is to implement it."
- - by: David Heinemeier Hansson
-About:
- - quote: "To me programming is more than an important practical art. It is also a gigantic undertaking in the foundations of knowledge."
- - by: Grace Hopper
-Portfolio:
- - quote: "Write code every day."
- - by: John Resig
-Blog:
-  - quote: "In the end, regardless of where you are on the development hierarchy, keep coding. It’s where you’re most valuable."
-  - by: The Developer's Code
+- quote: "The best way to predict the future is to implement it."
+  author: David Heinemeier Hansson
+  cite: 'https://twitter.com'
+- quote: "To me programming is more than an important practical art. It is also a gigantic undertaking in the foundations of knowledge."
+  author: Grace Hopper
+  cite: 'https://twitter.com'
+- quote: "Write code every day."
+  author: John Resig
+  cite: 'https://twitter.com'
+- quote: "In the end, regardless of where you are on the development hierarchy, keep coding. It’s where you’re most valuable."
+  author: The Developer's Code
+  cite: 'https://twitter.com'

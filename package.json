@@ -42,6 +42,7 @@
   "dependencies": {
     "@sentry/browser": "4.6.4",
     "airbnb-browser-shims": "^3.1.0",
+    "bearbones": "^0.36.2",
     "bourbon": "^5.1.0",
     "bulma": "^0.7.5",
     "codyhouse-framework": "^2.1.4",
@@ -52,7 +53,8 @@
     "lazysizes": "^5.1.1",
     "logrocket": "^0.6.19",
     "normalize.css": "^8.0.1",
-    "system-font-css": "^2.0.2"
+    "system-font-css": "^2.0.2",
+    "typed.js": "^2.0.10"
   },
   "devDependencies": {
     "@babel/core": "^7.2.2",

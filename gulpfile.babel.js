@@ -1,10 +1,4 @@
-import {
-  src,
-  dest,
-  watch,
-  series,
-  parallel
-} from 'gulp'
+import { src, dest, watch, series, parallel } from 'gulp'
 import autoprefixer from 'autoprefixer'
 import rucksack from 'rucksack-css'
 import cssvariables from 'postcss-css-variables'
@@ -51,7 +45,9 @@ const config = read.sync('./config/gulp.config.yml')
  * Environment
  */
 export const env = done => {
-  console.log(prod ? 'Running Gulp in production' : 'Running Gulp in development')
+  console.log(
+    prod ? 'Running Gulp in production' : 'Running Gulp in development'
+  )
   done()
 }
 
@@ -63,12 +59,16 @@ export const env = done => {
 // gulp jekyll --prod runs Jekyll build with production settings
 export const jekyll = done => {
   const JEKYLL_ENV = prod ? 'JEKYLL_ENV=production' : ''
-  const verbose = (config.jekyll.debug) ? '--verbose' : ''
-  const silent = (config.jekyll.silent) ? '--quiet' : ''
-  const inc = (config.jekyll.incremental) ? '--incremental' : ''
-  const build = !prod ?
-    'jekyll build ' + verbose + inc + ' --config _config.yml, _config.dev.yml' + silent :
-    'jekyll build'
+  const verbose = config.jekyll.debug ? '--verbose' : ''
+  const silent = config.jekyll.silent ? '--quiet' : ''
+  const inc = config.jekyll.incremental ? '--incremental' : ''
+  const build = !prod
+    ? 'jekyll build ' +
+      verbose +
+      inc +
+      ' --config _config.yml, _config.dev.yml' +
+      silent
+    : 'jekyll build'
 
   shell.exec(JEKYLL_ENV + 'bundle exec ' + build)
   done()
@@ -76,8 +76,8 @@ export const jekyll = done => {
 
 // gulp jekyll_check after production build run tests with html-proofer
 export const jekyll_check = done => {
-  shell.exec("gulp build --prod")
-  shell.exec("bundle exec rake test")
+  shell.exec('gulp build --prod')
+  shell.exec('bundle exec rake test')
   done()
 }
 
@@ -119,21 +119,23 @@ export const sass = () => {
     )
     .pipe($.gcmq())
     .pipe($.csscomb())
-    .pipe($.cleanCSS({
-      level: {
-        1: {
-          all: true,
-          normalizeUrls: false
-        },
-        2: {
-          all: false,
-          removeEmpty: true,
-          removeDuplicateFontRules: true,
-          removeDuplicateMediaBlocks: true,
-          removeDuplicateRules: true
+    .pipe(
+      $.cleanCSS({
+        level: {
+          1: {
+            all: true,
+            normalizeUrls: false
+          },
+          2: {
+            all: false,
+            removeEmpty: true,
+            removeDuplicateFontRules: true,
+            removeDuplicateMediaBlocks: true,
+            removeDuplicateRules: true
+          }
         }
-      }
-    }))
+      })
+    )
     .pipe(
       $.if(
         prod,
@@ -145,7 +147,7 @@ export const sass = () => {
     )
     .pipe(dest(config.sass.dest))
     .pipe($.if(!prod, sync.stream()))
-    .pipe($.if(!prod, dest(config.sass.tmp)));
+    .pipe($.if(!prod, dest(config.sass.tmp)))
 }
 
 /**
@@ -197,7 +199,8 @@ export const vendorTask = () => {
   }
 
   return src(
-    vendors.map(dependency => './node_modules/' + dependency + '/**/*.*'), {
+    vendors.map(dependency => './node_modules/' + dependency + '/**/*.*'),
+    {
       base: './node_modules/'
     }
   ).pipe(dest(config.vendors.dest))
@@ -212,37 +215,41 @@ export const images = () => {
     .pipe($.changed(config.image.dest))
     .pipe(
       $.cache(
-        $.imagemin([
-          $.imagemin.jpegtran({
-            progressive: true
-          }),
-          pngquant({
-            speed: 1,
-            quality: [0.5, 0.5] // lossy settings
-          }),
-          zopfli({
-            more: true
-          }),
-          giflossy({
-            optimizationLevel: 3,
-            optimize: 3, // keep-empty: Preserve empty transparent frames
-            lossy: 2
-          }),
-          $.imagemin.svgo({
-            plugins: [{
-                removeViewBox: true
-              },
-              {
-                cleanupIDs: true
-              }
-            ]
-          }),
-          mozjpeg({
-            quality: 90
-          })
-        ], {
-          verbose: true
-        })
+        $.imagemin(
+          [
+            $.imagemin.jpegtran({
+              progressive: true
+            }),
+            pngquant({
+              speed: 1,
+              quality: [0.5, 0.5] // lossy settings
+            }),
+            zopfli({
+              more: true
+            }),
+            giflossy({
+              optimizationLevel: 3,
+              optimize: 3, // keep-empty: Preserve empty transparent frames
+              lossy: 2
+            }),
+            $.imagemin.svgo({
+              plugins: [
+                {
+                  removeViewBox: true
+                },
+                {
+                  cleanupIDs: true
+                }
+              ]
+            }),
+            mozjpeg({
+              quality: 90
+            })
+          ],
+          {
+            verbose: true
+          }
+        )
       )
     )
     .pipe(dest(config.image.dest))
@@ -251,6 +258,7 @@ export const images = () => {
         title: 'images'
       })
     )
+    .pipe($.if(!prod, dest('.tmp/images')))
 }
 
 /**
@@ -275,6 +283,7 @@ export const webpImg = () => {
       })
     )
     .pipe(dest(config.image.dest))
+    .pipe($.if(!prod, dest('.tmp/images')))
 }
 
 /**
@@ -284,18 +293,22 @@ export const icons = () => {
   return src(config.image.icons)
     .pipe($.plumber())
     .pipe($.svgmin())
-    .pipe($.rename({
-      prefix: "icon-"
-    }))
-    .pipe($.svgstore({
-      fileName: "icons.svg",
-      inlineSvg: true
-    }))
+    .pipe(
+      $.rename({
+        prefix: 'icon-'
+      })
+    )
+    .pipe(
+      $.svgstore({
+        fileName: 'icons.svg',
+        inlineSvg: true
+      })
+    )
     .pipe(
       $.cheerio({
-        run: function($, file) {
-          $("svg").attr("style", "display:none");
-          $("[fill]").removeAttr("fill");
+        run: function ($, file) {
+          $('svg').attr('style', 'display:none')
+          $('[fill]').removeAttr('fill')
         },
         parserOptions: { xmlMode: true }
       })
@@ -306,6 +319,7 @@ export const icons = () => {
       })
     )
     .pipe(dest(config.image.dest))
+    .pipe($.if(!prod, dest('.tmp/images')))
 }
 
 /**
@@ -359,9 +373,14 @@ export const html = () => {
         })
       )
     )
-    .pipe($.if(prod, $.size({
-      title: 'optimized HTML'
-    })))
+    .pipe(
+      $.if(
+        prod,
+        $.size({
+          title: 'optimized HTML'
+        })
+      )
+    )
     .pipe(dest('dist'))
 }
 
@@ -374,17 +393,16 @@ export const clean_dist = () => {
 export const clean_tmp = () => {
   return del('.tmp')
 }
-export const clean_cache = (done) => {
+export const clean_cache = done => {
   $.cache.clearAll()
-  done();
+  done()
 }
 
 /**
  * Copy
  */
 export const copy = done => {
-  src(config.copy.src)
-    .pipe(dest(config.copy.dest))
+  src(config.copy.src).pipe(dest(config.copy.dest))
   done()
 }
 export const copyVendors = done => {
@@ -452,8 +470,24 @@ export const serve = done => {
     .on('add', series(js, reload))
     .on('change', series(js, reload))
   watch(config.watch.jekyll)
-    .on('add', series(jekyll, copyVendors, parallel(copy, images), parallel(webpImg, icons, fonts), reload))
-    .on('change', series(jekyll, copyVendors, parallel(copy, images), parallel(webpImg, icons, fonts), reload))
+    .on(
+      'add',
+      series(
+        jekyll,
+        copyVendors,
+        copy,
+        reload
+      )
+    )
+    .on(
+      'change',
+      series(
+        jekyll,
+        copyVendors,
+        copy,
+        reload
+      )
+    )
   watch(config.watch.fonts)
     .on('add', series(fonts, reload))
     .on('change', series(fonts, reload))
@@ -465,7 +499,7 @@ export const serve = done => {
  * Deploy
  */
 export const deploy = done => {
-  const live = (prod) ? 'netlify deploy --prod' : 'netlify deploy'
+  const live = prod ? 'netlify deploy --prod' : 'netlify deploy'
   shell.exec(live)
   done()
 }
