@@ -1,5 +1,42 @@
 .hero{
     &__body{
         @extend .hero-body;
+        @include size(0, 130vh, min);
+        @include bgImg('/assets/images/snow-trees');
+        [data-theme="dark"] {
+            @include bgImg('/assets/images/green-trees');
+        }
+        @media (prefers-color-scheme: dark) {
+            @include bgImg('/assets/images/green-trees');    
+        }
+        text-align: center;
+        color: v(colour-text-secondary);
+        font-family: $family-base;
+    }
+    &__title{
+        font-family: $family-banner;
+        font-size: $font-hero;
+    }
+    &__subtitle{
+        font-size: _heading(h1);
+    }
+    &__heading{
+        font-size: _heading(h3);
+    }
+    &__subtitle, &__heading{
+        font-weight: $weight-light;
+    }
+    &__quote{
+        font-size: _heading(h1);
+        font-weight: $weight;
+        &:not(:nth-of-type(1)){
+            display: none;
+        }
+        blockquote{
+            text-align: left;
+        }
+        figcaption{
+            text-align: right;
+        }
     }
 }

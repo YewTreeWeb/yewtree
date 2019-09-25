@@ -6,7 +6,7 @@ body {
 
 @each $heading, $size in $headings {
   #{$heading} {
-    @include font (em($size), $family-base, $weight, 1.5);
+    @include font(em($size), $family-base, $weight, 1.5);
     letter-spacing: 0.075em;
   }
 }
@@ -46,6 +46,10 @@ pre {
   }
 }
 
+blockquote {
+  font-style: italic;
+}
+
 hr {
   border: 0;
   border-bottom: solid 2px;
@@ -83,9 +87,9 @@ ol {
 }
 
 .text-nowrap {
-	white-space: nowrap;
+  white-space: nowrap;
 }
 
 .text-italic {
-	font-style: italic;
+  font-style: italic;
 }

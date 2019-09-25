@@ -9,7 +9,7 @@ a {
     background-color: v(colour-accent);
     @include prefix(transform-origin, bottom right);
     @include prefix(transform, scaleX(0));
-    @include prefix(transform, 0.5s ease);
+    @include prefix(transition, transform 0.5s ease);
   }
   @include call-to-action(true, false, false) {
     &::before {

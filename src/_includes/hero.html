@@ -5,7 +5,7 @@
     <div class="container">
         <h1 class="hero__subtitle">{{ site.author.name }}</h1>
         <h2 class="hero__title">{{ site.title }}</h2>
-        <div id="typed-headings">
+        <div class="hero__headings">
             <h3 class="hero__heading">WordPress & Shopify Developer</h3>
             <h3 class="hero__heading">Fullstack Developer</h3>
         </div>
@@ -13,10 +13,10 @@
 
         {%- for quote in site.data.quotes -%}
             <figure class="hero__quote">
-                <blockquote cite="{{ quote.cite }}">
-                    {{ quote.quote }}
+                <blockquote cite="{{ quote.cite | escape }}">
+                    "{{ quote.quote | strip }}"
                 </blockquote>
-                <figcaption>{{ quote.author }}</figcaption>
+                <figcaption>By {{ quote.author }}</figcaption>
             </figure>
         {%- endfor -%}
     </div>

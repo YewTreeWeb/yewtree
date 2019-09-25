@@ -31,9 +31,9 @@
   $font-name,
   $file-name,
   $locals: (0, 0),
-  $weight: normal,
+  $weight: 400,
   $style: normal,
-  $display: optional,
+  $display: swap,
   $fallback: false
 ) {
   @font-face {
@@ -80,8 +80,6 @@
     } @else {
       width: $width;
     }
-  } @else {
-    @warn "`#{$width}` is not a valid length for the `$width` argument.";
   }
 
   @if ($height !=null and $height !=0) {
@@ -92,8 +90,6 @@
     } @else {
       height: $height;
     }
-  } @else {
-    @warn "`#{$height}` is not a valid length for the `$height` argument "+"in the `max-size` mixin.";
   }
 }
 
@@ -273,4 +269,13 @@
   } @else {
     @error "A valid hover and/or active and/or focus is required.";
   }
+}
+
+/// Background Image
+@mixin bgImg($image, $x: 'center', $y: 'center'){
+  background-image: url(#{$image}.jpg);
+  background-image: url(#{$image}.webp);
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: $x $y;
 }

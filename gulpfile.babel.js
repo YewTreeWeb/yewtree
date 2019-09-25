@@ -470,24 +470,8 @@ export const serve = done => {
     .on('add', series(js, reload))
     .on('change', series(js, reload))
   watch(config.watch.jekyll)
-    .on(
-      'add',
-      series(
-        jekyll,
-        copyVendors,
-        copy,
-        reload
-      )
-    )
-    .on(
-      'change',
-      series(
-        jekyll,
-        copyVendors,
-        copy,
-        reload
-      )
-    )
+    .on('add', series(jekyll, copyVendors, copy, reload))
+    .on('change', series(jekyll, copyVendors, copy, reload))
   watch(config.watch.fonts)
     .on('add', series(fonts, reload))
     .on('change', series(fonts, reload))
