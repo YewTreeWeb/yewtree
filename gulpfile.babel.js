@@ -96,7 +96,7 @@ export const sass = () => {
     .pipe($.sassGlob())
     .pipe(
       $.sass({
-        precision: 10,
+        precision: 6,
         outputStyle: 'expanded',
         onError: sync.notify
       })

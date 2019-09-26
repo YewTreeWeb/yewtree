@@ -21,8 +21,8 @@
 }
 
 /// Data tags.
-@mixin data($data) {
-  html[data-browser*='#{$data}'] & {
+@mixin data($tag, $data) {
+  html[data-#{$tag}*='#{$data}'] & {
     @content;
   }
 }
@@ -95,17 +95,17 @@
 
 /// Create fluid responsive sizes.
 @mixin fluid($type, $min-size, $max-size, $min-vw, $max-vw) {
-  $type: $min-size;
+  #{$type}: #{$min-size};
 
-  @media only screen and (min-width: $min-vw) {
-    $type: calc(
+  @media only screen and (min-width: #{$min-vw}) {
+    #{$type}: calc(
       #{$min-size} + #{strip-unit($max-size - $min-size)} *
         ((100vw - #{$min-vw}) / #{strip-unit($max-vw - $min-vw)})
     );
   }
 
-  @media only screen and (min-width: $max-vw) {
-    $type: $max-size;
+  @media only screen and (min-width: #{$max-vw}) {
+    #{$type}: #{$max-size};
   }
 }
 
@@ -272,10 +272,76 @@
 }
 
 /// Background Image
-@mixin bgImg($image, $x: 'center', $y: 'center'){
+@mixin bgImg($image, $position: ($x, $y), $mode: null, $darkImg: null){
   background-image: url(#{$image}.jpg);
   background-image: url(#{$image}.webp);
+  @if $mode == 'dark' {
+    [data-theme="dark"] {
+      background-image: url(#{$darkImg}.jpg);
+      background-image: url(#{$darkImg}.webp);
+    }
+    @media (prefers-color-scheme: dark) {
+      background-image: url(#{$darkImg}.jpg);
+      background-image: url(#{$darkImg}.webp);   
+    }
+  }
   background-repeat: no-repeat;
   background-size: cover;
-  background-position: $x $y;
+  background-position: nth($position, 1) nth($position, 2);
+}
+
+/// Background Overlay
+@mixin overlay($color: colour(black, null, true), $alpha: 0.3){
+  &::before{
+    content: '';
+    @include size(100%);
+    background-color: rgba($color,$alpha);
+    @include position;
+  }
+}
+
+/// Display Flex
+@mixin flex($align, $justify, $direction: false, $wrap: true) {
+  display: flex;
+  align-items: $align;
+  // If space-evenly is used.
+  @if $justify == 'space-evenly' {
+    justify-content: space-between;
+    // Use fallback for Edge.
+    @supports (-ms-ime-align: auto) {
+      &::before,
+      &::after {
+        content: '';
+        display: block;
+      }
+    }
+    // If not Edge then apply space-evenly.
+    @supports not (-ms-ime-align: auto) {
+      // Run space-evenly.
+      justify-content: $justify;
+    }
+  } @else {
+    // If other justify-content used.
+    justify-content: $justify;
+  }
+  @if $direction {
+    @if str-index($direction, 'row') {
+      @if $wrap {
+        flex-flow: $direction wrap;
+      } @else {
+        flex-direction: $direction;
+        @include media("<=sm") {
+          @if $direction == 'row' {
+            flex-direction: column;
+          } @else if $direction == 'row-reverse' {
+            flex-direction: column-reverse;
+          }
+        }
+        flex-wrap: nowrap;
+      }
+    } @else {
+      flex-direction: $direction;
+      flex-wrap: nowrap;
+    }
+  }
 }

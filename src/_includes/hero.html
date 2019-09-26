@@ -10,15 +10,18 @@
             <h3 class="hero__heading">Fullstack Developer</h3>
         </div>
         <span id="typed"></span>
-
-        {%- for quote in site.data.quotes -%}
-            <figure class="hero__quote">
-                <blockquote cite="{{ quote.cite | escape }}">
-                    "{{ quote.quote | strip }}"
-                </blockquote>
-                <figcaption>By {{ quote.author }}</figcaption>
-            </figure>
-        {%- endfor -%}
+        {%- if site.data.quotes -%}
+            <div class="hero__quotes">
+            {%- for quote in site.data.quotes -%}       
+                <figure class="hero__quote">
+                    <blockquote cite="{{ quote.cite | escape }}">
+                        "{{ quote.quote | strip }}"
+                    </blockquote>
+                    <figcaption>By {{ quote.author }}</figcaption>
+                </figure>
+            {%- endfor -%}
+            </div>
+        {%- endif -%}
     </div>
   </div>
 </section>

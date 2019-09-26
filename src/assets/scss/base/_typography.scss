@@ -7,7 +7,7 @@ body {
 @each $heading, $size in $headings {
   #{$heading} {
     @include font(em($size), $family-base, $weight, 1.5);
-    letter-spacing: 0.075em;
+    letter-spacing: -2.42px;
   }
 }
 

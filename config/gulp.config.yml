@@ -59,7 +59,7 @@ image:
 jekyll:
   debug: false
   silent: false
-  incremental: true
+  incremental: false
 
 ## Project scripts
 js:
