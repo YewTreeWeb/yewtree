@@ -1,2 +1,5 @@
 // External
-import "airbnb-browser-shims"
+import "airbnb-browser-shims";
+
+// Internal
+import "./modules/typed";

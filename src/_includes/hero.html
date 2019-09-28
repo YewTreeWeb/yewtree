@@ -5,9 +5,10 @@
     <div class="container">
         <h1 class="hero__subtitle">{{ site.author.name }}</h1>
         <h2 class="hero__title">{{ site.title }}</h2>
-        <div class="hero__headings">
-            <h3 class="hero__heading">WordPress & Shopify Developer</h3>
-            <h3 class="hero__heading">Fullstack Developer</h3>
+        <div id="typed-headings" class="hero__headings">
+            {%- for heading in site.data.hero-headings -%}
+                <h3 class="hero__heading">{{ heading.text }}</h3>
+            {%- endfor -%}
         </div>
         <span id="typed"></span>
         {%- if site.data.quotes -%}

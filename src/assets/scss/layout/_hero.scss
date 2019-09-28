@@ -2,7 +2,13 @@
     &__body{
         @extend .hero-body;
         @include size(0, 130vh, min);
-        @include bgImg('/assets/images/snow-trees', 'center' -440px, 'dark', '/assets/images/green-trees');
+        @include bgImg('/assets/images/snow-trees', 'center' 'center', 'dark', '/assets/images/green-trees');
+        [data-theme="dark"] {
+            background-position-y: -440px;
+        }
+        @media (prefers-color-scheme: dark) {
+            background-position-y: -440px;
+        }
         text-align: center;
         color: v(colour-text-secondary);
         font-family: $family-base;
@@ -14,7 +20,7 @@
     &__subtitle{
         font-size: _heading(h1);
     }
-    &__heading{
+    &__heading, #typed{
         font-size: _heading(h3);
         letter-spacing: -2.42px;
     }
@@ -46,6 +52,12 @@
             text-align: right;
             font-size: _heading(h4);
             margin-top: em(20px);
+        }
+    }
+    .typed-cursor{
+        font-size: _heading(h3);
+        &--blink{
+            margin-left: 5px;
         }
     }
 }

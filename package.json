@@ -54,7 +54,7 @@
     "logrocket": "^0.6.19",
     "normalize.css": "^8.0.1",
     "system-font-css": "^2.0.2",
-    "typed.js": "^2.0.10"
+    "typed.js": "^2.0.11"
   },
   "devDependencies": {
     "@babel/core": "^7.2.2",
