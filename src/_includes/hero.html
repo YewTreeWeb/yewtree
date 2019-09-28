@@ -3,15 +3,23 @@
 <section class="hero">
   <div class="hero__body">
     <div class="container">
-        <h1 class="hero__subtitle">{{ site.author.name }}</h1>
-        <h2 class="hero__title">{{ site.title }}</h2>
-        <div id="typed-headings" class="hero__headings">
-            {%- for heading in site.data.hero-headings -%}
-                <h3 class="hero__heading">{{ heading.text }}</h3>
-            {%- endfor -%}
-        </div>
-        <span id="typed"></span>
-        {%- if site.data.quotes -%}
+        {%- unless site.baseurl -%}
+            {%- if hero.subtitle -%}
+                <h1 class="hero__subtitle">{{ hero.subtitle }}</h1>
+            {%- endif -%}
+        {%- else -%}
+            <h1 class="hero__subtitle">{{ site.author.name }}</h1>
+        {%- endunless -%}
+        <h2 class="hero__title">{{ hero.title | default: site.title }}</h2>
+        {%- if hero.headings -%}
+            <div id="typed-headings" class="hero__headings">
+                {%- for heading in hero.headings -%}
+                    <h3 class="hero__heading">{{ heading.text }}</h3>
+                {%- endfor -%}
+            </div>
+            <span id="typed"></span>
+        {%- endif -%}
+        {%- if hero.quotes and site.data.quotes -%}
             <div class="hero__quotes">
             {%- for quote in site.data.quotes -%}       
                 <figure class="hero__quote">

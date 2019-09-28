@@ -307,8 +307,7 @@ export const icons = () => {
     .pipe(
       $.cheerio({
         run: function ($, file) {
-          $('svg').attr('style', 'display:none')
-          $('[fill]').removeAttr('fill')
+          $('svg').attr('style', 'display:none!important')
         },
         parserOptions: { xmlMode: true }
       })

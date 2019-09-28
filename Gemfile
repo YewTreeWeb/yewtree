@@ -27,6 +27,7 @@ group :jekyll_plugins do
   gem "jekyll-include-cache", "~> 0.2.0"
   gem "jekyll-tagging-related_posts", "~> 1.1"
   gem "jekyll-algolia", "~> 1.4"
+  gem "jekyll-assets", "~> 1.0"
 end
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
