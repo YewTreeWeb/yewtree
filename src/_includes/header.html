@@ -1,23 +1,25 @@
 <header class="site-header navbar">
-  <div class="navbar-brand">
-    <a class="navbar-item site-logo" href="{{ site.baseurl | default: site.url }}">YTW</a>
+  <div class="container">
+    <div class="navbar-brand">
+      <a class="navbar-item site-logo" href="{{ site.baseurl | default: site.url }}">YTW</a>
 
-    <a role="button" class="navbar-burger burger" aria-label="menu" aria-expanded="false" data-target="site-nav">
-      <span aria-hidden="true"></span>
-      <span aria-hidden="true"></span>
-      <span aria-hidden="true"></span>
-    </a>
-  </div>
-
-  {%- include_cached navigation.html -%}
-
-  <div class="navbar-end">
-    <div class="navbar-item">
-      <a href="javascript:void(0)" class="switch-theme" aria-label="theme switcher" title="theme switcher" role="button">
-        {%- include_cached svg-icon.html icon="Sun" w="59" h="59" hidden=true -%}
-        {%- include_cached svg-icon.html icon="Moon" w="59" h="59" hidden=true -%}
+      <a role="button" class="navbar-burger burger" aria-label="menu" aria-expanded="false" data-target="site-nav">
+        <span aria-hidden="true"></span>
+        <span aria-hidden="true"></span>
+        <span aria-hidden="true"></span>
       </a>
     </div>
-  </div>
 
+    {%- include_cached navigation.html -%}
+
+    <div class="navbar-end">
+      <div class="navbar-item">
+        <a href="javascript:void(0)" class="switch-theme" aria-label="theme switcher" title="theme switcher"
+          role="button">
+          {%- include_cached svg-icon.html icon="Sun" w="59" h="59" hidden=true -%}
+          {%- include_cached svg-icon.html icon="Moon" w="59" h="59" hidden=true -%}
+        </a>
+      </div>
+    </div>
+  </div>
 </header>

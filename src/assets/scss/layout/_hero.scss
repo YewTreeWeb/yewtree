@@ -1,60 +1,85 @@
-.hero{
-    &__body{
-        @extend .hero-body;
-        @include size(0, 130vh, min);
-        @include bgImg('/assets/images/snow-trees', 'center' 'center', 'dark', '/assets/images/green-trees');
-        @include darkmode{
-            background-position-y: -440px;
-        }
-        text-align: center;
-        color: v(colour-text-secondary);
-        font-family: $family-base;
+.hero {
+  &__body {
+    @extend .hero-body;
+    padding-top: 13rem;
+    text-align: center;
+    color: v(colour-text-secondary);
+    font-family: $family-base;
+  }
+  &__title {
+    font-family: $family-banner;
+    font-size: $font-hero;
+  }
+  &__subtitle {
+    font-size: _heading(h1);
+  }
+  &__heading,
+  #typed {
+    font-size: _heading(h3);
+    letter-spacing: -2.42px;
+  }
+  &__subtitle,
+  &__heading {
+    font-weight: $weight-light;
+  }
+  &__subtitle,
+  &__title {
+    letter-spacing: -3.36px;
+  }
+  &__quotes {
+    @include flex(center, center);
+    @include center;
+  }
+  &__quote {
+    @include font(ceil(_heading(h1) * 1.2), $family-base, $weight, 1.5);
+    letter-spacing: -1px;
+    margin: 0 auto;
+    width: 100%;
+    @include fluid('max-width', 600px, 840px, 414px, 1199px);
+    &:not(:nth-of-type(1)) {
+      display: none;
     }
-    &__title{
-        font-family: $family-banner;
-        font-size: $font-hero;
+    blockquote,
+    figcaption {
+      font-family: inherit;
     }
-    &__subtitle{
-        font-size: _heading(h1);
+    blockquote {
+      text-align: left;
     }
-    &__heading, #typed{
-        font-size: _heading(h3);
-        letter-spacing: -2.42px;
+    figcaption {
+      text-align: right;
+      font-size: _heading(h4);
+      margin-top: em(20px);
     }
-    &__subtitle, &__heading{
-        font-weight: $weight-light;
+  }
+  .typed-cursor {
+    font-size: _heading(h3);
+    &--blink {
+      margin-left: 5px;
     }
-    &__subtitle, &__title{
-        letter-spacing: -3.36px;
+  }
+  /// Homepage hero.
+  &--main {
+    .hero__body {
+      @include size(0, 130vh, min);
+      @include bgImg(
+        '/assets/images/snow-trees',
+        'center' 'center',
+        'dark',
+        '/assets/images/green-trees'
+      );
+      @include darkmode {
+        background-position-y: -440px;
+      }
+      .hero__subtitle,
+      .hero__title,
+      #typed {
+        opacity: 0;
+        transition: opacity 0.25s ease-in-out-quad;
+      }
     }
-    &__quotes{
-        @include flex(center, center);
-    }
-    &__quote{
-        @include font(ceil(_heading(h1) * 1.2), $family-base, $weight, 1.5);
-        letter-spacing: -1px;
-        margin: 0 auto;
-        width: 100%;
-        @include fluid('max-width', 600px, 840px, 414px, 1199px);
-        &:not(:nth-of-type(1)){
-            display: none;
-        }
-        blockquote, figcaption{
-            font-family: inherit;
-        }
-        blockquote{
-            text-align: left;
-        }
-        figcaption{
-            text-align: right;
-            font-size: _heading(h4);
-            margin-top: em(20px);
-        }
-    }
-    .typed-cursor{
-        font-size: _heading(h3);
-        &--blink{
-            margin-left: 5px;
-        }
-    }
+  }
+  &--loaded {
+    opacity: 1;
+  }
 }

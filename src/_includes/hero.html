@@ -1,6 +1,12 @@
 {%- assign hero = page.hero -%}
 
-<section class="hero">
+{%- if page.url != site.baseurl -%}
+    {%- assign modifier = 'hero--page' -%}
+{%- else -%}
+    {%- assign modifier = 'hero--main' -%}
+{%- endif -%}
+
+<section class="hero {{ modifier }}">
   <div class="hero__body">
     <div class="container">
         {%- unless site.baseurl -%}
