@@ -27,6 +27,17 @@
   }
 }
 
+// If only for dark mode
+@mixin darkmode {
+  [data-theme='dark'] {
+    @content;
+  }
+  @media (prefers-color-scheme: dark) {
+    @content;
+  }
+}
+
+// Create font-face
 @mixin font-face(
   $font-name,
   $file-name,
@@ -249,21 +260,23 @@
 }
 
 /// Hover, Active, Focus.
-@mixin call-to-action($hover: true, $active: true, $focus: true){
-  @if ($hover, $active, $focus){
-    &:hover, &:active, &:focus{
+@mixin call-to-action($hover: true, $active: true, $focus: true) {
+  @if ($hover, $active, $focus) {
+    &:hover,
+    &:active,
+    &:focus {
       @content;
     }
   } @else if ($hover) {
-    &:hover{
+    &:hover {
       @content;
     }
   } @else if ($active) {
-    &:active{
+    &:active {
       @content;
     }
   } @else if ($focus) {
-    &:focus{
+    &:focus {
       @content;
     }
   } @else {
@@ -272,17 +285,13 @@
 }
 
 /// Background Image
-@mixin bgImg($image, $position: ($x, $y), $mode: null, $darkImg: null){
+@mixin bgImg($image, $position: ($x, $y), $mode: null, $darkImg: null) {
   background-image: url(#{$image}.jpg);
   background-image: url(#{$image}.webp);
   @if $mode == 'dark' {
-    [data-theme="dark"] {
+    @include darkmode{
       background-image: url(#{$darkImg}.jpg);
       background-image: url(#{$darkImg}.webp);
-    }
-    @media (prefers-color-scheme: dark) {
-      background-image: url(#{$darkImg}.jpg);
-      background-image: url(#{$darkImg}.webp);   
     }
   }
   background-repeat: no-repeat;
@@ -291,11 +300,11 @@
 }
 
 /// Background Overlay
-@mixin overlay($color: colour(black, null, true), $alpha: 0.3){
-  &::before{
+@mixin overlay($color: colour(black, null, true), $alpha: 0.3) {
+  &::before {
     content: '';
     @include size(100%);
-    background-color: rgba($color,$alpha);
+    background-color: rgba($color, $alpha);
     @include position;
   }
 }
@@ -330,7 +339,7 @@
         flex-flow: $direction wrap;
       } @else {
         flex-direction: $direction;
-        @include media("<=sm") {
+        @include media('<=sm') {
           @if $direction == 'row' {
             flex-direction: column;
           } @else if $direction == 'row-reverse' {

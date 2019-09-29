@@ -3,10 +3,7 @@
         @extend .hero-body;
         @include size(0, 130vh, min);
         @include bgImg('/assets/images/snow-trees', 'center' 'center', 'dark', '/assets/images/green-trees');
-        [data-theme="dark"] {
-            background-position-y: -440px;
-        }
-        @media (prefers-color-scheme: dark) {
+        @include darkmode{
             background-position-y: -440px;
         }
         text-align: center;

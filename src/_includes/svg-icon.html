@@ -15,7 +15,7 @@
 {%- endif -%}
 
 <svg class="icon" {{ width }} {{ height }} {{ aria }}{% if include.hidden != true %} role="img"{% endif %}>
-    <title{% if include.hidden != true %} id="{{ svgTitle }}"{% endif %}>{{ include.title }}</title>
+    <title{% if include.hidden != true %} id="{{ svgTitle }}"{% endif %}>{{ include.title | default: include.icon }}</title>
     {%- if include.hidden != true -%}
         <desc id="{{ svgDesc }}">{{ include.desc }}</desc>
     {%- endif -%}

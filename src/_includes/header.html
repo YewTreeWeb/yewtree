@@ -1,71 +1,23 @@
 <header class="site-header navbar">
   <div class="navbar-brand">
-    <a href="{{ site.baseurl | default: site.url }}">YTW</a>
+    <a class="navbar-item site-logo" href="{{ site.baseurl | default: site.url }}">YTW</a>
 
-    <a role="button" class="navbar-burger burger" aria-label="menu" aria-expanded="false" data-target="navbarBasicExample">
+    <a role="button" class="navbar-burger burger" aria-label="menu" aria-expanded="false" data-target="site-nav">
       <span aria-hidden="true"></span>
       <span aria-hidden="true"></span>
       <span aria-hidden="true"></span>
     </a>
   </div>
 
-  <div id="navbarBasicExample" class="navbar-menu">
-    <div class="navbar-start">
-      <a class="navbar-item">
-        Home
+  {%- include_cached navigation.html -%}
+
+  <div class="navbar-end">
+    <div class="navbar-item">
+      <a href="javascript:void(0)" class="switch-theme" aria-label="theme switcher" title="theme switcher" role="button">
+        {%- include_cached svg-icon.html icon="Sun" w="59" h="59" hidden=true -%}
+        {%- include_cached svg-icon.html icon="Moon" w="59" h="59" hidden=true -%}
       </a>
-
-      <a class="navbar-item">
-        Documentation
-      </a>
-
-      <div class="navbar-item has-dropdown is-hoverable">
-        <a class="navbar-link">
-          More
-        </a>
-
-        <div class="navbar-dropdown">
-          <a class="navbar-item">
-            About
-          </a>
-          <a class="navbar-item">
-            Jobs
-          </a>
-          <a class="navbar-item">
-            Contact
-          </a>
-          <hr class="navbar-divider">
-          <a class="navbar-item">
-            Report an issue
-          </a>
-        </div>
-      </div>
-    </div>
-
-    <div class="navbar-end">
-      <div class="navbar-item">
-        <div class="buttons">
-          <a href="javascript:void(0)" class="switch-theme button" aria-label="theme switcher" title="theme switcher">
-            {%- include_cached svg-icon.html icon="Sun" w="80" h="80" title="Moon" desc="Dark circle with white moon in center." -%}
-            {%- include_cached svg-icon.html icon="Moon" w="80" h="80" title="Sun" desc="Dark circle with yellow sun in center." -%}
-          </a>
-        </div>
-      </div>
     </div>
   </div>
-  <section class="site-header__inner container">
-    <div class="site-header__logo"><a href="{{ site.baseurl | default: site.url }}">YTW</a></div>
-
-    <button class="btn btn--subtle main-header__nav-trigger js-main-header__nav-trigger" aria-label="Toggle menu"
-      aria-expanded="false" aria-controls="main-header-nav">
-      <i class="main-header__nav-trigger-icon" aria-hidden="true"></i>
-      <span>Menu</span>
-    </button>
-
-    {%- include svg-icon.html icon="Twitter" w="80" h="80"  -%}
-
-    {%- include_cached navigation.html -%}
-
-  </section>
 
 </header>
