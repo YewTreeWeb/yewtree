@@ -1,4 +1,4 @@
-import { hasClass, addClass, removeClass } from './util';
+import { addClass, removeClass } from './util';
 
 const quote = document.getElementsByClassName('hero__quote');
 function randHeadings() {
@@ -11,8 +11,8 @@ function randHeadings() {
                 setTimeout(() => {
                     removeClass(quote[i], 'hero__quote--active');
                 }, 1500);
-            }, 4500);
-        }, 2000);
+            }, 2950);
+        }, 960);
 	}
 }
 randHeadings();

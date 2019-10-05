@@ -24,7 +24,7 @@ body {
     *,
     *::before,
     *::after {
-      @include prefix('animation', 'none !important');
+      // @include prefix('animation', 'none !important');
       // @include prefix('transition', 'none !important');
     }
   }

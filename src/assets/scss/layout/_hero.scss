@@ -48,10 +48,17 @@
       }
       .hero__subtitle,
       .hero__title,
-      #typed {
-        opacity: 0;
-        transition: opacity 0.25s ease-in-out-quad;
-        display: none;
+      .hero__headings {
+        animation: fade-in-bottom 0.6s cubic-bezier(0.39, 0.575, 0.565, 1) both;
+      }
+      .hero__subtitle {
+        animation-delay: 5.3s;
+      }
+      .hero__title {
+        animation-delay: 5.6s;
+      }
+      .hero__headings {
+        animation-delay: 5.8s;
       }
       .hero__quotes {
         @include flex(center, center);
@@ -66,8 +73,8 @@
         @include fluid('max-width', 600px, 840px, 414px, 1199px);
         opacity: 0;
         visibility: hidden;
-        transition: opacity 500ms ease-in-out-sine,
-          visability 500ms ease-in-out-sine;
+        transition: opacity 700ms ease-in-out-sine,
+          visability 700ms ease-in-out-sine;
         transition-delay: 300ms;
         &--active {
           opacity: 1;
@@ -89,6 +96,16 @@
     }
   }
   &--loaded {
+    opacity: 1;
+  }
+}
+@keyframes fade-in-bottom {
+  0% {
+    transform: translateY(50px);
+    opacity: 0;
+  }
+  100% {
+    transform: translateY(0);
     opacity: 1;
   }
 }
