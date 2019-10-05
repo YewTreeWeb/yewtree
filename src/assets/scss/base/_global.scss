@@ -4,7 +4,7 @@
 }
 
 // Ensures page width is always >=320px.
-@include media(">=xs") {
+@include media('>=xs') {
   html,
   body {
     min-width: 320px;
@@ -25,7 +25,7 @@ body {
     *::before,
     *::after {
       @include prefix('animation', 'none !important');
-      @include prefix('transition', 'none !important');
+      // @include prefix('transition', 'none !important');
     }
   }
 }

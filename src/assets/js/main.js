@@ -1,6 +1,6 @@
 // External
-import 'airbnb-browser-shims'
+import 'airbnb-browser-shims';
 
 // Internal
-import './modules/util'
-import './modules/typed'
+import './modules/typed';
+import './modules/random';

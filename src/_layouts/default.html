@@ -4,7 +4,6 @@
   {%- include head.html -%}
 
   <body class="layout-{{ page.layout | default: layout.layout }}{% if page.classes or layout.classes %}{{ page.classes | default: layout.classes | join: ' ' | prepend: ' ' }}{% endif %} {{ page.title | slugify }} is-loading">
-    {%- comment -%} SVG Icons {%- endcomment -%}
     
     <!--[if lte IE 9]>
       <p class="browserupgrade">You are using an <strong>outdated</strong> browser. Please <a href="https://browsehappy.com/">upgrade your browser</a> to improve your experience and security.</p>
@@ -20,6 +19,8 @@
     {%- include_cached footer.html -%}
 
     <!-- JS -->
+    <script src="{{ '/assets/js/breakpoints.min.js' | relative_url }}" defer></script>
+    <script src="{{ '/assets/js/browser.min.js' | relative_url }}" defer></script>
     <script src="{{ '/assets/js/main.js' | relative_url }}" defer></script>
 
     {%- if jekyll.environment == "production" -%}

@@ -26,38 +26,13 @@
   &__title {
     letter-spacing: -3.36px;
   }
-  &__quotes {
-    @include flex(center, center);
-    @include center;
-  }
-  &__quote {
-    @include font(ceil(_heading(h1) * 1.2), $family-base, $weight, 1.5);
-    letter-spacing: -1px;
-    margin: 0 auto;
-    width: 100%;
-    @include fluid('max-width', 600px, 840px, 414px, 1199px);
-    &:not(:nth-of-type(1)) {
-      display: none;
-    }
-    blockquote,
-    figcaption {
-      font-family: inherit;
-    }
-    blockquote {
-      text-align: left;
-    }
-    figcaption {
-      text-align: right;
-      font-size: _heading(h4);
-      margin-top: em(20px);
-    }
-  }
   .typed-cursor {
     font-size: _heading(h3);
     &--blink {
       margin-left: 5px;
     }
   }
+
   /// Homepage hero.
   &--main {
     .hero__body {
@@ -76,6 +51,40 @@
       #typed {
         opacity: 0;
         transition: opacity 0.25s ease-in-out-quad;
+        display: none;
+      }
+      .hero__quotes {
+        @include flex(center, center);
+        position: relative;
+      }
+      .hero__quote {
+        @include center;
+        @include font(ceil(_heading(h1) * 1.2), $family-base, $weight, 1.5);
+        letter-spacing: -1px;
+        margin: 0 auto;
+        width: 100%;
+        @include fluid('max-width', 600px, 840px, 414px, 1199px);
+        opacity: 0;
+        visibility: hidden;
+        transition: opacity 500ms ease-in-out-sine,
+          visability 500ms ease-in-out-sine;
+        transition-delay: 300ms;
+        &--active {
+          opacity: 1;
+          visibility: visible;
+        }
+        blockquote,
+        figcaption {
+          font-family: inherit;
+        }
+        blockquote {
+          text-align: left;
+        }
+        figcaption {
+          text-align: right;
+          font-size: _heading(h4);
+          margin-top: em(20px);
+        }
       }
     }
   }
