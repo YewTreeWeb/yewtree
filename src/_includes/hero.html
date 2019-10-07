@@ -1,28 +1,42 @@
 {%- assign hero = page.hero -%}
 
-<section class="hero">
-  <header class="hero__header">
-    {%- if hero.subtitle -%}
-        <span class="hero__subtitle">{{ hero.subtitle }}</span>
-    {%- endif -%}
-    <h1 class="hero__title">
-        {{ page.title }}
-        {%- if hero.small -%}
-            <small>{{ hero.small }}</small>
-        {%- endif -%}
-    </h1>
-    <p class="hero__intro">{{ hero.content }}</p>
-    {%- if hero.buttons -%}
-        {%- for button in hero.buttons -%}
-            <div class="hero__cta">
-                <a class="button button--primary anchor" href="{{ button.link }}" role="button">{{ button.text }}</a>
+{%- if page.url != site.baseurl -%}
+    {%- assign modifier = 'hero--page' -%}
+{%- else -%}
+    {%- assign modifier = 'hero--main' -%}
+{%- endif -%}
+
+<section class="hero {{ modifier }}">
+  <div class="hero__body">
+    <div class="container">
+        {%- unless site.baseurl -%}
+            {%- if hero.subtitle -%}
+                <h1 class="hero__subtitle">{{ hero.subtitle }}</h1>
+            {%- endif -%}
+        {%- else -%}
+            <h1 class="hero__subtitle">{{ site.author.name }}</h1>
+        {%- endunless -%}
+        <h2 class="hero__title">{{ hero.title | default: site.title }}</h2>
+        {%- if hero.headings -%}
+            <div id="typed-headings" class="hero__headings">
+                {%- for heading in hero.headings -%}
+                    <h3 class="hero__heading">{{ heading.text }}</h3>
+                {%- endfor -%}
             </div>
-        {%- endfor -%}
-    {%- endif -%}
-  </header>
-  <div class="hero__content">
-    {%- if hero.image -%}
-        <span class="hero__image fill" data-position="center"><img src="{{ hero.image.src }}" alt="{{ hero.image.alt }}" /></span>
-    {%- endif -%}
+            <span id="typed"></span>
+        {%- endif -%}
+        {%- if hero.quotes and site.data.quotes -%}
+            <div class="hero__quotes">
+            {%- for quote in site.data.quotes -%}       
+                <figure class="hero__quote">
+                    <blockquote cite="{{ quote.cite | escape }}">
+                        "{{ quote.quote | strip }}"
+                    </blockquote>
+                    <figcaption>By {{ quote.author }}</figcaption>
+                </figure>
+            {%- endfor -%}
+            </div>
+        {%- endif -%}
+    </div>
   </div>
 </section>

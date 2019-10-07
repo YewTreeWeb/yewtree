@@ -1,0 +1,44 @@
+/// Colours
+$colours: (
+  black: #000,
+  white: #fff,
+  accent: #66bb6a,
+  accent-dark: #1f6f2b
+) !default;
+$light-colours: (
+  primary: #f8f8f8,
+  secondary: #ededed,
+  text: #3b4252,
+  text-secondary: #2e3440,
+  text-accent: #f8f8f8
+);
+$dark-colours: (
+  primary: #242830,
+  secondary: #2e3440,
+  text: #f6fbff,
+  text-secondary: #3b4252,
+  text-accent: #f8f8f8
+);
+
+/// Font
+$family-base: quote(Barlow), system-ui, sans-serif;
+$family-banner: quote(Lombok), system-ui, sans-serif;
+
+$headings: (
+  h1: 40px,
+  h2: 35px,
+  h3: 30px,
+  h4: 25px,
+  h5: 20px,
+  h6: 18px
+) !default;
+
+$font-md: 17px;
+$font-base: 16px;
+$font-sm: 14px;
+$font-xs: 12px;
+$font-hero: 122px;
+
+$weight: 400;
+$weight-light: 100;
+$weight-heavy: 700;

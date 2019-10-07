@@ -1,19 +1,19 @@
-<nav id="site-nav" class="menu" itemscope itemtype="http://schema.org/SiteNavigationElement" aria-label="Main navigation" role="navigation">
-    <div id="site-nav-label" class="menu__label">Main menu</div>
-    <ul class="menu__list">
-        {%- for item in site.data.navigation -%}
-            <li class="menu__item{% if item.sub %} has_submenu{% endif %}">
-                <a class="menu__link{% if item.link == page.url or item.link == site.baseurl %} menu__link--active{% endif %}" href="{{ item.link | relative_url }}" itemprop="url">{{ item.name }}</a>
-                {%- if item.sub -%}
-                <div class="menu__sublist">
-                    <ul class="subitems">
-                    {%- for sub in item.sub -%}
-                        <li class="subitems__item"><a href="{{ sub.link }}" class="subitems__link{% if sub.link == page.url %} subitems__link--active{% endif %}" itemprop="url"><span class="strike">{{ sub.name }}</span></a></li>
-                    {%- endfor -%}
-                    </ul>
-                </div>
-                {%- endif -%}
-            </li>
-        {%- endfor -%}
-    </ul>
+<nav id="site-nav" class="navbar-menu" itemscope itemtype="http://schema.org/SiteNavigationElement" aria-label="Main navigation" role="navigation">
+  <div id="site-nav-label" class="menu__label sr-only">Main menu</div>
+  <div class="navbar-start">
+    {%- for item in site.data.navigation -%}
+        {%- if item.sub -%}
+        <div class="navbar-item has-dropdown is-hoverable">
+            <a class="navbar-link" href="{{ item.link | relative_url }}" itemprop="url">{{ item.name }}</a>
+            <div class="navbar-dropdown">
+                {%- for sub in item.sub -%}
+                    <a href="{{ sub.link }}" class="navbar-item{% if sub.link == page.url %} navbar-item--active{% endif %}" itemprop="url"><span class="strike">{{ sub.name }}</span></a>
+                {%- endfor -%}
+            </div>
+        </div>
+        {%- else -%}
+        <a class="navbar-item{% if item.link == page.url or item.link == site.baseurl %} navbar-item--active{% endif %}" href="{{ item.link | relative_url }}" itemprop="url">{{ item.name }}</a>
+        {%- endif -%}
+    {%- endfor -%}
+  </div>
 </nav>

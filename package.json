@@ -42,7 +42,9 @@
   "dependencies": {
     "@sentry/browser": "4.6.4",
     "airbnb-browser-shims": "^3.1.0",
+    "bearbones": "^0.36.2",
     "bourbon": "^5.1.0",
+    "bulma": "^0.7.5",
     "codyhouse-framework": "^2.1.4",
     "family.scss": "^1.0.8",
     "fg-loadcss": "^2.1.0",
@@ -50,7 +52,9 @@
     "include-media": "^1.4.9",
     "lazysizes": "^5.1.1",
     "logrocket": "^0.6.19",
-    "normalize.css": "^8.0.1"
+    "normalize.css": "^8.0.1",
+    "system-font-css": "^2.0.2",
+    "typed.js": "^2.0.11"
   },
   "devDependencies": {
     "@babel/core": "^7.2.2",

@@ -34,7 +34,10 @@ copy:
   dest: 'dist/assets/'
   src: '.tmp/**/*'
   vendors:
-    src: 'src/assets/vendors/normalize.css/normalize.css'
+    src:
+      - 'src/assets/vendors/normalize.css/normalize.css'
+      - 'src/assets/vendors/breakpoints.min.js'
+      - 'src/assets/vendors/browser.min.js'
     css: 'dist/assets/css'
     js: 'dist/assets/js'
 
@@ -53,12 +56,13 @@ image:
   webp:
     - 'src/assets/images/**/*.+(jpg|jpeg|png)'
     - '!src/assets/images/icons/*'
+    - '!src/assets/images/favicons/*'
 
 ## Jekyll
 jekyll:
   debug: false
   silent: false
-  incremental: true
+  incremental: false
 
 ## Project scripts
 js:
@@ -69,7 +73,9 @@ js:
 ## Project styles
 sass:
   dest: 'dist/assets/css'
-  src: 'src/assets/scss/main.scss'
+  src: 
+    - 'src/assets/scss/main.scss'
+    - 'src/assets/scss/font.scss'
   tmp: '.tmp/css'
 
 ### Vendor assets

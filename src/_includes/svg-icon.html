@@ -9,13 +9,15 @@
 {%- if include.hidden == true -%}
     {%- assign aria = 'aria-hidden="true"'  -%}
 {%- else -%}
-    {%- assign aria = 'aria-labelledby="svgTitle svgDesc"'  -%}
+    {%- assign svgTitle = include.icon | append: 'Title' -%}
+    {%- assign svgDesc = include.icon | append: 'Desc' -%}
+    {%- assign aria = 'aria-labelledby="' | append: svgTitle | append: ' ' | append: svgDesc | append: '"'  -%}
 {%- endif -%}
 
-<svg class="icon" width height aria{% if include.hidden != true %} role="img"{% endif %}>
-    <title {% if include.hidden != true %}id="svgTitle"{% endif %}>{{ include.title }}</title>
+<svg class="icon" {{ width }} {{ height }} {{ aria }}{% if include.hidden != true %} role="img"{% endif %}>
+    <title{% if include.hidden != true %} id="{{ svgTitle }}"{% endif %}>{{ include.title | default: include.icon }}</title>
     {%- if include.hidden != true -%}
-        <desc id="svgDesc">{{ include.desc }}</desc>
+        <desc id="{{ svgDesc }}">{{ include.desc }}</desc>
     {%- endif -%}
-    <use xlink:href="{{ 'icons.svg#' | prepend: 'assets/icons/' | relative_url | append: include.icon }}"></use>
+    <use xlink:href="{{ 'icons.svg#icon-' | prepend: '/assets/images/' | append: include.icon }}"></use>
 </svg>

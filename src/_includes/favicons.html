@@ -1,4 +1,4 @@
-{%- assign src = '/assets/images/' -%}
+{%- assign src = '/assets/images/favicons/' -%}
 {%- if jekyll.environment != 'production' -%}
     {%- assign favicon_version = site.favicon_version | default: '1.0' | prepend: '?v=' -%}
 {%- else -%}
@@ -19,7 +19,7 @@
 <link rel="icon" type="image/png" sizes="32x32" href="{{ 'favicon-32x32.png' | prepend: src | relative_url | append: favicon_version }}">
 <link rel="icon" type="image/png" sizes="96x96" href="{{ 'favicon-96x96.png' | prepend: src | relative_url | append: favicon_version }}">
 <link rel="icon" type="image/png" sizes="16x16" href="{{ 'favicon-16x16.png' | prepend: src | relative_url | append: favicon_version }}">
-<link rel="mask-icon" href="{{ 'safari-pinned-tab.svg' | prepend: src | relative_url | append: favicon_version }}" color="#3b3634">
+<link rel="mask-icon" href="{{ 'safari-pinned-tab.svg' | prepend: src | relative_url | append: favicon_version }}" color="{{ site.theme_colour }}">
 <link rel="shortcut icon" href="{{ 'favicon.ico' | prepend: src | relative_url | append: favicon_version }}">
 
 <!-- Web Application Manifest -->
@@ -38,8 +38,8 @@
 
 <!-- Tile icon for Win8 (144x144 + tile color) -->
 <meta name="msapplication-TileImage" content="{{ 'ms-touch-icon-precomposed.png' | prepend: src | relative_url | append: favicon_version }}">
-<meta name="msapplication-TileColor" content="#3b3634">
+<meta name="msapplication-TileColor" content="{{ site.theme_colour }}">
 <meta name="msapplication-config" content="{{ 'browserconfig.xml' | relative_url | append: favicon_version }}">
 
 <!-- Color the status bar on mobile devices -->
-<meta name="theme-color" content="#3b3634">
+<meta name="theme-color" content="{{ site.theme_colour }}">
