@@ -8,9 +8,70 @@ hero:
     - text: 'Photography Hobbyist'
     - text: 'WordPress & Shopify Developer'
   quotes: true
+about:
+  heading: "Hi I'm Mat"
+  text: "I’m a fullstack developer from the UK, with a love for all code from front-end to back-end. I currently develop
+  in both WordPress and Shopify on a daily basis. I code to each platform language’s coding standards along with styling
+  in a BEM methology. I am also a computer science graduate from Aberystwyth University."
+  button:
+    link: /about/
+    text: "Learn More"
+projects:
+  text: "Being a fullstack developer that is always learning I have
+  gained experience in a variaty of different languages and
+  software. Some of these experiences are:"
+  skills:
+    - PHP
+    - JavaScript
+  button:
+    link: /about/
+    text: "Find Out More"
+testimonials:
+  - img: ""
+    name: "Joseph Brown"
+    role: "Operastions Director"
+    place: "@ Kubix Media"
+    review: "Mathew has a fantastic passion for all things Web and consistently bringing new ideas and processes to the
+    Web Development Department. Mat's knowledge of a vast amount of CMS' is an incredible asset, combined with fantastic
+    communication and organisational skills makes him a delight to work with."
 ---
 
 {%- include hero.html -%}
-<section class="about"></section>
-<section class="projects"></section>
-<section class="testimonials"></section>
+<section class="about section">
+  <h2>About Me</h2>
+  <div class="columns">
+    <div class="column is-7"><img src="" alt="" loading="lazy"></div>
+    <div class="column is-5">
+      <div class="bubble">
+        <h3>{{ page.about.heading }}</h3>
+      </div>
+      <p>{{ page.about.text }}</p>
+      <a class="" href="{{ page.about.button.link | relative_url }}" role="button">{{ page.about.button.text | upcase }}</a>
+    </div>
+  </div>
+</section>
+<section class="projects section">
+  <h2>Projects & Experience</h2>
+  <div class="columns">
+    <div class="column is-5">
+      <p>{{ page.projects.text }}</p>
+      <ul class="skills">
+        {%- for skill in page.projects.skills -%}
+          <li>{{ skill }}</li>
+        {%- endfor -%}
+      </ul>
+      <a class="" href="{{ page.projects.button.link | relative_url }}" role="button">{{ page.projects.button.text | upcase }}</a>
+    </div>
+    <div class="column is-7"></div>
+  </div>
+</section>
+<section class="testimonials section">
+  {%- for testimonial in page.testimonials -%}
+    <h2 class="testimonials__heading">{{ testimonial.name }}</h2>
+    <h3 class="testimonials__subheading">
+      <span>{{ testimonial.role }}</span><span>{{ testimonial.place }}</span>
+    </h3>
+    <div class="testimonials__review">{{ testimonial.review }}</div>
+  {%- endfor -%}
+</section>
+{%- include contact.html -%}
