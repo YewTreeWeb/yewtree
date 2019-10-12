@@ -27,6 +27,8 @@ module.exports = {
 	},
 	externals: {
 		jquery: 'jQuery',
+		browser: 'browser',
+		breakpoints: 'breakpoints'
 	},
 	plugins: [
 		// Set dependencies in global scope
@@ -34,7 +36,9 @@ module.exports = {
 		new webpack.ProvidePlugin({
 			$: 'jquery',
 			jQuery: 'jquery',
-			cloudinary: 'cloudinary-core'
+			cloudinary: 'cloudinary-core',
+			browser: 'browser',
+			breakpoints: 'breakpoints'
 		})
 	]
-}
+};
