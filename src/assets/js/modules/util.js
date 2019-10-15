@@ -36,6 +36,12 @@ export const setAttributes = (el, attrs) => {
 	}
 };
 
+export const removeAttributes = (el, attrs) => {
+	for (var key in attrs) {
+		el.removeAttribute(key, attrs[key]);
+	}
+};
+
 /* 
   DOM manipulation
 */

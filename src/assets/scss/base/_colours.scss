@@ -1,5 +1,5 @@
 :root,
-[data-theme="light"] {
+[data-theme='light'] {
   @each $name, $colour in $colours {
     --colour-#{$name}: #{hex2hsl($colour)};
   }
@@ -8,17 +8,17 @@
   }
 }
 
-[data-theme="dark"] {
+/* Dark mode */
+[data-theme='dark'] {
   @each $name, $colour in $dark-colours {
     --colour-#{$name}: #{hex2hsl($colour)};
   }
 }
 
-/* Dark mode */
-@media (prefers-color-scheme: dark) {
-  :root {
-    @each $name, $colour in $dark-colours {
-      --colour-#{$name}: #{hex2hsl($colour)};
-    }
-  }
-}
+// @media (prefers-color-scheme: dark) {
+//   :root {
+//     @each $name, $colour in $dark-colours {
+//       --colour-#{$name}: #{hex2hsl($colour)};
+//     }
+//   }
+// }
