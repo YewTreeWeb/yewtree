@@ -2,7 +2,7 @@
 import 'airbnb-browser-shims';
 
 // Internal
-import { setAttributes, removeAttributes } from './modules/util';
+import { removeClass } from './modules/util';
 import './modules/helpers';
 // import './modules/typed';
 import './modules/hero';
@@ -20,15 +20,15 @@ window.onload = () => {
 if (typeof localStorage != 'undefined') {
 	if (localStorage.getItem('theme')) {
 		const theme = localStorage.getItem('theme');
-		body.removeAttributes('data-theme', 'light');
-		body.removeAttributes('data-theme', 'dark');
-		body.setAttributes(theme);
+		body.removeAttribute('data-theme', 'light');
+		body.removeAttribute('data-theme', 'dark');
+		body.setAttribute('data-theme', theme);
 	}
 }
 
 // sessionStorage
 if (typeof sessionStorage != 'undefined') {
-	const bubble = document.querySelector['bubble'];
+	const bubble = document.querySelector('.bubble');
 	if (sessionStorage.getItem('theme')) {
 		if (sessionStorage['theme'] == 'light') {
 			bubble.innerHTML = '<h3>I see you walk the path of light.</h3>';
@@ -43,7 +43,9 @@ const switchTheme = document.getElementById('switch-theme');
 // const toggleDark = document.querySelector('.toggle-dark');
 
 switchTheme.addEventListener('click', function(e) {
-	e.preventDefault();
+  e.preventDefault();
+  console.log('clicked');
+  
 	if (body.getAttribute('data-theme') === 'light') {
 		localStorage.setItem('theme', 'dark');
 		sessionStorage.setItem('theme', 'dark');
