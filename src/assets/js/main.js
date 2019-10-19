@@ -7,7 +7,7 @@ import './modules/helpers';
 // import './modules/typed';
 import './modules/hero';
 
-const body = document.getElementsByTagName("body")[0];
+const body = document.getElementsByTagName('body')[0];
 
 // Remove loading class fron bosy on window load.
 window.onload = () => {
@@ -17,11 +17,25 @@ window.onload = () => {
 };
 
 // LocalStroage
-if (localStorage.getItem('theme')) {
-  const theme = localStorage.getItem('theme');
-  body.removeAttributes('data-theme', 'light');
-  body.removeAttributes('data-theme', 'dark');
-  body.setAttributes(theme);
+if (typeof localStorage != 'undefined') {
+	if (localStorage.getItem('theme')) {
+		const theme = localStorage.getItem('theme');
+		body.removeAttributes('data-theme', 'light');
+		body.removeAttributes('data-theme', 'dark');
+		body.setAttributes(theme);
+	}
+}
+
+// sessionStorage
+if (typeof sessionStorage != 'undefined') {
+	const bubble = document.querySelector['bubble'];
+	if (sessionStorage.getItem('theme')) {
+		if (sessionStorage['theme'] == 'light') {
+			bubble.innerHTML = '<h3>I see you walk the path of light.</h3>';
+		} else {
+			bubble.innerHTML = '<h3>The dark side is strong with you.</h3>';
+		}
+	}
 }
 
 const switchTheme = document.getElementById('switch-theme');
@@ -29,14 +43,14 @@ const switchTheme = document.getElementById('switch-theme');
 // const toggleDark = document.querySelector('.toggle-dark');
 
 switchTheme.addEventListener('click', function(e) {
-  e.preventDefault();
-  if (body.getAttribute('data-theme') === "light") {
-    localStorage.setItem('theme', 'dark');
-    sessionStorage.setItem('theme', 'dark');
-  } else {
-    localStorage.setItem('theme', 'light');
-    sessionStorage.setItem('theme', 'light');
-  }
+	e.preventDefault();
+	if (body.getAttribute('data-theme') === 'light') {
+		localStorage.setItem('theme', 'dark');
+		sessionStorage.setItem('theme', 'dark');
+	} else {
+		localStorage.setItem('theme', 'light');
+		sessionStorage.setItem('theme', 'light');
+	}
 });
 // toggleLight.addEventListener('click', function(e) {
 //   e.preventDefault();
