@@ -22,14 +22,14 @@
 
 /// Data tags.
 @mixin data($tag, $data) {
-	html[data-#{$tag}*='#{$data}'] & {
+	[data-#{$tag}*='#{$data}'] & {
 		@content;
 	}
 }
 
 // If only for dark mode
 @mixin darkmode {
-	[data-theme='dark'] {
+	[data-theme='dark'] & {
 		@content;
 	}
 }
@@ -266,7 +266,7 @@
 			@content;
 		}
 	} @else {
-		@error "A valid hover and/or active and/or focus is required.";
+		@warn "A valid hover and/or active and/or focus is required.";
 	}
 }
 

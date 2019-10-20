@@ -2,12 +2,12 @@
 import 'airbnb-browser-shims';
 
 // Internal
-import { removeClass } from './modules/util';
+import { removeClass, addClass } from './modules/util';
 import './modules/helpers';
-// import './modules/typed';
 import './modules/hero';
 
 const body = document.getElementsByTagName('body')[0];
+const html = document.getElementsByTagName('html')[0];
 
 // Remove loading class fron bosy on window load.
 window.onload = () => {
@@ -16,7 +16,9 @@ window.onload = () => {
 	}, 100);
 };
 
-// LocalStroage
+html.setAttribute('data-browser', browser.name);
+
+// LocalStroage.
 if (typeof localStorage != 'undefined') {
 	if (localStorage.getItem('theme')) {
 		const theme = localStorage.getItem('theme');
@@ -26,7 +28,7 @@ if (typeof localStorage != 'undefined') {
 	}
 }
 
-// sessionStorage
+// sessionStorage.
 if (typeof sessionStorage != 'undefined') {
 	const bubble = document.querySelector('.bubble');
 	if (sessionStorage.getItem('theme')) {
@@ -38,31 +40,39 @@ if (typeof sessionStorage != 'undefined') {
 	}
 }
 
+// set dark mode if user's system prefers it.
+if (window.matchMedia) {
+	if (process.env.NODE_ENV !== 'production') {
+		console.log('supports matchmedia');
+	}
+	if (matchMedia('(prefers-color-scheme: dark)').matches && !localStorage.getItem('theme')) {
+		if (process.env.NODE_ENV !== 'production') {
+			console.log('prefers dark');
+		}
+		body.removeAttribute('data-theme', 'light');
+		body.setAttribute('data-theme', 'dark');
+	}
+}
+
+// Switch between dark and light mode.
 const switchTheme = document.getElementById('switch-theme');
-// const toggleLight = document.querySelector('.toggle-light');
-// const toggleDark = document.querySelector('.toggle-dark');
 
 switchTheme.addEventListener('click', function(e) {
-  e.preventDefault();
-  console.log('clicked');
-  
+	e.preventDefault();
+
+	addClass(body, 'color-theme-in-transition');
 	if (body.getAttribute('data-theme') === 'light') {
+		body.setAttribute('data-theme', 'dark');
 		localStorage.setItem('theme', 'dark');
 		sessionStorage.setItem('theme', 'dark');
+		document.querySelector('.bubble').innerHTML = '<h3>The dark side is strong with you.</h3>';
 	} else {
+		body.setAttribute('data-theme', 'light');
 		localStorage.setItem('theme', 'light');
 		sessionStorage.setItem('theme', 'light');
+		document.querySelector('.bubble').innerHTML = '<h3>I see you walk the path of light.</h3>';
 	}
+	window.setTimeout(() => {
+		removeClass(body, 'color-theme-in-transition');
+	}, 3500);
 });
-// toggleLight.addEventListener('click', function(e) {
-//   e.preventDefault();
-//   addClass(body, 'light');
-//   removeClass(body, 'dark');
-//   localStorage.setItem('theme', 'light');
-// });
-// toggleDark.addEventListener('click', function(e) {
-//   e.preventDefault();
-//   addClass(body, 'dark');
-//   removeClass(body, 'light');
-//   localStorage.setItem('theme', 'dark');
-// });
