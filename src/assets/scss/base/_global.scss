@@ -44,7 +44,7 @@ body {
 		*,
 		*::before,
 		*::after {
-			@include prefix('transition', 'all 250ms ease-in-out !important');
+			@include prefix('transition', 'ease-in-out 200ms !important');
 			@include prefix('transition-delay', '0 !important');
 		}
 	}
