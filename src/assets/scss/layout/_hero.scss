@@ -38,13 +38,13 @@
 		.hero__body {
 			@include size(0, 130vh, min);
 			@include bgImg(
-        '/assets/images/snow-trees',
-        'center' 'center',
-        'dark',
-        '/assets/images/green-trees'
-      );
+				'/assets/images/snow-trees',
+				'center' 'center',
+				'dark',
+				'/assets/images/green-trees'
+			);
 			@include darkmode {
-				background-position-y: -440px;
+				background-position: center bottom;
 			}
 			.hero__subtitle,
 			.hero__title,
@@ -64,6 +64,12 @@
 			}
 			.hero__headings {
 				animation-delay: 5.8s;
+				.hero__heading {
+					font-weight: $weight;
+					b {
+						font-weight: inherit;
+					}
+				}
 			}
 			.hero__quotes {
 				@include flex(center, center);

@@ -37,7 +37,7 @@ testimonials:
 ---
 
 {%- include hero.html -%}
-<section class="about section">
+<section class="about">
   <h2>About Me</h2>
   <div class="columns">
     <div class="column is-7"><img src="" alt="" loading="lazy"></div>
@@ -50,7 +50,7 @@ testimonials:
     </div>
   </div>
 </section>
-<section class="projects section">
+<section class="projects">
   <h2>Projects & Experience</h2>
   <div class="columns">
     <div class="column is-5">
@@ -65,13 +65,18 @@ testimonials:
     <div class="column is-7"></div>
   </div>
 </section>
-<section class="testimonials section">
-  {%- for testimonial in page.testimonials -%}
-    <h2 class="testimonials__heading">{{ testimonial.name }}</h2>
-    <h3 class="testimonials__subheading">
-      <span>{{ testimonial.role }}</span><span>{{ testimonial.place }}</span>
-    </h3>
-    <div class="testimonials__review">{{ testimonial.review }}</div>
-  {%- endfor -%}
+<section class="sticky-hero testimonials js-sticky-hero">
+  <div class="sticky-hero__media" style="background-image:url(../../assets/img/sticky-hero-img-1.jpg)" aria-hidden="true"></div>
+  <div class="sticky-hero__content">
+    {%- for testimonial in page.testimonials -%}
+      <div class="container max-width-sm text-component">
+        <h2 class="testimonials__heading">{{ testimonial.name }}</h2>
+        <h3 class="testimonials__subheading">
+          <span>{{ testimonial.role }}</span><span>{{ testimonial.place }}</span>
+        </h3>
+        <div class="testimonials__review">{{ testimonial.review }}</div>
+      </div>
+    {%- endfor -%}
+  </div>
 </section>
 {%- include contact.html -%}
