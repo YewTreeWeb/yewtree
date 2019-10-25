@@ -27,17 +27,23 @@ projects:
     link: /about/
     text: "Find Out More"
 testimonials:
-  - img: ""
+  - img:
+      src: "joe"
+      alt: "Image of Joseph Brown smiling."
+      width:
+        - "200"
+        - "600"
     name: "Joseph Brown"
     role: "Operastions Director"
     place: "@ Kubix Media"
     review: "Mathew has a fantastic passion for all things Web and consistently bringing new ideas and processes to the
     Web Development Department. Mat's knowledge of a vast amount of CMS' is an incredible asset, combined with fantastic
     communication and organisational skills makes him a delight to work with."
+    platform: "LinkedIn"
 ---
 
 {%- include hero.html -%}
-<section class="about">
+<section class="about section">
   <h2>About Me</h2>
   <div class="columns">
     <div class="column is-7"><img src="" alt="" loading="lazy"></div>
@@ -50,7 +56,7 @@ testimonials:
     </div>
   </div>
 </section>
-<section class="projects">
+<section class="projects section">
   <h2>Projects & Experience</h2>
   <div class="columns">
     <div class="column is-5">
@@ -65,18 +71,50 @@ testimonials:
     <div class="column is-7"></div>
   </div>
 </section>
-<section class="sticky-hero testimonials sticky-hero--overlay-layer js-sticky-hero">
+<section class="sticky-hero sticky-hero--overlay-layer js-sticky-hero">
   <div class="sticky-hero__media" aria-hidden="true"></div>
-  <div class="sticky-hero__content">
-    {%- for testimonial in page.testimonials -%}
-      <div class="container max-width-sm text-component">
+  <div class="sticky-hero__content section">
+    <div class="container testimonials align-center">
+      {%- for testimonial in page.testimonials -%}
+        <picture>
+          <source
+            type="image/webp"
+            {%- for width in testimonial.img.width -%}
+            srcset="
+            {%- for width in testimonial.img.width -%}
+              {{ width | prepend: ',w_' | prepend: testimonial.img.src | prepend: '/assets/images/' | append: '.webp' | relative_url }}
+              {%- unless forloop.last -%}
+                {{ width | prepend: ' ' | append: 'w' | append: ', ' }}
+              {%- else -%}
+                {{ width | prepend: ' ' | append: 'w' }}
+              {%- endunless -%}
+            {%- endfor -%}
+            "
+            {%- endfor -%}
+            sizes="(max-width: {{ testimonial.img.width[1] }}px) 100vw, {{ testimonial.img.width[1] }}px">
+          <source 
+            type="image/jpg"
+            srcset="
+            {%- for width in testimonial.img.width -%}
+              {{ width | prepend: ',w_' | prepend: testimonial.img.src | prepend: '/assets/images/' | append: '.jpg' | append: ' ' | relative_url }}
+              {%- unless forloop.last -%}
+                {{ width | prepend: ' ' | append: 'w' | append: ', ' }}
+              {%- else -%}
+                {{ width | prepend: ' ' | append: 'w' }}
+              {%- endunless -%}
+            {%- endfor -%}
+            "
+            sizes="(max-width: {{ testimonial.img.width[1] }}px) 100vw, {{ testimonial.img.width[1] }}px">
+          <img class="lazyload testimonials__image" src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 3 2'%3E%3C/svg%3E" data-src="{{ '/assets/images/' | append: testimonial.img.src | append: ',w_' | append: testimonial.img.width[0] | append: '.jpg' | relative_url }}" data-sizes="auto" alt="{{ testimonial.img.alt }}" loading="lazy">
+        </picture>
         <h2 class="testimonials__heading">{{ testimonial.name }}</h2>
         <h3 class="testimonials__subheading">
           <span>{{ testimonial.role }}</span><span>{{ testimonial.place }}</span>
         </h3>
-        <div class="testimonials__review">{{ testimonial.review }}</div>
-      </div>
-    {%- endfor -%}
+        <p class="testimonials__review">{{ testimonial.review }}</p>
+        <p class="testimonials__platform">Posted on: {{ testimonial.platform }}</p>
+      {%- endfor -%}
+    </div>
   </div>
 </section>
 {%- include contact.html -%}
