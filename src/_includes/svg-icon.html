@@ -13,12 +13,14 @@
     {%- assign svgDesc = include.icon | append: 'Desc' -%}
     {%- assign aria = 'aria-labelledby="' | append: svgTitle | append: ' ' | append: svgDesc | append: '"'  -%}
 {%- endif -%}
+{%- if include.id -%}
+    {%- assign id = include.id -%}
+{%- endif -%}
 {%- if include.class -%}
-    {%- assign class = include -%}
+    {%- assign class = include.class -%}
 {%- endif -%}
 
-<svg {% if include.id %}id="{{ include.id }}" {% endif %}class="icon{% if include.class %} {{ include.class }}{% endif %}" {{ width }} {{ height }} {{ aria }}{% if include.hidden != true %}
-  role="img" {% endif %}>
+<svg {% if include.id %}id="{{ id }}" {% endif %}class="icon{% if include.class %} {{ class }}{% endif %}" {{ width }} {{ height }} {{ aria }}{% if include.hidden != true %} role="img"{% endif %}>
     <title{% if include.hidden != true %} id="{{ svgTitle }}"{% endif %}>{{ include.title | default: include.icon }}</title>
     {%- if include.hidden != true -%}
         <desc id="{{ svgDesc }}">{{ include.desc }}</desc>
