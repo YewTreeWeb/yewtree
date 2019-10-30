@@ -71,10 +71,13 @@ testimonials:
   </div>
 </section>
 <section class="sticky-hero sticky-hero--overlay-layer js-sticky-hero">
-  <div class="sticky-hero__media" aria-hidden="true" loading="lazy"></div>
+  <div class="sticky-hero__media" aria-hidden="true"></div>
   <div class="sticky-hero__content section">
     <div class="container testimonials align-center">
       {%- for testimonial in page.testimonials -%}
+        {%- if forloop.index > 1 -%}
+          <div class="testimonials__slide">
+        {%- endif -%}
         <picture>
           <source
             type="image/webp"
@@ -104,13 +107,18 @@ testimonials:
             {%- endfor -%}
             "
             sizes="(max-width: {{ testimonial.img.width[1] }}px) 100vw, {{ testimonial.img.width[1] }}px">
-          <img class="lazyload testimonials__image" data-src="{{ '/assets/images/' | append: testimonial.img.src | append: ',w_' | append: testimonial.img.width[0] | append: '.jpg' | relative_url }}" data-sizes="auto" alt="{{ testimonial.img.alt }}" loading="lazy" intrinsicsize="194x194" width="200" height="200">
+          <img class="lazyload testimonials__image" src="" data-src="{{ '/assets/images/' | append: testimonial.img.src | append: ',w_' | append: testimonial.img.width[0] | append: '.jpg' | relative_url }}" data-sizes="auto" alt="{{ testimonial.img.alt }}" intrinsicsize="194x194" width="200" height="200">
         </picture>
-        <h2 class="testimonials__heading">{{ testimonial.name }}</h2>
-        <h3 class="testimonials__subheading">
-          <span>{{ testimonial.role }}</span><span>{{ testimonial.place }}</span>
-        </h3>
+        <hgroup class="testimonials testimonials--headings">
+          <h2 class="testimonials__heading">{{ testimonial.name }}</h2>
+          <h3 class="testimonials__subheading">
+            <span>{{ testimonial.role }}</span><span>{{ testimonial.place }}</span>
+          </h3>
+        </hgroup>
         <p class="testimonials__review">{{ testimonial.review }}</p>
+        {%- if forloop.index > 1 -%}
+          </div>
+        {%- endif -%}
       {%- endfor -%}
     </div>
   </div>

@@ -21,10 +21,6 @@
     {%- include_cached footer.html -%}
 
     <!-- JS -->
-    <script src="{{ '/assets/js/breakpoints.min.js' | relative_url }}" defer></script>
-    <script src="{{ '/assets/js/browser.min.js' | relative_url }}" defer></script>
-    <script src="{{ '/assets/js/main.js' | relative_url }}" defer></script>
-
     {%- if jekyll.environment == "production" -%}
       <!-- Google Analytics: change UA-XXXXX-Y to be your site's ID. -->
       <script>
@@ -38,8 +34,11 @@
       </script>
       <script src="https://www.google-analytics.com/analytics.js" async defer></script>
     {%- endif -%}
-
-    <script src="//instant.page/2.0.0" type="module" defer integrity="sha384-D7B5eODAUd397+f4zNFAVlnDNDtO1ppV8rPnfygILQXhqu3cUndgHvlcJR2Bhig8"></script>
+    <script src="{{ '/assets/js/lazysizes.min.js' | relative_url }}" defer></script>
+    <script src="{{ '/assets/js/breakpoints.min.js' | relative_url }}" defer></script>
+    <script src="{{ '/assets/js/browser.min.js' | relative_url }}" defer></script>
+    <script src="{{ '/assets/js/main.js' | relative_url }}" defer></script>
+    <script src="//instant.page/3.0.0" type="module" defer integrity="sha384-OeDn4XE77tdHo8pGtE1apMPmAipjoxUQ++eeJa6EtJCfHlvijigWiJpD7VDPWXV1"></script>
   </body>
 
 </html>
