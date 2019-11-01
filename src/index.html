@@ -30,9 +30,7 @@ testimonials:
   - img:
       src: "joe"
       alt: "Image of Joseph Brown smiling."
-      width:
-        - "100"
-        - "200"
+      width: "200"
     name: "Joseph Brown"
     role: "Operastions Director"
     place: "@ Kubix Media"
@@ -79,35 +77,9 @@ testimonials:
           <div class="testimonials__slide">
         {%- endif -%}
         <picture>
-          <source
-            type="image/webp"
-            {%- for width in testimonial.img.width -%}
-            srcset="
-            {%- for width in testimonial.img.width -%}
-              {{ width | prepend: ',w_' | prepend: testimonial.img.src | prepend: '/assets/images/' | append: '.webp' | relative_url }}
-              {%- unless forloop.last -%}
-                {{ width | prepend: ' ' | append: 'w' | append: ', ' }}
-              {%- else -%}
-                {{ width | prepend: ' ' | append: 'w' }}
-              {%- endunless -%}
-            {%- endfor -%}
-            "
-            {%- endfor -%}
-            sizes="(max-width: {{ testimonial.img.width[1] }}px) 100vw, {{ testimonial.img.width[1] }}px">
-          <source 
-            type="image/jpg"
-            srcset="
-            {%- for width in testimonial.img.width -%}
-              {{ width | prepend: ',w_' | prepend: testimonial.img.src | prepend: '/assets/images/' | append: '.jpg' | append: ' ' | relative_url }}
-              {%- unless forloop.last -%}
-                {{ width | prepend: ' ' | append: 'w' | append: ', ' }}
-              {%- else -%}
-                {{ width | prepend: ' ' | append: 'w' }}
-              {%- endunless -%}
-            {%- endfor -%}
-            "
-            sizes="(max-width: {{ testimonial.img.width[1] }}px) 100vw, {{ testimonial.img.width[1] }}px">
-          <img class="lazyload testimonials__image" src="" data-src="{{ '/assets/images/' | append: testimonial.img.src | append: ',w_' | append: testimonial.img.width[0] | append: '.jpg' | relative_url }}" data-sizes="auto" alt="{{ testimonial.img.alt }}" intrinsicsize="194x194" width="200" height="200">
+          <source type="image/webp" srcset="{{ '/assets/images/' | append: testimonial.img.src | append: ',w_' | append: testimonial.img.width | append: '.webp' | relative_url }}">
+          <source type="image/jpg" srcset="{{ '/assets/images/' | append: testimonial.img.src | append: ',w_' | append: testimonial.img.width | append: '.jpg' | relative_url }}">
+          <img class="lazyload testimonials__image" src="" data-src="{{ '/assets/images/' | append: testimonial.img.src | append: ',w_' | append: testimonial.img.width | append: '.jpg' | relative_url }}" data-sizes="auto" alt="{{ testimonial.img.alt }}" intrinsicsize="194x194" width="200" height="200">
         </picture>
         <hgroup class="testimonials testimonials--headings">
           <h2 class="testimonials__heading">{{ testimonial.name }}</h2>
