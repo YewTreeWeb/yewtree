@@ -37,6 +37,39 @@ testimonials:
     review: "Mathew has a fantastic passion for all things Web and consistently bringing new ideas and processes to the
     Web Development Department. Mat's knowledge of a vast amount of CMS' is an incredible asset, combined with fantastic
     communication and organisational skills makes him a delight to work with."
+  - img:
+      src: "scott"
+      alt: "Image of Scott Jinks smiling."
+    name: "Scott Jinks"
+    role: "Assistant Brand Manager"
+    place: "@ Estrella Damm at Marston's PLC"
+    review: "Having worked with Mathew on multiple digital projects, I feel totally at ease recommending him for his
+    encyclopedia-like knowledge of all things digital and his ability to build quality websites with a real focus on
+    ensuring top functionality. Mathew is also has wonderful personality and would welcome any opportunity to work with
+    him again in the future."
+  - img:
+      src: "jason"
+      alt: "Image of Jason James smiling."
+    name: "Jason James"
+    role: "Experienced Digital Marketing Specialist"
+    place: "@ Global Search Marketing Ltd"
+    review: "Dedicated is the phrase that comes to mind when I think about Mat . I’ve had the pleasure of knowing Mat
+    for 2 years, during which I worked with him in the digital team at Gough Bailey Wright. Above all, I was impressed
+    with Mat’s ability to build WordPress websites using is own custom built theme rather than use an off-the-shelf
+    them. And, of course, his/her passion for web development in general. Mat would be a true asset for any positions
+    requiring web design and development expertise, especially when it comes to WordPress website builds and comes with
+    my heartfelt recommendation."
+  - img:
+      src: "matt-h"
+      alt: "Image of Matthew Harrison smiling."
+    name: "Matthew Harrison"
+    role: "Digital Marketing Director"
+    place: "@ Kubix Media"
+    review: "Working with Mat has been an absolute pleasure, and his web development skills are second-to-none. I’ve
+    learned so much from Mat through the many projects we’ve worked on together, from frameworks to task runners to the
+    best coding techniques - Which brings me onto what I admire most about Mat, and that’s the way he always finds the
+    time to help you if you need it. Mat would be an asset to any employer and I can recommend him without reservation.
+    See less"
 ---
 
 {%- include hero.html -%}
@@ -76,10 +109,15 @@ testimonials:
         {%- if forloop.index > 1 -%}
           <div class="testimonials__slide">
         {%- endif -%}
+        {%- if testimonial.img.width -%}
+          {%- assign picture = '/assets/images/' | append: testimonial.img.src | append: ',w_' | append: testimonial.img.width -%}
+        {%- else -%}
+          {%- assign picture = '/assets/images/' | append: testimonial.img.src -%}
+        {%- endif -%}
         <picture>
-          <source type="image/webp" srcset="{{ '/assets/images/' | append: testimonial.img.src | append: ',w_' | append: testimonial.img.width | append: '.webp' | relative_url }}">
-          <source type="image/jpg" srcset="{{ '/assets/images/' | append: testimonial.img.src | append: ',w_' | append: testimonial.img.width | append: '.jpg' | relative_url }}">
-          <img class="lazyload testimonials__image" src="" data-src="{{ '/assets/images/' | append: testimonial.img.src | append: ',w_' | append: testimonial.img.width | append: '.jpg' | relative_url }}" data-sizes="auto" alt="{{ testimonial.img.alt }}" intrinsicsize="194x194" width="200" height="200">
+          <source type="image/webp" srcset="{{ picture | append: '.webp' | relative_url }}">
+          <source type="image/jpg" srcset="{{ picture | append: '.jpg' | relative_url }}">
+          <img class="lazyload testimonials__image" src="" data-src="{{ picture | append: '.jpg' | relative_url }}" data-sizes="auto" alt="{{ testimonial.img.alt }}" intrinsicsize="194x194" width="200" height="200">
         </picture>
         <hgroup class="testimonials testimonials--headings">
           <h2 class="testimonials__heading">{{ testimonial.name }}</h2>
