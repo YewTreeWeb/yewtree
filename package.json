@@ -40,6 +40,7 @@
   "license": "ISC",
   "homepage": "https://yewtreeweb.co.uk",
   "dependencies": {
+    "@glidejs/glide": "^3.4.1",
     "@sentry/browser": "4.6.4",
     "airbnb-browser-shims": "^3.1.0",
     "bearbones": "^0.36.2",

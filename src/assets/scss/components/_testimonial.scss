@@ -15,7 +15,7 @@
 		@include margin(20px null 10px);
 	}
 	&__subheading {
-		max-width: 300px;
+		max-width: 600px;
 		margin: 0 auto;
 		line-height: 1.2;
 		> span {
@@ -27,5 +27,8 @@
 		max-width: 568px;
 		@include font(em(_heading(h5)), null, $weight, 1.2);
 		@include margin(em(36px) auto null);
+	}
+	&__slide {
+		@include size(100%, null);
 	}
 }
