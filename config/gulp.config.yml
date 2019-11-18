@@ -50,13 +50,16 @@ fonts:
 image:
   dest: "dist/assets/images"
   icons: "src/assets/images/icons/*.svg"
+  sprites: "src/assets/images/sprites/*.+(jpg|jpeg|png)"
   src:
     - "src/assets/images/**/*.+(jpg|jpeg|png|svg|gif)"
     - "!src/assets/images/icons/*"
+    - "!src/assets/images/sprites/*"
   webp:
     - "src/assets/images/**/*.+(jpg|jpeg|png)"
     - "!src/assets/images/icons/*"
     - "!src/assets/images/favicons/*"
+    - "!src/assets/images/sprites/*"
 
 ## Jekyll
 jekyll:
@@ -95,4 +98,5 @@ watch:
   js: "src/assets/js/**/*.js"
   images: "src/assets/images/**/*"
   icons: "src/assets/images/icons/*"
+  sprites: "src/assets/images/sprites/*"
   scss: "src/assets/scss/**/*.scss"
