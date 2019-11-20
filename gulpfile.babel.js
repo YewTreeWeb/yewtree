@@ -295,6 +295,13 @@ export const sprite = () => {
 				}
 			})
 		)
+		.pipe(
+			$.replace(
+				'background-image:url(sprite.png);',
+				'background-image:url(sprite.png);background-image:url(sprite.webp);'
+			)
+		)
+		.pipe($.replace(/.icon-/g, '.'))
 		.pipe(dest(config.sass.dest))
 		.pipe($.if(!prod, dest(config.sass.tmp)));
 

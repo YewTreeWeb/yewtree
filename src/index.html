@@ -94,17 +94,9 @@ projects:
         {%- if forloop.index >= 1 -%}
           <div class="testimonials__slide">
         {%- endif -%}
-        {%- if testimonial.img.width -%}
-          {%- assign picture = '/assets/images/' | append: testimonial.img.src | append: ',w_' | append: testimonial.img.width -%}
-        {%- else -%}
-          {%- assign picture = '/assets/images/' | append: testimonial.img.src -%}
-        {%- endif -%}
-        <picture>
-          <source type="image/webp" srcset="{{ picture | append: '.webp' | relative_url }}">
-          <source type="image/jpg" srcset="{{ picture | append: '.jpg' | relative_url }}">
-          <img class="lazyload testimonials__image" src="" data-src="{{ picture | append: '.jpg' | relative_url }}" data-sizes="auto" alt="{{ testimonial.img.alt }}" intrinsicsize="194x194" width="200" height="200">
-        </picture>
-        <hgroup class="testimonials testimonials--headings">
+        <div class="testimonials__image {{ testimonial.img.name }}" role="img" aria-label="{{ testimonial.img.alt }}">
+        </div>
+        <hgroup class="testimonials__headings">
           <h2 class="testimonials__heading">{{ testimonial.name }}</h2>
           <h3 class="testimonials__subheading">
             <span>{{ testimonial.role }}</span><span>{{ testimonial.place | prepend: '@ ' }}</span>
