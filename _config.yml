@@ -19,7 +19,7 @@
 title: "YewTree Web"
 description: "Portfolio website."
 url: https://yewtreeweb.co.uk
-baseurl: '/'
+baseurl: "/"
 lang: en-GB
 words_per_minute: 200
 
@@ -39,12 +39,12 @@ author:
   email: mathew.teague@yewtreeweb.co.uk
   uri: yewtreeweb
   bio: me
-  twitter:
-  github:
-  twitter:
-  facebook:
-  instagram:
-  linkedin:
+  twitter: "https://twitter.com/yewtreeweb"
+  github: "https://github.com/YewTreeWeb"
+  pintrest: "https://www.pinterest.co.uk/mteague89/"
+  instagram: "https://www.instagram.com/mat.teague/"
+  linkedin: "https://www.linkedin.com/in/mathewteague"
+  gitlab: "https://gitlab.com/YewTreeWeb"
 
 # _config.dev.yml overwrites these options when you run `gulp`
 # Hides your drafts and future posts
@@ -58,22 +58,22 @@ limit_posts: 0
 # Permalink structure and pagination options
 permalink: pretty
 paginate: 10
-paginate_path: 'page:num'
-excerpt_separator: ''
+paginate_path: "page:num"
+excerpt_separator: ""
 
 # Markdown library and options
 markdown: kramdown
 kramdown:
-  auto_ids:         true
-  footnote_nr:      1
-  entity_output:    as_char
-  toc_levels:       1..6
-  enable_coderay:   false
+  auto_ids: true
+  footnote_nr: 1
+  entity_output: as_char
+  toc_levels: 1..6
+  enable_coderay: false
 highlighter: rouge
 strict_front_matter: true
 
 # Favicons
-favicon_version: '1.0'
+favicon_version: "1.0"
 theme_colour: "#242830"
 
 # Site analytics

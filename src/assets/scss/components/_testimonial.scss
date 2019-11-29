@@ -5,6 +5,7 @@
 		@include size(194px, null, max);
 		border: 2px solid v(colour-white);
 		box-shadow: 0 0 14px 1px rgba(0, 0, 0, 0.5);
+		margin: 0 auto;
 	}
 	&__heading,
 	&__subheading {

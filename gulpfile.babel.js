@@ -81,7 +81,7 @@ export const jekyll_check = (done) => {
  * Styles
  */
 export const sass = () => {
-	return src(config.sass.src)
+	return src(config.sass.src, { allowEmpty: true })
 		.pipe($.plumber())
 		.pipe($.if(!prod, $.sourcemaps.init())) // Start sourcemap.
 		.pipe(
@@ -150,7 +150,7 @@ export const sass = () => {
  * Scripts
  */
 export const js = () => {
-	return src(config.js.src)
+	return src(config.js.src, { allowEmpty: true })
 		.pipe($.plumber())
 		.pipe(named())
 		.pipe(webpackStream(webpackConfig), webpack)
@@ -200,7 +200,7 @@ export const vendorTask = () => {
  * Images
  */
 export const images = () => {
-	return src(config.image.src)
+	return src(config.image.src, { allowEmpty: true })
 		.pipe($.plumber())
 		.pipe($.changed(config.image.dest))
 		.pipe(
@@ -280,8 +280,9 @@ export const sprite = () => {
 				}
 			)
 		)
-		.pipe(dest(config.image.dest))
-		.pipe($.if(!prod, dest('.tmp/images')));
+		.pipe(dest('.tmp/images'));
+	// .pipe(dest(config.image.dest))
+	// .pipe($.if(!prod, dest('.tmp/images')));
 
 	// Pipe CSS stream through CSS optimizer and onto disk
 	const cssStream = spriteData.css
@@ -301,6 +302,7 @@ export const sprite = () => {
 				'background-image:url(sprite.png);background-image:url(sprite.webp);'
 			)
 		)
+		.pipe($.replace(/sprite/g, '../images/sprite'))
 		.pipe($.replace(/.icon-/g, '.'))
 		.pipe(dest(config.sass.dest))
 		.pipe($.if(!prod, dest(config.sass.tmp)));
@@ -449,11 +451,11 @@ export const clean_cache = (done) => {
  * Copy
  */
 export const copy = (done) => {
-	src(config.copy.src).pipe(dest(config.copy.dest));
+	src(config.copy.src, { allowEmpty: true }).pipe(dest(config.copy.dest));
 	done();
 };
 export const copyVendors = (done) => {
-	src(config.copy.vendors.src)
+	src(config.copy.vendors.src, { allowEmpty: true })
 		.pipe($.plumber())
 		.pipe($.if('*.css', $.cleanCSS()))
 		.pipe($.if('*.js', $.uglify()))
@@ -466,11 +468,15 @@ export const copyVendors = (done) => {
  * Fonts
  */
 export const fonts = (done) => {
-	src(config.fonts.src).pipe($.plumber()).pipe(dest(config.fonts.dest)).pipe($.if(!prod, dest('.tmp/fonts'))).pipe(
-		$.size({
-			title: 'Fonts completed'
-		})
-	);
+	src(config.fonts.src, { allowEmpty: true })
+		.pipe($.plumber())
+		.pipe(dest(config.fonts.dest))
+		.pipe($.if(!prod, dest('.tmp/fonts')))
+		.pipe(
+			$.size({
+				title: 'Fonts completed'
+			})
+		);
 	done();
 };
 

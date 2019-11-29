@@ -57,6 +57,7 @@ image:
     - "!src/assets/images/sprites/*"
   webp:
     - "src/assets/images/**/*.+(jpg|jpeg|png)"
+    - ".tmp/images/sprite.png"
     - "!src/assets/images/icons/*"
     - "!src/assets/images/favicons/*"
     - "!src/assets/images/sprites/*"

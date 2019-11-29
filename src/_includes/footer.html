@@ -16,13 +16,13 @@
         <ul class="social-media-list">
           {% if site.author.github %}
           <li>
-            {% include icons/icon-github.html username=site.author.github %}
+            {%- include svg-icon.html icon="Github" id="github" w="59" h="59" hidden=true -%}
           </li>
           {% endif %}
 
           {% if site.author.twitter %}
           <li>
-            {% include icons/icon-twitter.html username=site.author.twitter %}
+            {%- include svg-icon.html icon="Twitter" id="twitter" w="59" h="59" hidden=true -%}
           </li>
           {% endif %}
         </ul>
