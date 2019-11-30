@@ -1,5 +1,55 @@
-.projects {
-	.skills {
-		column-count: 2;
+.page-home {
+	.section {
+		min-height: 50vh;
+		h2 {
+			text-align: center;
+			margin-bottom: 60px;
+		}
+		p,
+		ul {
+			font-size: _heading(h6);
+		}
+	}
+	.projects {
+		p {
+			font-weight: $weight-light;
+		}
+		.skills {
+			column-count: 2;
+			margin-top: em(18px);
+			font-weight: $weight;
+			line-height: 1.3;
+		}
+	}
+	.about {
+		.bubble {
+			border-width: 4px;
+			border-style: solid;
+			border-color: v(colour-grey-dark);
+			border-radius: 3px;
+			width: fit-content;
+			padding: 8px 9.5%;
+			margin-bottom: 25px;
+			position: relative;
+			&::after {
+				content: '';
+				position: absolute;
+				left: 0;
+				border-right: 10px solid v(colour-grey-dark);
+			}
+			h3 {
+				font-size: _heading(h4);
+			}
+		}
+	}
+	&[data-theme='dark'] {
+		.about {
+			.bubble {
+				border-color: v(colour-grey-light);
+				&::after {
+					border-color: v(colour-grey-light);
+				}
+			}
+		}
 	}
 }
