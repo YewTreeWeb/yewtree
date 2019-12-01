@@ -6,7 +6,7 @@
 
 /// Convert Hex to HSLA color.
 @function hex2hsla($colour, $opacity) {
-	@return unquote("hsla(#{hue($colour)}, #{saturation($colour)}, #{lightness($colour)}, $opacity)"
+	@return unquote("hsla(#{hue($colour)}, #{saturation($colour)}, #{lightness($colour)}, #{$opacity})"
   );
 }
 
@@ -145,6 +145,27 @@
 /// @return {string} Value.
 @function _heading($keys...) {
 	@return val($headings, $keys...);
+}
+
+/// Gets a colour value.
+/// @param {string} $keys Key(s).
+/// @return {string} Value.
+@function _colour($keys...) {
+	@return val($colours, $keys...);
+}
+
+/// Gets a light colour value.
+/// @param {string} $keys Key(s).
+/// @return {string} Value.
+@function _lightcolour($keys...) {
+	@return val($light-colours, $keys...);
+}
+
+/// Gets a dark colour value.
+/// @param {string} $keys Key(s).
+/// @return {string} Value.
+@function _darkcolour($keys...) {
+	@return val($dark-colours, $keys...);
 }
 
 /// Transforms shorthand to its shortest possible form.

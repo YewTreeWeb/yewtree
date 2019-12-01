@@ -143,6 +143,10 @@ export const sass = () => {
 		)
 		.pipe(dest(config.sass.dest))
 		.pipe($.if(!prod, sync.stream()))
+		.pipe($.if(!prod, dest(config.sass.tmp)))
+		.pipe($.rename('style-fallback.css'))
+		.pipe($.postcss([ cssvariables(), calc() ]))
+		.pipe(dest(config.sass.dest))
 		.pipe($.if(!prod, dest(config.sass.tmp)));
 };
 

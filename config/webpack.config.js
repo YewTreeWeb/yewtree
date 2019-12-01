@@ -5,9 +5,18 @@ const prod = yargs.argv.prod;
 module.exports = {
 	module: {
 		rules: [
+			// {
+			// 	test: /\.jsx$/,
+			// 	loader: 'babel-loader',
+			// 	exclude: /node_modules/,
+			// 	options: {
+			// 		presets: [ '@babel/preset-env', 'babel-preset-airbnb' ],
+			// 		plugins: [ '@babel/plugin-syntax-dynamic-import', '@babel/plugin-transform-runtime' ]
+			// 	}
+			// },
 			{
-				test: /\.js$/,
-				loader: 'babel-loader',
+				test: /\.tsx?$/,
+				loader: 'ts-loader',
 				exclude: /node_modules/,
 				options: {
 					presets: [ '@babel/preset-env', 'babel-preset-airbnb' ],
@@ -15,6 +24,9 @@ module.exports = {
 				}
 			}
 		]
+	},
+	resolve: {
+		extensions: [ '.tsx', '.ts', '.js' ]
 	},
 	mode: prod ? 'production' : 'development',
 	devServer: {

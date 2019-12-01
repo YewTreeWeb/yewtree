@@ -7,8 +7,6 @@
 @import './helpers/functions';
 @import './helpers/variables';
 @import './helpers/mixins';
-/// Reset css.
-@import '../vendors/codyhouse-framework/main/assets/css/base/reset';
 /// Base files for project
 @import './base/*';
 /// Layouts - sections for the site.

@@ -61,7 +61,10 @@ projects:
 <section class="about section" data-theme="dark">
   <h2>About Me</h2>
   <div class="columns">
-    <div class="column is-7"><img src="" alt="" loading="lazy"></div>
+    <div class="column is-7">
+      <img class="lazyload asset-light" src="{{ 'assets/images/character-light.svg' | relative_url }}" alt="Illustration of a smiling character holding a phone and laptop." loading="lazy" data-sizes="auto" intrinsicsize="702x425">
+      <img class="lazyload asset-dark" src="{{ 'assets/images/character-dark.svg' | relative_url }}" alt="Illusttation of a person with a latop and huddie" loading="lazy" data-sizes="auto" intrinsicsize="702x425">
+    </div>
     <div class="column is-5">
       <div class="bubble">
         <h3>{{ page.about.heading }}</h3>
@@ -83,7 +86,13 @@ projects:
       </ul>
       <a class="btn" href="{{ page.projects.button.link | relative_url }}" role="button">{{ page.projects.button.text | upcase }}</a>
     </div>
-    <div class="column is-7"></div>
+    <div class="column is-7">
+      <img class="lazyload asset-light" src="{{ 'assets/images/feature-illustration-light.svg' | relative_url }}"
+        alt="Illustration of a smiling character holding a phone and laptop." loading="lazy" data-sizes="auto"
+        intrinsicsize="702x425">
+      <img class="lazyload asset-dark" src="{{ 'assets/images/feature-illustration-dark.svg' | relative_url }}"
+        alt="Illusttation of a person with a latop and huddie" loading="lazy" data-sizes="auto" intrinsicsize="702x425">
+    </div>
   </div>
 </section>
 <section class="sticky-hero sticky-hero--overlay-layer js-sticky-hero">

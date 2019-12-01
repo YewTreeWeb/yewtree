@@ -1,0 +1,33 @@
+.box {
+	background-color: v(colour-secondary);
+	color: v(colour-text);
+	@include size(1056px, 386px, max);
+	width: 100%;
+	margin: 0 auto;
+	box-shadow: -1px 25px 20px 0px darken(_lightcolour(secondary), 10%);
+	@include darkmode {
+		box-shadow: -1px 25px 20px 0px darken(_darkcolour(secondary), 10%);
+	}
+	text-align: center;
+	@include padding(45.67px 4.9% 66px);
+	&__media {
+		svg {
+			@include size(96px);
+			color: v(colour-text);
+			fill: v(colour-text);
+			path {
+				fill: v(colour-text) !important;
+			}
+		}
+		margin-bottom: em(25px);
+	}
+	&__content {
+		@include font(em(_heading(h3)), $family-base, $weight-heavy);
+		> span {
+			@include font(inherit, null, inherit);
+		}
+	}
+	&__form {
+		@include flex(center, space-between, row);
+	}
+}
