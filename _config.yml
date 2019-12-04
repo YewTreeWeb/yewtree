@@ -24,7 +24,7 @@ lang: en-GB
 words_per_minute: 200
 
 # Used so Jekyll outputs the site correctly so Gulp can do what it wants
-source: src
+source: .tmp
 destination: dist
 include:
   - _pages
@@ -149,6 +149,6 @@ exclude:
   - netlify.toml
   - CHANGELOG.md
   - workbox-config.js
-  - assets
-  - .tmp/
+  # - assets
+  # - .tmp/
   - config/**/*

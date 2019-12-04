@@ -30,20 +30,22 @@ cloudinary:
 
 ### Copy files from tmp
 copy:
-  dest: "dist/assets/"
-  src: ".tmp/**/*"
+  dest: ".tmp"
+  src:
+    - "src/**/*"
+    - "!src/assets/**/*"
   vendors:
     src:
       - "src/assets/vendors/normalize.css/normalize.css"
       - "src/assets/vendors/breakpoints.min.js"
       - "src/assets/vendors/browser.min.js"
       - "src/assets/vendors/lazysizes/lazysizes.min.js"
-    css: "dist/assets/css"
-    js: "dist/assets/js"
+    css: ".tmp/assets/css"
+    js: ".tmp/assets/js"
 
 ### Fonts
 fonts:
-  dest: "dist/assets/fonts"
+  dest: ".tmp/assets/fonts"
   src: "src/assets/fonts/*"
 
 ## Images
@@ -57,7 +59,7 @@ image:
     - "!src/assets/images/sprites/*"
   webp:
     - "src/assets/images/**/*.+(jpg|jpeg|png)"
-    - ".tmp/images/sprite.png"
+    - ".tmp/assets/images/sprite.png"
     - "!src/assets/images/icons/*"
     - "!src/assets/images/favicons/*"
     - "!src/assets/images/sprites/*"
@@ -72,7 +74,6 @@ jekyll:
 js:
   dest: "dist/assets/js"
   src: "src/assets/js/main.js"
-  tmp: ".tmp/js"
 
 ## Project styles
 sass:
@@ -80,7 +81,6 @@ sass:
   src:
     - "src/assets/scss/main.scss"
     - "src/assets/scss/font.scss"
-  tmp: ".tmp/css"
 
 ### Vendor assets
 vendors:
