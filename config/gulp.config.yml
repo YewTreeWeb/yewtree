@@ -30,10 +30,8 @@ cloudinary:
 
 ### Copy files from tmp
 copy:
-  dest: ".tmp"
-  src:
-    - "src/**/*"
-    - "!src/assets/**/*"
+  dest: "dist"
+  src: ".tmp/assets/**/*"
   vendors:
     src:
       - "src/assets/vendors/normalize.css/normalize.css"
