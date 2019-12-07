@@ -1,7 +1,7 @@
 .box {
 	background-color: v(colour-secondary);
 	color: v(colour-text);
-	@include size(1056px, 386px, max);
+	@include size(1256px, null, max);
 	width: 100%;
 	margin: 0 auto;
 	box-shadow: -1px 25px 20px 0px darken(_lightcolour(secondary), 10%);
@@ -15,19 +15,38 @@
 			@include size(96px);
 			color: v(colour-text);
 			fill: v(colour-text);
+			stroke: v(colour-text);
+			g,
 			path {
+				color: v(colour-text);
+				stroke: v(colour-text);
 				fill: v(colour-text) !important;
 			}
 		}
 		margin-bottom: em(25px);
 	}
 	&__content {
-		@include font(em(_heading(h3)), $family-base, $weight-heavy);
+		@include font(em(_heading(h2)), $family-base, $weight-heavy);
 		> span {
 			@include font(inherit, null, inherit);
 		}
 	}
 	&__form {
-		@include flex(center, space-between, row);
+		@include flex(center, center, row);
+		margin-top: em(43px);
+		p {
+			line-height: 0;
+			@include even() {
+				input {
+					@include margin(null 50px);
+				}
+			}
+			button {
+				margin-top: 0;
+				line-height: 1;
+				margin-left: 50px;
+				vertical-align: middle;
+			}
+		}
 	}
 }

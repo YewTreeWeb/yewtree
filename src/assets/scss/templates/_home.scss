@@ -11,6 +11,7 @@
 		}
 	}
 	.about {
+		position: relative;
 		.column.is-7 {
 			padding-right: 4.5%;
 		}
@@ -59,6 +60,26 @@
 		img {
 			transform: scaleX(-1);
 		}
+	}
+	.contact-area {
+		position: relative;
+		min-height: 100vh;
+		.box {
+			@include center(true, false);
+			top: 10%;
+		}
+	}
+	.footer-bg,
+	.header-bg {
+		width: 100%;
+		@include center(true, false);
+	}
+	.header-bg {
+		height: auto;
+		top: -624px;
+	}
+	.footer-bg {
+		height: 100%;
 	}
 	&[data-theme='dark'] {
 		.about {

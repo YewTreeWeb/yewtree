@@ -59,8 +59,13 @@ projects:
 
 {%- include hero.html -%}
 <section class="about section" data-theme="dark">
+  <img class="lazyload asset-light header-bg header-bg--light"
+    src="{{ 'assets/images/header-bg-light.svg' | relative_url }}"
+    alt="Illustration of a smiling character holding a phone and laptop." loading="lazy" data-sizes="auto">
+  <img class="lazyload asset-dark header-bg header-bg--dark" src="{{ 'assets/images/header-bg.svg' | relative_url }}"
+    alt="Illusttation of a person with a latop and huddie" loading="lazy" data-sizes="auto">
   <div class="container">
-    <h2>About MeK</h2>
+    <h2>About Me</h2>
     <div class="columns">
       <div class="column is-7">
         <img class="lazyload asset-light" src="{{ 'assets/images/character-light.svg' | relative_url }}" alt="Illustration of a smiling character holding a phone and laptop." loading="lazy" data-sizes="auto" intrinsicsize="702x425">
@@ -123,4 +128,10 @@ projects:
     </div>
   </div>
 </section>
-{%- include contact.html -%}
+<section class="contact-area">
+  <img class="lazyload asset-light footer-bg ooter-bg--light" src="{{ 'assets/images/footer-bg-light.svg' | relative_url }}"
+    alt="Illustration of a smiling character holding a phone and laptop." loading="lazy" data-sizes="auto">
+  <img class="lazyload asset-dark footer-bg footer-bg--dark" src="{{ 'assets/images/footer-bg.svg' | relative_url }}"
+    alt="Illusttation of a person with a latop and huddie" loading="lazy" data-sizes="auto">
+  {%- include contact.html -%}
+</section>

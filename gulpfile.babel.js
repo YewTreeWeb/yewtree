@@ -143,11 +143,11 @@ export const sass = () => {
 		)
 		.pipe(dest(config.sass.dest))
 		.pipe($.if(!prod, sync.stream()))
-		.pipe($.if(!prod, dest(config.sass.tmp)))
+		.pipe($.if(!prod, dest('.tmp/assets/css')))
 		.pipe($.rename('style-fallback.css'))
 		.pipe($.postcss([ cssvariables(), calc() ]))
 		.pipe(dest(config.sass.dest))
-		.pipe($.if(!prod, dest(config.sass.tmp)));
+		.pipe($.if(!prod, dest('.tmp/assets/css')));
 };
 
 /**
@@ -179,7 +179,7 @@ export const js = () => {
 			})
 		)
 		.pipe(dest(config.js.dest))
-		.pipe($.if(!prod, dest(config.js.tmp)));
+		.pipe($.if(!prod, dest('.tmp/assets/js')));
 };
 
 /**
@@ -252,7 +252,7 @@ export const images = () => {
 				title: 'images'
 			})
 		)
-		.pipe($.if(!prod, dest('.tmp/images')));
+		.pipe($.if(!prod, dest('.tmp/assets/images')));
 };
 
 /**
@@ -284,9 +284,9 @@ export const sprite = () => {
 				}
 			)
 		)
-		.pipe(dest('.tmp/images'));
+		.pipe(dest('.tmp/assets/images'));
 	// .pipe(dest(config.image.dest))
-	// .pipe($.if(!prod, dest('.tmp/images')));
+	// .pipe($.if(!prod, dest('.tmp/assets/images')));
 
 	// Pipe CSS stream through CSS optimizer and onto disk
 	const cssStream = spriteData.css
@@ -309,7 +309,7 @@ export const sprite = () => {
 		.pipe($.replace(/sprite/g, '../images/sprite'))
 		.pipe($.replace(/.icon-/g, '.'))
 		.pipe(dest(config.sass.dest))
-		.pipe($.if(!prod, dest(config.sass.tmp)));
+		.pipe($.if(!prod, dest('.tmp/assets/css')));
 
 	// Return a merged stream to handle both `end` events
 	return merge(imgStream, cssStream);
@@ -337,7 +337,7 @@ export const webpImg = () => {
 			})
 		)
 		.pipe(dest(config.image.dest))
-		.pipe($.if(!prod, dest('.tmp/images')));
+		.pipe($.if(!prod, dest('.tmp/assets/images')));
 };
 
 /**
@@ -372,7 +372,7 @@ export const icons = () => {
 			})
 		)
 		.pipe(dest(config.image.dest))
-		.pipe($.if(!prod, dest('.tmp/images')));
+		.pipe($.if(!prod, dest('.tmp/assets/images')));
 };
 
 /**
@@ -475,7 +475,7 @@ export const fonts = (done) => {
 	src(config.fonts.src, { allowEmpty: true })
 		.pipe($.plumber())
 		.pipe(dest(config.fonts.dest))
-		.pipe($.if(!prod, dest('.tmp/fonts')))
+		.pipe($.if(!prod, dest('.tmp/assets/fonts')))
 		.pipe(
 			$.size({
 				title: 'Fonts completed'
@@ -518,10 +518,8 @@ export const serve = (done) => {
 
 	watch(config.watch.scss).on('add', sass).on('change', sass);
 	watch(config.watch.js).on('add', series(js, reload)).on('change', series(js, reload));
-	watch(config.watch.jekyll)
-		.on('add', series(jekyll, copyVendors, copy, reload))
-		.on('change', series(jekyll, copyVendors, copy, reload));
 	watch(config.watch.fonts).on('add', series(fonts, reload)).on('change', series(fonts, reload));
+	watch(config.watch.jekyll, series(jekyll, copyVendors, copy, reload));
 	watch(config.watch.images, series(images, webpImg, reload));
 	watch(config.watch.icons, series(icons, reload));
 	watch(config.watch.sprites, series(sprite, webpImg, reload));
@@ -557,11 +555,11 @@ export const dev = series(
 	env,
 	parallel(clean_dist, clean_tmp),
 	jekyll,
-	copy,
 	vendorTask,
 	parallel(copyVendors, sass, js, images, fonts),
 	parallel(icons, sprite),
 	webpImg,
+	copy,
 	serve
 );
 
