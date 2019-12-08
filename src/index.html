@@ -58,12 +58,10 @@ projects:
 ---
 
 {%- include hero.html -%}
+<section class="shape-backgrounds">
+  <div class="background background--header" aria-hidden="true"></div>
+</section>
 <section class="about section" data-theme="dark">
-  <img class="lazyload asset-light header-bg header-bg--light"
-    src="{{ 'assets/images/header-bg-light.svg' | relative_url }}"
-    alt="Illustration of a smiling character holding a phone and laptop." loading="lazy" data-sizes="auto">
-  <img class="lazyload asset-dark header-bg header-bg--dark" src="{{ 'assets/images/header-bg.svg' | relative_url }}"
-    alt="Illusttation of a person with a latop and huddie" loading="lazy" data-sizes="auto">
   <div class="container">
     <h2>About Me</h2>
     <div class="columns">
@@ -129,9 +127,9 @@ projects:
   </div>
 </section>
 <section class="contact-area">
-  <img class="lazyload asset-light footer-bg ooter-bg--light" src="{{ 'assets/images/footer-bg-light.svg' | relative_url }}"
+  {%- comment -%} <img class="lazyload asset-light footer-bg ooter-bg--light" src="{{ 'assets/images/footer-bg-light.svg' | relative_url }}"
     alt="Illustration of a smiling character holding a phone and laptop." loading="lazy" data-sizes="auto">
   <img class="lazyload asset-dark footer-bg footer-bg--dark" src="{{ 'assets/images/footer-bg.svg' | relative_url }}"
-    alt="Illusttation of a person with a latop and huddie" loading="lazy" data-sizes="auto">
+    alt="Illusttation of a person with a latop and huddie" loading="lazy" data-sizes="auto"> {%- endcomment -%}
   {%- include contact.html -%}
 </section>

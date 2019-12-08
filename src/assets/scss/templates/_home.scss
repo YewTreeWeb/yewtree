@@ -64,22 +64,11 @@
 	.contact-area {
 		position: relative;
 		min-height: 100vh;
+		z-index: 1;
 		.box {
 			@include center(true, false);
 			top: 10%;
 		}
-	}
-	.footer-bg,
-	.header-bg {
-		width: 100%;
-		@include center(true, false);
-	}
-	.header-bg {
-		height: auto;
-		top: -624px;
-	}
-	.footer-bg {
-		height: 100%;
 	}
 	&[data-theme='dark'] {
 		.about {

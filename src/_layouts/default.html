@@ -22,6 +22,9 @@
 
     <main class="layout-{{ page.layout | default: layout.layout }} wrapper">
       {{ content }}
+      <section class="shape-backgrounds">
+        <div class="background background--footer" aria-hidden="true"></div>
+      </section>
     </main>
 
     {%- include_cached footer.html -%}

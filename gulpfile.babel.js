@@ -344,35 +344,60 @@ export const webpImg = () => {
  * Icons
  */
 export const icons = () => {
-	return src(config.image.icons, { since: lastRun(icons) })
-		.pipe($.plumber())
-		.pipe($.svgmin())
-		.pipe(
-			$.rename({
-				prefix: 'icon-'
-			})
-		)
-		.pipe(
-			$.svgstore({
-				fileName: 'icons.svg',
-				inlineSvg: true
-			})
-		)
-		.pipe(
-			$.cheerio({
-				run: function($, file) {
-					$('svg').attr('style', 'display:none!important');
-				},
-				parserOptions: { xmlMode: true }
-			})
-		)
-		.pipe(
-			$.size({
-				showFiles: true
-			})
-		)
-		.pipe(dest(config.image.dest))
-		.pipe($.if(!prod, dest('.tmp/assets/images')));
+	return (
+		src(config.image.icons, { since: lastRun(icons) })
+			.pipe($.plumber())
+			.pipe($.svgmin())
+			.pipe(
+				$.rename({
+					prefix: 'icon-'
+				})
+			)
+			.pipe(
+				$.svgstore({
+					fileName: 'icons.svg',
+					inlineSvg: true
+				})
+			)
+			.pipe(
+				$.cheerio({
+					run: function($, file) {
+						$('svg').attr('style', 'display:none!important');
+					},
+					parserOptions: { xmlMode: true }
+				})
+			)
+			// .pipe(
+			// 	$.if(
+			// 		'icons/fill/**/*',
+			// 		$.cheerio({
+			// 			run: function($, file) {
+			// 				$('svg').attr('style', 'display:none!important');
+			// 			},
+			// 			parserOptions: { xmlMode: true }
+			// 		})
+			// 	)
+			// )
+			.pipe(
+				$.if(
+					'icons/nofill/**/*',
+					$.cheerio({
+						run: function($, file) {
+							// $('svg').attr('style', 'display:none!important');
+							$('[fill]').removeAttr('fill');
+						},
+						parserOptions: { xmlMode: true }
+					})
+				)
+			)
+			.pipe(
+				$.size({
+					showFiles: true
+				})
+			)
+			.pipe(dest(config.image.dest))
+			.pipe($.if(!prod, dest('.tmp/assets/images')))
+	);
 };
 
 /**
@@ -456,6 +481,10 @@ export const clean_cache = (done) => {
  */
 export const copy = (done) => {
 	src(config.copy.src, { allowEmpty: true }).pipe(dest(config.copy.dest));
+	done();
+};
+export const copyImages = (done) => {
+	src('src/assets/images/**/*', { dot: true }).pipe(dest(config.copy.dest));
 	done();
 };
 export const copyVendors = (done) => {
@@ -556,7 +585,7 @@ export const dev = series(
 	parallel(clean_dist, clean_tmp),
 	jekyll,
 	vendorTask,
-	parallel(copyVendors, sass, js, images, fonts),
+	parallel(copyVendors, sass, js, copyImages, fonts),
 	parallel(icons, sprite),
 	webpImg,
 	copy,
