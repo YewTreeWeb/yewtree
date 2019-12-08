@@ -380,11 +380,12 @@ export const icons = () => {
 			// )
 			.pipe(
 				$.if(
-					'icons/nofill/**/*',
+					'nofill/**/*',
 					$.cheerio({
 						run: function($, file) {
 							// $('svg').attr('style', 'display:none!important');
 							$('[fill]').removeAttr('fill');
+							$('[stroke]').removeAttr('stroke');
 						},
 						parserOptions: { xmlMode: true }
 					})
@@ -484,7 +485,7 @@ export const copy = (done) => {
 	done();
 };
 export const copyImages = (done) => {
-	src('src/assets/images/**/*', { dot: true }).pipe(dest(config.copy.dest));
+	src('.tmp/assets/images/*', { dot: true }).pipe(dest(config.copy.dest));
 	done();
 };
 export const copyVendors = (done) => {
