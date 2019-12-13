@@ -49,7 +49,10 @@ fonts:
 ## Images
 image:
   dest: "dist/assets/images"
-  icons: "src/assets/images/icons/**/*.svg"
+  icons:
+    - "src/assets/images/icons/**/*.svg"
+    - "!src/assets/images/icons/nofill/*.svg"
+  icons_nofill: "src/assets/images/icons/nofill/*.svg"
   sprites: "src/assets/images/sprites/*.+(jpg|jpeg|png)"
   src:
     - "src/assets/images/**/*.+(jpg|jpeg|png|svg|gif)"

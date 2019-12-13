@@ -344,61 +344,69 @@ export const webpImg = () => {
  * Icons
  */
 export const icons = () => {
-	return (
-		src(config.image.icons, { since: lastRun(icons) })
-			.pipe($.plumber())
-			.pipe($.svgmin())
-			.pipe(
-				$.rename({
-					prefix: 'icon-'
-				})
-			)
-			.pipe(
-				$.svgstore({
-					fileName: 'icons.svg',
-					inlineSvg: true
-				})
-			)
-			.pipe(
-				$.cheerio({
-					run: function($, file) {
-						$('svg').attr('style', 'display:none!important');
-					},
-					parserOptions: { xmlMode: true }
-				})
-			)
-			// .pipe(
-			// 	$.if(
-			// 		'icons/fill/**/*',
-			// 		$.cheerio({
-			// 			run: function($, file) {
-			// 				$('svg').attr('style', 'display:none!important');
-			// 			},
-			// 			parserOptions: { xmlMode: true }
-			// 		})
-			// 	)
-			// )
-			.pipe(
-				$.if(
-					'nofill/**/*',
-					$.cheerio({
-						run: function($, file) {
-							// $('svg').attr('style', 'display:none!important');
-							$('[fill]').removeAttr('fill');
-							$('[stroke]').removeAttr('stroke');
-						},
-						parserOptions: { xmlMode: true }
-					})
-				)
-			)
-			.pipe(
-				$.size({
-					showFiles: true
-				})
-			)
-			.pipe(dest(config.image.dest))
-			.pipe($.if(!prod, dest('.tmp/assets/images')))
-	);
+	return src(config.image.icons, { since: lastRun(icons) })
+		.pipe($.plumber())
+		.pipe($.svgmin())
+		.pipe(
+			$.rename({
+				prefix: 'icon-'
+			})
+		)
+		.pipe(
+			$.svgstore({
+				fileName: 'icons.svg',
+				inlineSvg: true
+			})
+		)
+		.pipe(
+			$.cheerio({
+				run: function($, file) {
+					$('svg').attr('style', 'display:none!important');
+				},
+				parserOptions: { xmlMode: true }
+			})
+		)
+		.pipe(
+			$.size({
+				showFiles: true
+			})
+		)
+		.pipe(dest(config.image.dest))
+		.pipe($.if(!prod, dest('.tmp/assets/images')));
+};
+
+export const iconsNoFill = () => {
+	return src(config.image.icons_nofill, { since: lastRun(iconsNoFill) })
+		.pipe($.plumber())
+		.pipe($.svgmin())
+		.pipe(
+			$.rename({
+				prefix: 'icon-'
+			})
+		)
+		.pipe(
+			$.svgstore({
+				fileName: 'icons-nofill.svg',
+				inlineSvg: true
+			})
+		)
+		.pipe(
+			$.cheerio({
+				run: function($, file) {
+					$('svg').attr('style', 'display:none!important');
+					$('[fill]').removeAttr('fill');
+					$('[stroke]').removeAttr('stroke');
+				},
+				parserOptions: { xmlMode: true }
+			})
+		)
+		.pipe(
+			$.size({
+				showFiles: true
+			})
+		)
+		.pipe(dest(config.image.dest))
+		.pipe($.if(!prod, dest('.tmp/assets/images')));
 };
 
 /**
@@ -551,7 +559,7 @@ export const serve = (done) => {
 	watch(config.watch.fonts).on('add', series(fonts, reload)).on('change', series(fonts, reload));
 	watch(config.watch.jekyll, series(jekyll, copyVendors, copy, reload));
 	watch(config.watch.images, series(images, webpImg, reload));
-	watch(config.watch.icons, series(icons, reload));
+	watch(config.watch.icons, series(icons, iconsNoFill, reload));
 	watch(config.watch.sprites, series(sprite, webpImg, reload));
 };
 
@@ -572,8 +580,8 @@ export const build = series(
 	parallel(clean_dist, clean_tmp, clean_cache),
 	jekyll,
 	vendorTask,
-	copyVendors,
-	parallel(sass, js, images, html, fonts),
+	parallel(copyVendors, sass, js, images, html, fonts),
+	parallel(icons, iconsNoFill, sprite),
 	parallel(cloudinary, webpImg),
 	deploy
 );
@@ -587,7 +595,7 @@ export const dev = series(
 	jekyll,
 	vendorTask,
 	parallel(copyVendors, sass, js, copyImages, fonts),
-	parallel(icons, sprite),
+	parallel(icons, iconsNoFill, sprite),
 	webpImg,
 	copy,
 	serve
