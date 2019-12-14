@@ -2,12 +2,11 @@
 @import '../vendors/bulma/bulma.sass';
 @import '../vendors/include-media/dist/include-media';
 @import '../vendors/family.scss/source/src/family';
+@import '../vendors/flickity/dist/flickity.css';
 /// Helper files.
 @import './helpers/functions';
 @import './helpers/variables';
 @import './helpers/mixins';
-/// Reset css.
-@import '../vendors/codyhouse-framework/main/assets/css/base/reset';
 /// Base files for project
 @import './base/*';
 /// Layouts - sections for the site.

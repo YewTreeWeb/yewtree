@@ -1,10 +1,16 @@
+{%- if page.url == "/" -%}
+  {%- assign pageName = 'home' -%}
+{%- else -%}
+  {%- assign pageName = page.title -%}
+{%- endif -%}
+
 <!DOCTYPE html>
 <html lang="{{ site.lang | default: 'en-GB' }}">
 
   {%- include head.html -%}
 
   <body
-    class="layout-{{ page.layout | default: layout.layout }}{% if page.classes or layout.classes %}{{ page.classes | default: layout.classes | join: ' ' | prepend: ' ' }}{% endif %} {{ page.title | slugify }} is-loading"
+    class="layout-{{ page.layout | default: layout.layout }}{% if page.classes or layout.classes %}{{ page.classes | default: layout.classes | join: ' ' | prepend: ' ' }}{% endif %} page-{{ pageName | slugify }} is-loading"
     data-theme="light">
     
     <!--[if lte IE 9]>
@@ -16,6 +22,9 @@
 
     <main class="layout-{{ page.layout | default: layout.layout }} wrapper">
       {{ content }}
+      <section class="shape-backgrounds">
+        <div class="background background--footer" aria-hidden="true"></div>
+      </section>
     </main>
 
     {%- include_cached footer.html -%}

@@ -21,116 +21,115 @@ projects:
   gained experience in a variaty of different languages and
   software. Some of these experiences are:"
   skills:
-    - PHP
-    - JavaScript
+    - "Photoshop"
+    - "Sketch"
+    - "Figma"
+    - "Affinity Photo"
+    - "Affinity Designer"
+    - "Affinity Publisher"
+    - "Invision"
+    - "Bootstrap CSS"
+    - "MySQL"
+    - "Gulp"
+    - "HTML5 & CSS"
+    - "Bash & shell script"
+    - "JavaScript (ES6+)"
+    - "jQuery"
+    - "PHP"
+    - "Liquid"
+    - "SCSS & Sass"
+    - "Bourbon, Neat & Bitters"
+    - "Bulma"
+    - "Webpack"
+    - "Less" 
+    - "JSON & YML"
+    - "Shopify"
+    - "Jekyll"
+    - "WordPress"
+    - "Git"
+    - "Web performance practises"
+    - "Basic Magento 1 & 2"
+    - "Composer"
+    - "WooCommerce"
+    - "Jade/Pug"
   button:
     link: /about/
     text: "Find Out More"
-testimonials:
-  - img:
-      src: "joe"
-      alt: "Image of Joseph Brown smiling."
-      width: "200"
-    name: "Joseph Brown"
-    role: "Operastions Director"
-    place: "@ Kubix Media"
-    review: "Mathew has a fantastic passion for all things Web and consistently bringing new ideas and processes to the
-    Web Development Department. Mat's knowledge of a vast amount of CMS' is an incredible asset, combined with fantastic
-    communication and organisational skills makes him a delight to work with."
-  - img:
-      src: "scott"
-      alt: "Image of Scott Jinks smiling."
-    name: "Scott Jinks"
-    role: "Assistant Brand Manager"
-    place: "@ Estrella Damm at Marston's PLC"
-    review: "Having worked with Mathew on multiple digital projects, I feel totally at ease recommending him for his
-    encyclopedia-like knowledge of all things digital and his ability to build quality websites with a real focus on
-    ensuring top functionality. Mathew is also has wonderful personality and would welcome any opportunity to work with
-    him again in the future."
-  - img:
-      src: "jason"
-      alt: "Image of Jason James smiling."
-    name: "Jason James"
-    role: "Experienced Digital Marketing Specialist"
-    place: "@ Global Search Marketing Ltd"
-    review: "Dedicated is the phrase that comes to mind when I think about Mat . I’ve had the pleasure of knowing Mat
-    for 2 years, during which I worked with him in the digital team at Gough Bailey Wright. Above all, I was impressed
-    with Mat’s ability to build WordPress websites using is own custom built theme rather than use an off-the-shelf
-    them. And, of course, his/her passion for web development in general. Mat would be a true asset for any positions
-    requiring web design and development expertise, especially when it comes to WordPress website builds and comes with
-    my heartfelt recommendation."
-  - img:
-      src: "matt-h"
-      alt: "Image of Matthew Harrison smiling."
-    name: "Matthew Harrison"
-    role: "Digital Marketing Director"
-    place: "@ Kubix Media"
-    review: "Working with Mat has been an absolute pleasure, and his web development skills are second-to-none. I’ve
-    learned so much from Mat through the many projects we’ve worked on together, from frameworks to task runners to the
-    best coding techniques - Which brings me onto what I admire most about Mat, and that’s the way he always finds the
-    time to help you if you need it. Mat would be an asset to any employer and I can recommend him without reservation.
-    See less"
 ---
 
 {%- include hero.html -%}
-<section class="about section">
-  <h2>About Me</h2>
-  <div class="columns">
-    <div class="column is-7"><img src="" alt="" loading="lazy"></div>
-    <div class="column is-5">
-      <div class="bubble">
-        <h3>{{ page.about.heading }}</h3>
+<section class="shape-backgrounds">
+  <div class="background background--header" aria-hidden="true"></div>
+</section>
+<section class="about section" data-theme="dark">
+  <div class="container">
+    <h2>About Me</h2>
+    <div class="columns">
+      <div class="column is-7">
+        <img class="lazyload asset-light" src="{{ 'assets/images/character-light.svg' | relative_url }}" alt="Illustration of a smiling character holding a phone and laptop." loading="lazy" data-sizes="auto" intrinsicsize="702x425">
+        <img class="lazyload asset-dark" src="{{ 'assets/images/character-dark.svg' | relative_url }}" alt="Illusttation of a person with a latop and huddie" loading="lazy" data-sizes="auto" intrinsicsize="702x425">
       </div>
-      <p>{{ page.about.text }}</p>
-      <a class="" href="{{ page.about.button.link | relative_url }}" role="button">{{ page.about.button.text | upcase }}</a>
+      <div class="column is-5">
+        <div class="bubble">
+          <h3>{{ page.about.heading }}</h3>
+        </div>
+        <p>{{ page.about.text }}</p>
+        <a class="btn" href="{{ page.about.button.link | relative_url }}" role="button">{{ page.about.button.text | upcase }}</a>
+      </div>
     </div>
   </div>
 </section>
 <section class="projects section">
-  <h2>Projects & Experience</h2>
-  <div class="columns">
-    <div class="column is-5">
-      <p>{{ page.projects.text }}</p>
-      <ul class="skills">
-        {%- for skill in page.projects.skills -%}
-          <li>{{ skill }}</li>
-        {%- endfor -%}
-      </ul>
-      <a class="" href="{{ page.projects.button.link | relative_url }}" role="button">{{ page.projects.button.text | upcase }}</a>
+  <div class="container">
+    <h2>Projects & Experience</h2>
+    <div class="columns">
+      <div class="column is-5">
+        <p>{{ page.projects.text }}</p>
+        <ul class="skills">
+          {%- for skill in page.projects.skills -%}
+            <li>{{ skill }}</li>
+          {%- endfor -%}
+        </ul>
+        <a class="btn" href="{{ page.projects.button.link | relative_url }}" role="button">{{ page.projects.button.text | upcase }}</a>
+      </div>
+      <div class="column is-7">
+        <img class="lazyload asset-light" src="{{ 'assets/images/feature-illustration-light.svg' | relative_url }}"
+          alt="Illustration of a smiling character holding a phone and laptop." loading="lazy" data-sizes="auto"
+          intrinsicsize="702x425">
+        <img class="lazyload asset-dark" src="{{ 'assets/images/feature-illustration-dark.svg' | relative_url }}"
+          alt="Illusttation of a person with a latop and huddie" loading="lazy" data-sizes="auto" intrinsicsize="702x425">
+      </div>
     </div>
-    <div class="column is-7"></div>
   </div>
 </section>
 <section class="sticky-hero sticky-hero--overlay-layer js-sticky-hero">
   <div class="sticky-hero__media" aria-hidden="true"></div>
   <div class="sticky-hero__content section">
     <div class="container testimonials align-center">
-      {%- for testimonial in page.testimonials -%}
-        {%- if forloop.index > 1 -%}
+      {%- for testimonial in site.data.testimonials -%}
+        {%- if forloop.index >= 1 -%}
           <div class="testimonials__slide">
         {%- endif -%}
-        {%- if testimonial.img.width -%}
-          {%- assign picture = '/assets/images/' | append: testimonial.img.src | append: ',w_' | append: testimonial.img.width -%}
-        {%- else -%}
-          {%- assign picture = '/assets/images/' | append: testimonial.img.src -%}
-        {%- endif -%}
-        <picture>
-          <source type="image/webp" srcset="{{ picture | append: '.webp' | relative_url }}">
-          <source type="image/jpg" srcset="{{ picture | append: '.jpg' | relative_url }}">
-          <img class="lazyload testimonials__image" src="" data-src="{{ picture | append: '.jpg' | relative_url }}" data-sizes="auto" alt="{{ testimonial.img.alt }}" intrinsicsize="194x194" width="200" height="200">
-        </picture>
-        <hgroup class="testimonials testimonials--headings">
+        <div class="testimonials__image {{ testimonial.img.name }}" role="img" aria-label="{{ testimonial.img.alt }}">
+        </div>
+        <hgroup class="testimonials__headings">
           <h2 class="testimonials__heading">{{ testimonial.name }}</h2>
           <h3 class="testimonials__subheading">
-            <span>{{ testimonial.role }}</span><span>{{ testimonial.place }}</span>
+            <span>{{ testimonial.role }}</span><span>{{ testimonial.place | prepend: '@ ' }}</span>
           </h3>
         </hgroup>
-        <p class="testimonials__review">{{ testimonial.review }}</p>
-        {%- if forloop.index > 1 -%}
+        <p class="testimonials__review"><span>"</span>{{ testimonial.review }}<span>"</span></p>
+        {%- if forloop.index >= 1 -%}
           </div>
         {%- endif -%}
       {%- endfor -%}
     </div>
   </div>
 </section>
-{%- include contact.html -%}
+<section class="contact-area">
+  {%- comment -%} <img class="lazyload asset-light footer-bg ooter-bg--light" src="{{ 'assets/images/footer-bg-light.svg' | relative_url }}"
+    alt="Illustration of a smiling character holding a phone and laptop." loading="lazy" data-sizes="auto">
+  <img class="lazyload asset-dark footer-bg footer-bg--dark" src="{{ 'assets/images/footer-bg.svg' | relative_url }}"
+    alt="Illusttation of a person with a latop and huddie" loading="lazy" data-sizes="auto"> {%- endcomment -%}
+  {%- include contact.html -%}
+</section>

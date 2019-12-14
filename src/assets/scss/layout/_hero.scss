@@ -36,7 +36,7 @@
 	/// Homepage hero.
 	&--main {
 		.hero__body {
-			@include size(0, 130vh, min);
+			@include size(0, 146vh, min);
 			@include bgImg(
 				'/assets/images/snow-trees',
 				'center' 'center',
@@ -65,7 +65,7 @@
 			.hero__headings {
 				animation-delay: 5.8s;
 				.hero__heading {
-					font-weight: $weight;
+					font-weight: $weight-light;
 					b {
 						font-weight: inherit;
 					}

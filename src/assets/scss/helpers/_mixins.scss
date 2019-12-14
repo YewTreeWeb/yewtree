@@ -437,6 +437,13 @@
 	}
 }
 
+/// Background Settings
+@mixin background {
+	background-repeat: no-repeat;
+	background-size: cover;
+	background-position: center center;
+}
+
 /// Background Image
 @mixin bgImg($image, $position: ($x, $y), $mode: null, $darkImg: null) {
 	background-image: url(#{$image}.jpg);
