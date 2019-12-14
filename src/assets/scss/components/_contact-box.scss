@@ -12,16 +12,10 @@
 	@include padding(45.67px 4.9% 66px);
 	&__media {
 		svg {
-			@include size(96px);
+			@include size(106px);
 			color: v(colour-text);
-			fill: v(colour-text);
+			fill: none;
 			stroke: v(colour-text);
-			g,
-			path {
-				color: v(colour-text);
-				stroke: v(colour-text);
-				fill: v(colour-text) !important;
-			}
 		}
 		margin-bottom: em(25px);
 	}

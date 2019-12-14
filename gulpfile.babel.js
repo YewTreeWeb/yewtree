@@ -493,7 +493,7 @@ export const copy = (done) => {
 	done();
 };
 export const copyImages = (done) => {
-	src('.tmp/assets/images/*', { dot: true }).pipe(dest(config.copy.dest));
+	src('.src/assets/images/*.+(png|jpg|jpeg|svg|gif)', { dot: true }).pipe(dest(config.copy.dest));
 	done();
 };
 export const copyVendors = (done) => {

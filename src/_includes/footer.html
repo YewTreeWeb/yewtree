@@ -1,38 +1,62 @@
 <footer class="site-footer">
 
-  <div class="wrapper">
-
-    <h2 class="footer-heading">{{ site.title }}</h2>
-
-    <div class="footer-col-wrapper">
-      <div class="footer-col footer-col-1">
-        <ul class="contact-list">
-          <li>{{ site.title }}</li>
-          <li><a href="mailto:{{ site.author.email }}">{{ site.author.email }}</a></li>
-        </ul>
+  <section class="section site-footer__top">
+    <div class="container">
+      <div class="columns footer-menu">
+        {%- assign nav = site.data.footer-nav -%}
+        {%- for item in nav -%}
+          <div class="column">
+            <ul class="footer-menu__list">
+              {%- if item.name -%}
+                <li class="footer-menu__item footer-menu__heading">{{ item.name }}</li>
+              {%- endif -%}
+              {%- if item.list -%}
+                {%- for sub in item.list -%}
+                  <li class="footer-menu__item"><a href="{{ sub.link }}">{{ sub.name }}</a></li>
+                {%- endfor -%}
+              {%- endif -%}
+            </ul>
+          </div>
+        {%- endfor -%}
+        <div class="column">
+          <ul class="footer-menu__list footer-menu__list--social">
+            <li class="footer-menu__item footer-menu__heading">Social</li>
+            {%- if site.author.twitter -%}
+              <li class="footer-menu__item"><a href="{{ site.author.twitter }}" target="_blank">Twitter</a></li>
+            {%- endif -%}
+            {%- if site.author.github -%}
+              <li class="footer-menu__item"><a href="{{ site.author.github }}" target="_blank">Github</a></li>
+            {%- endif -%}
+            {%- if site.author.linkedin -%}
+              <li class="footer-menu__item"><a href="{{ site.author.linkedin }}" target="_blank">LinkedIn</a></li>
+            {%- endif -%}
+            {%- if site.author.instagram -%}
+              <li class="footer-menu__item"><a href="{{ site.author.instagram }}" target="_blank">Instagram</a></li>
+            {%- endif -%}
+            {%- if site.author.pintrest -%}
+              <li class="footer-menu__item"><a href="{{ site.author.pintrest }}" target="_blank">Pintrest</a></li>
+            {%- endif -%}
+          </ul>
+        </div>
+        <div class="column is-4">
+          <h4>Enter the lab @ <a href="https://hub.yewtreeweb.co.uk" target="_blank">YewTree Hub</a></h4>
+          {%- include svg-icon.html icon="programming-browser--nofill" id="hub" w="120" h="94" title="Programming Icon" desc="icon of a terminal with a code symbol inside." -%}
+        </div>
       </div>
+    </div>
+  </section>
 
-      <div class="footer-col footer-col-2">
-        <ul class="social-media-list">
-          {% if site.author.github %}
-          <li>
-            {%- include svg-icon.html icon="Github" id="github" w="59" h="59" hidden=true -%}
-          </li>
-          {% endif %}
+  <section class="section site-footer__bottom">
 
-          {% if site.author.twitter %}
-          <li>
-            {%- include svg-icon.html icon="Twitter" id="twitter" w="59" h="59" hidden=true -%}
-          </li>
-          {% endif %}
-        </ul>
-      </div>
-
-      <div class="footer-col footer-col-3">
-        <p>{{ site.description }}</p>
+    <div class="container">
+      <div class="columns">
+        <div class="column is-4">
+          <p class="footer-heading">{{ site.title }}</p>
+        </div>
+        <div class="column is-8">&copy; Copyright {{ site.time | date: '%Y' }} {{ site.title }} - {{ site.author.name }}. All rights reserved.</div>
       </div>
     </div>
 
-  </div>
+  </section>
 
 </footer>
