@@ -142,12 +142,9 @@ export const sass = () => {
 				})
 			)
 		)
+		.pipe($.if(!prod, $.sourcemaps.write('.')))
 		.pipe(dest(config.sass.dest))
 		.pipe($.if(!prod, sync.stream()))
-		.pipe($.if(!prod, dest('.tmp/assets/css')))
-		.pipe($.rename('style-fallback.css'))
-		.pipe($.postcss([ cssvariables(), calc() ]))
-		.pipe(dest(config.sass.dest))
 		.pipe($.if(!prod, dest('.tmp/assets/css')));
 };
 
@@ -209,41 +206,44 @@ export const images = () => {
 		.pipe($.plumber())
 		.pipe($.changed(config.image.dest))
 		.pipe(
-			$.cache(
-				$.imagemin(
-					[
-						$.imagemin.jpegtran({
-							progressive: true
-						}),
-						pngquant({
-							speed: 1,
-							quality: [ 0.5, 0.5 ] // lossy settings
-						}),
-						zopfli({
-							more: true
-						}),
-						giflossy({
-							optimizationLevel: 3,
-							optimize: 3, // keep-empty: Preserve empty transparent frames
-							lossy: 2
-						}),
-						$.imagemin.svgo({
-							plugins: [
-								{
-									removeViewBox: true
-								},
-								{
-									cleanupIDs: true
-								}
-							]
-						}),
-						mozjpeg({
-							quality: 90
-						})
-					],
-					{
-						verbose: true
-					}
+			$.if(
+				prod,
+				$.cache(
+					$.imagemin(
+						[
+							$.imagemin.jpegtran({
+								progressive: true
+							}),
+							pngquant({
+								speed: 1,
+								quality: [ 0.5, 0.5 ] // lossy settings
+							}),
+							zopfli({
+								more: true
+							}),
+							giflossy({
+								optimizationLevel: 3,
+								optimize: 3, // keep-empty: Preserve empty transparent frames
+								lossy: 2
+							}),
+							$.imagemin.svgo({
+								plugins: [
+									{
+										removeViewBox: true
+									},
+									{
+										cleanupIDs: true
+									}
+								]
+							}),
+							mozjpeg({
+								quality: 90
+							})
+						],
+						{
+							verbose: true
+						}
+					)
 				)
 			)
 		)
@@ -285,9 +285,8 @@ export const sprite = () => {
 				}
 			)
 		)
-		.pipe(dest('.tmp/assets/images'));
-	// .pipe(dest(config.image.dest))
-	// .pipe($.if(!prod, dest('.tmp/assets/images')));
+		.pipe(dest(config.image.dest))
+		.pipe($.if(!prod, dest('.tmp/assets/images')));
 
 	// Pipe CSS stream through CSS optimizer and onto disk
 	const cssStream = spriteData.css
@@ -595,7 +594,7 @@ export const dev = series(
 	parallel(clean_dist, clean_tmp),
 	jekyll,
 	vendorTask,
-	parallel(copyVendors, sass, js, copyImages, fonts),
+	parallel(copyVendors, sass, js, images, fonts),
 	parallel(icons, iconsNoFill, sprite),
 	webpImg,
 	copy,

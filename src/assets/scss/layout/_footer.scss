@@ -16,4 +16,16 @@
 			@include size(100%);
 		}
 	}
+	.footer-menu {
+		&__list {
+			list-style: none;
+			padding-left: 0;
+		}
+		&__item {
+			color: v(colour-text);
+			> a {
+				color: inherit;
+			}
+		}
+	}
 }
