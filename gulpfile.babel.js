@@ -132,6 +132,7 @@ export const sass = () => {
 				}
 			})
 		)
+		.pipe($.if(!prod, $.sourcemaps.write('.')))
 		.pipe(
 			$.if(
 				prod,
