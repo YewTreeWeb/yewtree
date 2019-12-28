@@ -1,18 +1,18 @@
 {% comment %}
-Usage:
-@ {icon} - Icon file name
-@ {class} - Icon class (optional)
-@ {id} - Icon ID (optional)
-@ {w} - Icon Width (optional)
-@ {h} - Icon Height (optional)
-@ {title} - Icon title for aria label (Optional) (If unset hidden should be set to true)
-@ {desc} - Icon description for aria descripion (Optional) (If unset hidden should be set to true)
-@ {hidden} - bool (optional - default set to false ).
+    Usage:
+    @ {icon} - Icon file name
+    @ {class} - Icon class (optional)
+    @ {id} - Icon ID (optional)
+    @ {w} - Icon Width (optional)
+    @ {h} - Icon Height (optional)
+    @ {title} - Icon title for aria label (Optional) (If unset hidden should be set to true)
+    @ {desc} - Icon description for aria descripion (Optional) (If unset hidden should be set to true)
+    @ {hidden} - bool (optional - default set to false ).
 
-// Usage
-{%- include svg-icon.html icon="Sun" id="sun" class="icon--sun" w="59" h="59" title="Sun" desc="Image of the sun with blue background." -%}
-// or
-{%- include svg-icon.html icon="Sun" hidden=true -%}
+    // Usage
+    {%- include svg-icon.html icon="Sun" id="sun" class="icon--sun" w="59" h="59" title="Sun" desc="Image of the sun with blue background." -%}
+    // or
+    {%- include svg-icon.html icon="Sun" hidden=true -%}
 {% endcomment %}
 
 {%- assign hidden = false -%}

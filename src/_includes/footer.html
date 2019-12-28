@@ -22,25 +22,25 @@
           <ul class="footer-menu__list footer-menu__list--social">
             <li class="footer-menu__item footer-menu__heading">Social</li>
             {%- if site.author.twitter -%}
-              <li class="footer-menu__item"><a href="{{ site.author.twitter }}" target="_blank">Twitter</a></li>
+              <li class="footer-menu__item"><a href="{{ site.author.twitter }}" class="icon-link" target="_blank">{%- include svg-icon.html icon="Twitter" id="twitter" title="Twitter" desc="Twitter logo of a bird." -%}</a></li>
             {%- endif -%}
             {%- if site.author.github -%}
-              <li class="footer-menu__item"><a href="{{ site.author.github }}" target="_blank">Github</a></li>
+              <li class="footer-menu__item"><a href="{{ site.author.github }}" class="icon-link" target="_blank">{%- include svg-icon.html icon="Github" id="github" title="Github" desc="Github logo of a octopus cat hybrid." -%}</a></li>
             {%- endif -%}
             {%- if site.author.linkedin -%}
-              <li class="footer-menu__item"><a href="{{ site.author.linkedin }}" target="_blank">LinkedIn</a></li>
+              <li class="footer-menu__item"><a href="{{ site.author.linkedin }}" class="icon-link" target="_blank">{%- include svg-icon.html icon="Linkedin" id="linkedin" title="Linkedin" desc="LinkedIn logo of a square with in in the centre." -%}</a></li>
             {%- endif -%}
             {%- if site.author.instagram -%}
-              <li class="footer-menu__item"><a href="{{ site.author.instagram }}" target="_blank">Instagram</a></li>
+              <li class="footer-menu__item"><a href="{{ site.author.instagram }}" class="icon-link" target="_blank">{%- include svg-icon.html icon="Instagram" id="instagram" title="Instagram" desc="Instagram logo of a camera." -%}</a></li>
             {%- endif -%}
             {%- if site.author.pintrest -%}
-              <li class="footer-menu__item"><a href="{{ site.author.pintrest }}" target="_blank">Pintrest</a></li>
+              <li class="footer-menu__item"><a href="{{ site.author.pintrest }}" class="icon-link" target="_blank">{%- include svg-icon.html icon="Pinterest" id="pinterest" title="Pinterest" desc="Pinterest logo of a p within a circle." -%}</a></li>
             {%- endif -%}
           </ul>
         </div>
         <div class="column is-4">
           <h4>Enter the lab @ <a href="https://hub.yewtreeweb.co.uk" target="_blank">YewTree Hub</a></h4>
-          {%- include svg-icon.html icon="programming-browser--nofill" id="hub" w="120" h="94" title="Programming Icon" desc="icon of a terminal with a code symbol inside." -%}
+          {%- include svg-icon.html icon="programming-browser--nofill" id="hub" title="Programming Icon" desc="icon of a terminal with a code symbol inside." -%}
         </div>
       </div>
     </div>
