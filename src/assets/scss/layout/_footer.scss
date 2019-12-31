@@ -1,5 +1,9 @@
 .site-footer {
 	background-color: v(colour-secondary);
+	position: relative;
+	&__top {
+		top: -30rem;
+	}
 	&__bottom {
 		&.section {
 			min-height: unset !important;
@@ -7,22 +11,39 @@
 		}
 	}
 
-	.footer-heading {
-		@include font(em(_heading(h1) + 4), $family-banner, null, null);
-		letter-spacing: 1px;
-	}
+	// .footer-heading {
+	// 	@include font(em(_heading(h1) + 4), $family-banner, null, null);
+	// 	letter-spacing: 1px;
+	// }
 
-	#hub {
-		fill: none;
-		stroke: v(colour-text);
-		stroke-width: 0.5px;
-		@include size(100%);
-		@include size(120px, 94px, max);
+	.footer-hub {
+		text-align: center;
+		h4 {
+			font-size: _heading(h3);
+			font-weight: $weight-heavy;
+			letter-spacing: 0px;
+			line-height: 1.4;
+			max-width: 230px;
+			margin: 0 auto;
+			> a {
+				color: inherit !important;
+				display: inline-block;
+			}
+		}
 
-		use,
-		g,
-		svg {
+		#hub {
+			fill: none;
+			stroke: v(colour-text);
+			stroke-width: 0.5px;
 			@include size(100%);
+			@include size(120px, 94px, max);
+			margin-top: 20px;
+
+			use,
+			g,
+			svg {
+				@include size(100%);
+			}
 		}
 	}
 
@@ -34,23 +55,37 @@
 			&--social {
 				@include flex(center, flex-start, row);
 
-				.footer-menu__heading {
+				.footer-menu__item--heading {
 					width: 100%;
+				}
+
+				.footer-menu__item {
+					@include margin(null 16px);
 				}
 			}
 		}
 
 		&__item {
 			color: v(colour-text);
+			line-height: 2.5;
 
-			> a {
-				color: inherit;
+			&--heading {
+				@include font(_heading(h6), $family-base, $weight-heavy, 4);
+				color: v(colour-secondary);
+				@include darkmode {
+					color: v(colour-text);
+				}
 			}
 
-			@include all-but-first-last(2) {
+			a {
+				color: inherit !important;
+			}
+
+			&:nth-child(2),
+			&:nth-child(5) {
 				.icon-link {
 					.icon {
-						@include margin(null 16px);
+						margin-left: 0;
 					}
 				}
 			}

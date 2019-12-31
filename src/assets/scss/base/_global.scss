@@ -68,7 +68,7 @@ body {
 }
 
 .container {
-	@include media("screen", ">=1408px") {
+	@include media("screen", ">=1500px") {
 		max-width: 1440px;
 	}
 }
