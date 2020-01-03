@@ -1,20 +1,33 @@
 .site-footer {
 	background-color: v(colour-secondary);
 	position: relative;
+	min-height: 30vh;
 	&__top {
-		top: -30rem;
+		top: -290px;
+		min-height: unset !important;
+		width: 100%;
+		@include center(true, false);
+		z-index: 1;
 	}
 	&__bottom {
+		@include center(true, false);
+		bottom: 0;
+		width: 100%;
+		z-index: 1;
 		&.section {
 			min-height: unset !important;
 			padding: 3rem 1.5rem;
 		}
 	}
 
-	// .footer-heading {
-	// 	@include font(em(_heading(h1) + 4), $family-banner, null, null);
-	// 	letter-spacing: 1px;
-	// }
+	a.footer-logo {
+		@include font(em(_heading(h1) + 4), $family-banner, null, null);
+		letter-spacing: 1px;
+		color: v(colour-text);
+		@include call-to-action {
+			color: v(colour-accent);
+		}
+	}
 
 	.footer-hub {
 		text-align: center;
@@ -26,8 +39,11 @@
 			max-width: 230px;
 			margin: 0 auto;
 			> a {
-				color: inherit !important;
 				display: inline-block;
+				color: v(colour-text);
+				@include call-to-action {
+					color: v(colour-accent);
+				}
 			}
 		}
 
@@ -100,5 +116,10 @@
 				}
 			}
 		}
+	}
+
+	.footer-copy {
+		@include flex(flex-end, center, column);
+		text-align: center;
 	}
 }

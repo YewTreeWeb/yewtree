@@ -39,7 +39,8 @@
           </ul>
         </div>
         <div class="column is-4 footer-hub">
-          <h4>Enter the lab @ <a href="https://hub.yewtreeweb.co.uk" target="_blank">YewTree Hub</a></h4>
+          <h4>Enter the lab @ <a class="footer-hub__link" href=" https://hub.yewtreeweb.co.uk" target="_blank">YewTree
+              Hub</a></h4>
           {%- include svg-icon.html icon="programming-browser--nofill" id="hub" title="Programming Icon" desc="icon of a terminal with a code symbol inside." -%}
         </div>
       </div>
@@ -51,9 +52,9 @@
     <div class="container">
       <div class="columns">
         <div class="column is-4">
-          <p class="footer-heading"><a href="{{ site.baseurl }}">{{ site.title }}</a></p>
+          <a class="footer-logo" href="{{ site.baseurl }}">{{ site.title }}</a>
         </div>
-        <div class="column is-8">
+        <div class="column is-8 footer-copy">
           <p>&copy; Copyright {{ site.time | date: '%Y' }} {{ site.title }} - {{ site.author.name }}. All rights
             reserved.</p>
         </div>
