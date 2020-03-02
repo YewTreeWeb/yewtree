@@ -1,0 +1,125 @@
+.site-footer {
+	background-color: v(colour-secondary);
+	position: relative;
+	min-height: 30vh;
+	&__top {
+		top: -290px;
+		min-height: unset !important;
+		width: 100%;
+		@include center(true, false);
+		z-index: 1;
+	}
+	&__bottom {
+		@include center(true, false);
+		bottom: 0;
+		width: 100%;
+		z-index: 1;
+		&.section {
+			min-height: unset !important;
+			padding: 3rem 1.5rem;
+		}
+	}
+
+	a.footer-logo {
+		@include font(em(_heading(h1) + 4), $family-banner, null, null);
+		letter-spacing: 1px;
+		color: v(colour-text);
+		@include call-to-action {
+			color: v(colour-accent);
+		}
+	}
+
+	.footer-hub {
+		text-align: center;
+		h4 {
+			font-size: _heading(h3);
+			font-weight: $weight-heavy;
+			letter-spacing: 0px;
+			line-height: 1.4;
+			max-width: 230px;
+			margin: 0 auto;
+			> a {
+				display: inline-block;
+				color: v(colour-text);
+				@include call-to-action {
+					color: v(colour-accent);
+				}
+			}
+		}
+
+		#hub {
+			fill: none;
+			stroke: v(colour-text);
+			stroke-width: 0.5px;
+			@include size(100%);
+			@include size(120px, 94px, max);
+			margin-top: 20px;
+
+			use,
+			g,
+			svg {
+				@include size(100%);
+			}
+		}
+	}
+
+	.footer-menu {
+		&__list {
+			list-style: none;
+			padding-left: 0;
+
+			&--social {
+				@include flex(center, flex-start, row);
+
+				.footer-menu__item--heading {
+					width: 100%;
+				}
+
+				.footer-menu__item {
+					@include margin(null 16px);
+				}
+			}
+		}
+
+		&__item {
+			color: v(colour-text);
+			line-height: 2.5;
+
+			&--heading {
+				@include font(_heading(h6), $family-base, $weight-heavy, 4);
+				color: v(colour-secondary);
+				@include darkmode {
+					color: v(colour-text);
+				}
+			}
+
+			a {
+				color: inherit !important;
+			}
+
+			&:nth-child(2),
+			&:nth-child(5) {
+				.icon-link {
+					.icon {
+						margin-left: 0;
+					}
+				}
+			}
+
+			.icon {
+				fill: v(colour-text);
+				@include prefix(transition, fill 0.5s ease);
+				@include size(40px);
+
+				@include hover {
+					fill: v(colour-accent);
+				}
+			}
+		}
+	}
+
+	.footer-copy {
+		@include flex(flex-end, center, column);
+		text-align: center;
+	}
+}

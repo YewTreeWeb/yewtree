@@ -1,0 +1,39 @@
+.sticky-hero__media {
+	@include bgImg('/assets/images/snow-forest',
+    'center''center',
+    'dark',
+    '/assets/images/forest');
+	position: relative; // fallback
+	position: sticky;
+	z-index: 1;
+	top: 0;
+	@include size(100%, 100vh);
+	overflow: hidden;
+	transition: transform 0.5s ease-in-out;
+	transform: translateZ(0); // fix issue on iOS - content not visible on sticky element
+}
+
+.sticky-hero--overlay-layer .sticky-hero__media::after {
+	// overlay layer
+	content: '';
+	position: absolute;
+	top: 0;
+	left: 0;
+	background-color: v(colour-black);
+	@include size(100%);
+	opacity: 0;
+	transition: opacity 1s ease-in-out;
+}
+
+.sticky-hero--media-is-fixed.sticky-hero--overlay-layer .sticky-hero__media::after {
+	opacity: 0.5;
+}
+
+.sticky-hero__content {
+	color: v(colour-text);
+	position: relative;
+	z-index: 2;
+	height: 100vh;
+	@include flex(center, center);
+	transform: translateZ(0); // fix issue on iOS - content not visible on sticky element
+}

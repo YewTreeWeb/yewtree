@@ -1,0 +1,47 @@
+.box {
+	background-color: v(colour-secondary);
+	color: v(colour-text);
+	@include size(1256px, null, max);
+	width: 100%;
+	margin: 0 auto;
+	box-shadow: -1px 25px 20px 0px darken(_lightcolour(secondary), 10%);
+	@include darkmode {
+		box-shadow: -1px 25px 20px 0px darken(_darkcolour(secondary), 10%);
+	}
+	text-align: center;
+	@include padding(45.67px 4.9% 66px);
+	&__media {
+		svg {
+			@include size(106px);
+			color: v(colour-text);
+			fill: none;
+			stroke: v(colour-text);
+			stroke-width: 0.5px;
+		}
+		margin-bottom: em(25px);
+	}
+	&__content {
+		@include font(em(_heading(h2)), $family-base, $weight-heavy);
+		> span {
+			@include font(inherit, null, inherit);
+		}
+	}
+	&__form {
+		@include flex(center, center, row);
+		margin-top: em(43px);
+		p {
+			line-height: 0;
+			@include even() {
+				input {
+					@include margin(null 50px);
+				}
+			}
+			button {
+				margin-top: 0;
+				line-height: 1;
+				margin-left: 50px;
+				vertical-align: middle;
+			}
+		}
+	}
+}

@@ -1,0 +1,123 @@
+.hero {
+	&__body {
+		@extend .hero-body;
+		padding-top: 13rem;
+		text-align: center;
+		color: v(colour-text-secondary);
+		font-family: $family-base;
+	}
+	&__title {
+		font-family: $family-banner;
+		font-size: $font-hero;
+	}
+	&__subtitle {
+		font-size: _heading(h1);
+	}
+	&__heading,
+	#typed {
+		font-size: _heading(h3);
+		letter-spacing: -2.42px;
+	}
+	&__subtitle,
+	&__heading {
+		font-weight: $weight-light;
+	}
+	&__subtitle,
+	&__title {
+		letter-spacing: -3.36px;
+	}
+	.typed-cursor {
+		font-size: _heading(h3);
+		&--blink {
+			margin-left: 5px;
+		}
+	}
+
+	/// Homepage hero.
+	&--main {
+		.hero__body {
+			@include size(0, 146vh, min);
+			@include bgImg(
+				'/assets/images/snow-trees',
+				'center' 'center',
+				'dark',
+				'/assets/images/green-trees'
+			);
+			@include darkmode {
+				background-position: center bottom;
+			}
+			.hero__subtitle,
+			.hero__title,
+			.hero__headings {
+				animation: fade-in-bottom 0.6s cubic-bezier(0.39, 0.575, 0.565, 1) both;
+				.hero__heading {
+					b:not(.is-visible) {
+						display: none;
+					}
+				}
+			}
+			.hero__subtitle {
+				animation-delay: 5.3s;
+			}
+			.hero__title {
+				animation-delay: 5.6s;
+			}
+			.hero__headings {
+				animation-delay: 5.8s;
+				.hero__heading {
+					font-weight: $weight-light;
+					b {
+						font-weight: inherit;
+					}
+				}
+			}
+			.hero__quotes {
+				@include flex(center, center);
+				position: relative;
+			}
+			.hero__quote {
+				@include center;
+				@include font(ceil(_heading(h1) * 1.2), $family-base, $weight, 1.5);
+				letter-spacing: -1px;
+				margin: 0 auto;
+				width: 100%;
+				@include fluid('max-width', 600px, 840px, 414px, 1199px);
+				opacity: 0;
+				visibility: hidden;
+				transition: opacity 700ms ease-in-out-sine, visability 700ms ease-in-out-sine;
+				transition-delay: 300ms;
+				&--active {
+					opacity: 1;
+					visibility: visible;
+				}
+				blockquote,
+				figcaption {
+					font-family: inherit;
+				}
+				blockquote {
+					text-align: left;
+				}
+				figcaption {
+					text-align: right;
+					font-size: _heading(h4);
+					margin-top: em(20px);
+				}
+			}
+		}
+	}
+	&--loaded {
+		opacity: 1;
+	}
+}
+
+/// Hero animations
+@keyframes fade-in-bottom {
+	0% {
+		transform: translateY(50px);
+		opacity: 0;
+	}
+	100% {
+		transform: translateY(0);
+		opacity: 1;
+	}
+}

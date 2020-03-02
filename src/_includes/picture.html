@@ -1,0 +1,39 @@
+{%- assign images = include.pageImages -%}
+
+<picture>
+    <source
+    type="image/webp"
+    {%- if images.width -%}
+        data-srcset="
+        {%- for width in images.width -%}
+            {{ width | prepend: ',w_' | prepend: images.src | prepend: '/assets/images/' | append: '.webp' | relative_url }}
+            {%- unless forloop.last -%}
+            {{ width | prepend: ' ' | append: 'w' | append: ', ' }}
+            {%- else -%}
+            {{ width | prepend: ' ' | append: 'w' }}
+            {%- endunless -%}
+        {%- endfor -%}
+        "
+        sizes="(max-width: {{ images.width[1] }}px) 100vw, {{ images.width[1] }}px">
+    {%- else -%}
+        data-srcset="{{ '/assets/images/' | append: images.src | append: '.webp' | relative_url }}">
+    {%- endif -%}
+    <source 
+    type="image/jpg"
+    {%- if images.width -%}
+        data-srcset="
+        {%- for width in images -%}
+            {{ width | prepend: ',w_' | prepend: images.src | prepend: '/assets/images/' | append: '.jpg' | append: ' ' | relative_url }}
+            {%- unless forloop.last -%}
+            {{ width | prepend: ' ' | append: 'w' | append: ', ' }}
+            {%- else -%}
+            {{ width | prepend: ' ' | append: 'w' }}
+            {%- endunless -%}
+        {%- endfor -%}
+        "
+        sizes="(max-width: {{ images.width[1] }}px) 100vw, {{ images.width[1] }}px">
+    {%- else -%}
+        data-srcset="{{ '/assets/images/' | append: images.src | append: '.jpg' | relative_url }}">
+    {%- endif -%}
+    <img class="lazyload testimonials__image" src="" data-src="{{ '/assets/images/' | append: images.src | append: '.jpg' | relative_url }}" data-sizes="auto" alt="{{ images.alt }}" intrinsicsize="194x194" width="200" height="200">
+</picture>

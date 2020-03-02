@@ -1,39 +1,17 @@
-@charset "utf-8";
-
-// Our variables
-$base-font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
-$base-font-size:   16px;
-$base-font-weight: 400;
-$small-font-size:  $base-font-size * 0.875;
-$base-line-height: 1.5;
-
-$spacing-unit:     30px;
-
-$text-color:       #111;
-$background-color: #fdfdfd;
-$brand-color:      #2a7ae2;
-
-$grey-color:       #828282;
-$grey-color-light: lighten($grey-color, 40%);
-$grey-color-dark:  darken($grey-color, 25%);
-
-// Width of the content area
-$content-width:    800px;
-
-$on-palm:          600px;
-$on-laptop:        800px;
-
-
-
-// Use media queries like this:
-// @include media-query($on-palm) {
-//     .wrapper {
-//         padding-right: $spacing-unit / 2;
-//         padding-left: $spacing-unit / 2;
-//     }
-// }
-@mixin media-query($device) {
-    @media screen and (max-width: $device) {
-        @content;
-    }
-}
+/// Vendors
+@import '../vendors/bulma/bulma.sass';
+@import '../vendors/include-media/dist/include-media';
+@import '../vendors/family.scss/source/src/family';
+@import '../vendors/flickity/dist/flickity.css';
+/// Helper files.
+@import './helpers/functions';
+@import './helpers/variables';
+@import './helpers/mixins';
+/// Base files for project
+@import './base/*';
+/// Layouts - sections for the site.
+@import './layout/*';
+/// Components - snippets for the site.
+@import './components/*';
+/// Templates - unique layout styling.
+@import './templates/*';

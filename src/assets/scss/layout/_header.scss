@@ -1,0 +1,61 @@
+.site-header {
+	background-color: transparent;
+	position: absolute;
+	top: 0;
+	width: 100%;
+	padding: em(10px) 0;
+	&.scrolled {
+		background-color: v(colour-secondary);
+		box-shadow: 0 -4px 7px v(colour-black);
+		position: fixed;
+	}
+	.navbar-brand {
+		.site-logo {
+			@include font(ceil(_heading(h1) + 4), $family-banner);
+			@include call-to-action {
+				color: v(colour-accent);
+			}
+		}
+	}
+	.navbar-menu {
+	}
+	.navbar-end {
+		#switch-theme {
+			position: relative;
+			border-radius: 50%;
+			background-color: v(colour-text-secondary);
+			@include darkmode {
+				background-color: v(colour-secondary);
+			}
+			box-shadow: none;
+			@include size(59px);
+			&::before {
+				content: none;
+			}
+			> .icon {
+				@include size(100%);
+				@include size(59px, null, max);
+				@include center(true, false);
+				top: 0;
+				opacity: 0;
+				visibility: hidden;
+				transition: opacity 500ms ease-in-out, visiability 500ms ease-in-out;
+				transition-delay: 200ms;
+			}
+			#sun {
+				opacity: 1;
+				visibility: visible;
+			}
+			@include darkmode {
+				#moon {
+					opacity: 1;
+					visibility: visible;
+				}
+				#sun {
+					opacity: 0;
+					visibility: hidden;
+				}
+			}
+		}
+	}
+}

@@ -1,0 +1,24 @@
+a:not(.btn) {
+	position: relative;
+	color: v(colour-text-secondary);
+
+	&::before {
+		content: '';
+		@include center(true, false);
+		bottom: 0;
+		height: 2px;
+		background-color: v(colour-accent);
+		@include prefix(transform-origin, bottom right);
+		@include prefix(transform, scaleX(0));
+		@include prefix(transition, transform 0.5s ease);
+	}
+
+	@include call-to-action(true, false, false) {
+		color: v(colour-accent);
+
+		&::before {
+			@include prefix(transform-origin, bottom left);
+			@include prefix(transform, scaleX(1));
+		}
+	}
+}

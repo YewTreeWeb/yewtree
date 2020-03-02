@@ -1,0 +1,53 @@
+{% comment %}
+    Usage:
+    @ {icon} - Icon file name
+    @ {class} - Icon class (optional)
+    @ {id} - Icon ID (optional)
+    @ {w} - Icon Width (optional)
+    @ {h} - Icon Height (optional)
+    @ {title} - Icon title for aria label (Optional) (If unset hidden should be set to true)
+    @ {desc} - Icon description for aria descripion (Optional) (If unset hidden should be set to true)
+    @ {hidden} - bool (optional - default set to false ).
+
+    // Usage
+    {%- include svg-icon.html icon="Sun" id="sun" class="icon--sun" w="59" h="59" title="Sun" desc="Image of the sun with blue background." -%}
+    // or
+    {%- include svg-icon.html icon="Sun" hidden=true -%}
+{% endcomment %}
+
+{%- assign hidden = false -%}
+
+{%- if include.w -%}
+    {%- assign width = include.w | prepend: 'width="' | append: 'px"' -%}
+{%- endif -%}
+{%- if include.h -%}
+    {%- assign height = include.h | prepend: 'height="' | append: 'px"' -%}
+{%- endif -%}
+{%- if include.hidden == true -%}
+    {%- assign aria = 'aria-hidden="true"'  -%}
+{%- else -%}
+    {%- assign svgTitle = include.icon | append: 'Title' | remove: '--nofill' }} -%}
+    {%- assign svgDesc = include.icon | append: 'Desc' | remove: '--nofill' }} -%}
+    {%- assign aria = 'aria-labelledby="' | append: svgTitle | append: ' ' | append: svgDesc | append: '"'  -%}
+{%- endif -%}
+{%- if include.id -%}
+    {%- assign id = include.id -%}
+{%- endif -%}
+{%- if include.class -%}
+    {%- assign classes = include.class | prepend: 'icon '  -%}
+{%- else -%}
+    {%- assign classes = 'icon'  -%}
+{%- endif -%}
+{%- if include.icon contains '--nofill' -%}
+    {%- assign iconFile = 'nofill.svg#icon-' | prepend: '/assets/images/' | append: include.icon | remove: '--nofill' -%}
+{%- else -%}
+    {%- assign iconFile = 'icons.svg#icon-' | prepend: '/assets/images/' | append: include.icon -%}
+{%- endif -%}
+
+<svg {% if include.id %}id="{{ id }}" {% endif %}class="{{ classes }}" {{ width }} {{ height }} {{ aria }}{% if include.hidden != true %} role="img" {% endif %}>
+    <title{% if include.hidden != true %} id="{{ svgTitle }}" {% endif %}>{{ include.title | default: include.icon }}</title>
+    {%- if include.hidden != true -%}
+    <desc id="{{ svgDesc }}">{{ include.desc }}</desc>
+    {%- endif -%}
+    <use xlink:href="{{ iconFile }}"></use>
+</svg>

@@ -1,0 +1,52 @@
+.testimonials {
+  color: v(colour-white);
+
+  &__image {
+    border-radius: 50%;
+    @include size(100%, auto);
+    @include size(194px, null, max);
+    border: 2px solid v(colour-white);
+    box-shadow: 0 0 14px 1px rgba(_colour(black), 0.5);
+    box-shadow: 0 0 14px 1px hex2hsla(_colour(black), 0.5);
+    margin: 0 auto;
+  }
+
+  &__heading,
+  &__subheading {
+    letter-spacing: unset;
+  }
+
+  &__heading {
+    font-weight: $weight-heavy;
+    @include margin(20px null 10px);
+  }
+
+  &__subheading {
+    max-width: 600px;
+    margin: 0 auto;
+    line-height: 1.2;
+
+    >span {
+      width: 100%;
+      display: block;
+    }
+  }
+
+  &__review {
+    max-width: 568px;
+    @include font(em(_heading(h5)), null, $weight, 1.2);
+    @include margin(em(36px) auto null);
+
+    &::before {
+      left: 0;
+    }
+
+    &::after {
+      right: 0;
+    }
+  }
+
+  &__slide {
+    @include size(100%, null);
+  }
+}

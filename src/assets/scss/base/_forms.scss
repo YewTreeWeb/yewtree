@@ -1,0 +1,19 @@
+form {
+	p {
+		line-height: 1;
+	}
+	input,
+	textarea {
+		@include font(_heading(h6), $family-base, $weight-light, 1);
+		padding: 0.3em 0.5em;
+		outline: none;
+		border: 1px solid v(colour-text);
+		border-radius: 3px;
+		transition: color 0.4s ease-in-out, box-shadow 0.4s ease-in-out-cubic;
+		@include size(232px, 48px, min);
+		&.focus-visible {
+			border-color: v(colour-accent);
+			box-shadow: hex2hsla(_colour(accent), 0.2) 0px 5px 20px;
+		}
+	}
+}

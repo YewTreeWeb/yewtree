@@ -1,0 +1,576 @@
+/// Vendor prefixes
+@mixin prefix($property, $value, $vendors: webkit moz ms o, $default: true) {
+	@if $vendors {
+		@each $vendor in $vendors {
+			#{"-" + $vendor + "-" + $property}: #{$value};
+		}
+	}
+
+	@if $default {
+		#{$property}: #{$value};
+	}
+}
+
+/// Detect user agent.
+@mixin browser($browsers: Mozilla Safari Opera Edge Firefox MSIE Chrome) {
+	@each $browser in $browsers {
+		html[data-browser*='#{$browser}'] & {
+			@content;
+		}
+	}
+}
+
+/// Data tags.
+@mixin data($tag, $data) {
+	[data-#{$tag}*='#{$data}'] & {
+		@content;
+	}
+}
+
+// If only for dark mode
+@mixin darkmode {
+	[data-theme='dark'] & {
+		@content;
+	}
+}
+
+// Create font-face
+@mixin font-face($font-name,
+  $file-name,
+  $locals: (0, 0),
+  $weight: 400,
+  $style: normal,
+  $display: swap,
+  $fallback: false) {
+	@font-face {
+		font-family: quote($font-name);
+		font-weight: $weight;
+		font-style: $style;
+		font-display: $display;
+
+		@if ($fallback) {
+			src: url($file-name+'.eot');
+
+			@if (nth($locals, 1) !=0 and nth($locals, 2) !=0) {
+				src: local(quote(nth($locals, 1))), local(quote(nth($locals, 2))),
+					url($file-name+'.eot?#iefix') format('embedded-opentype'), url($file-name+'.woff2') format('woff2'),
+					url($file-name+'.woff') format('woff'), url($file-name+'.ttf') format('truetype'),
+					url($file-name+'.svg##{$font-name}') format('svg');
+			} @else {
+				src: url($file-name+'.eot?#iefix') format('embedded-opentype'), url($file-name+'.woff2') format('woff2'),
+					url($file-name+'.woff') format('woff'), url($file-name+'.ttf') format('truetype'),
+					url($file-name+'.svg##{$font-name}') format('svg');
+			}
+		} @else {
+			@if (nth($locals, 1) !=0 and nth($locals, 2) !=0) {
+				src: local(quote(nth($locals, 1))), local(quote(nth($locals, 2))),
+					url($file-name+'.woff2') format('woff2'), url($file-name+'.woff') format('woff');
+			} @else {
+				src: url($file-name+'.woff2') format('woff2'), url($file-name+'.woff') format('woff');
+			}
+		}
+	}
+}
+
+/// Sets the `max-width` and `max-height` of the element in one statement.
+@mixin size($width, $height: $width, $type: null) {
+	@if ($width !=null and $width !=0) {
+		@if ($type=='max') {
+			max-width: $width;
+		} @else if ($type=='min') {
+			min-width: $width;
+		} @else {
+			width: $width;
+		}
+	}
+
+	@if ($height !=null and $height !=0) {
+		@if ($type=='max') {
+			max-height: $height;
+		} @else if ($type=='min') {
+			min-height: $height;
+		} @else {
+			height: $height;
+		}
+	}
+}
+
+/// Provides a concise, one-line method for setting `margin` on specific edges
+/// of a box. Use a `null` value to “skip” edges of the box with standard
+/// CSS shorthand.
+///
+/// @argument {list} $values
+///   List of margin values; accepts CSS shorthand.
+///
+/// @example scss
+///   .element {
+///     @include margin(null auto);
+///   }
+///
+///   // CSS Output
+///   .element {
+///     margin-left: auto;
+///     margin-right: auto;
+///   }
+///
+/// @example scss
+///   .element {
+///     @include margin(10px 3em 20vh null);
+///   }
+///
+///   // CSS Output
+///   .element {
+///     margin-bottom: 20vh;
+///     margin-right: 3em;
+///     margin-top: 10px;
+///   }
+///
+/// @require {mixin} _directional-property
+@mixin margin($values) {
+	$top: margin + "-top";
+	$bottom: margin + "-bottom";
+	$left: margin + "-left";
+	$right: margin + "-right";
+	$all: margin;
+
+	$values: _compact-shorthand($values);
+
+	@if _contains-falsy($values) {
+		@if nth($values, 1) {
+			#{$top}: nth($values, 1);
+		}
+
+		@if length($values) ==1 {
+			@if nth($values, 1) {
+				#{$right}: nth($values, 1);
+			}
+		} @else {
+			@if nth($values, 2) {
+				#{$right}: nth($values, 2);
+			}
+		}
+
+		@if length($values) ==2 {
+			@if nth($values, 1) {
+				#{$bottom}: nth($values, 1);
+			}
+
+			@if nth($values, 2) {
+				#{$left}: nth($values, 2);
+			}
+		} @else if length($values) ==3 {
+			@if nth($values, 3) {
+				#{$bottom}: nth($values, 3);
+			}
+
+			@if nth($values, 2) {
+				#{$left}: nth($values, 2);
+			}
+		} @else if length($values) ==4 {
+			@if nth($values, 3) {
+				#{$bottom}: nth($values, 3);
+			}
+
+			@if nth($values, 4) {
+				#{$left}: nth($values, 4);
+			}
+		}
+	} @else {
+		#{$all}: $values;
+	}
+}
+
+/// Provides a concise method for targeting `padding` on specific sides of a
+/// box. Use a `null` value to “skip” a side.
+///
+/// @argument {list} $values
+///   List of padding values; accepts CSS shorthand.
+///
+/// @example scss
+///   .element-one {
+///     @include padding(null 1rem);
+///   }
+///
+///   // CSS Output
+///   .element-one {
+///     padding-left: 1rem;
+///     padding-right: 1rem;
+///   }
+///
+/// @example scss
+///   .element-two {
+///     @include padding(10vh null 10px 5%);
+///   }
+///
+///   // CSS Output
+///   .element-two {
+///     padding-bottom: 10px;
+///     padding-left: 5%;
+///     padding-top: 10vh;
+///   }
+///
+/// @require {mixin} _directional-property
+@mixin padding($values) {
+	$top: padding + "-top";
+	$bottom: padding + "-bottom";
+	$left: padding + "-left";
+	$right: padding + "-right";
+	$all: padding;
+
+	$values: _compact-shorthand($values);
+
+	@if _contains-falsy($values) {
+		@if nth($values, 1) {
+			#{$top}: nth($values, 1);
+		}
+
+		@if length($values) ==1 {
+			@if nth($values, 1) {
+				#{$right}: nth($values, 1);
+			}
+		} @else {
+			@if nth($values, 2) {
+				#{$right}: nth($values, 2);
+			}
+		}
+
+		@if length($values) ==2 {
+			@if nth($values, 1) {
+				#{$bottom}: nth($values, 1);
+			}
+
+			@if nth($values, 2) {
+				#{$left}: nth($values, 2);
+			}
+		} @else if length($values) ==3 {
+			@if nth($values, 3) {
+				#{$bottom}: nth($values, 3);
+			}
+
+			@if nth($values, 2) {
+				#{$left}: nth($values, 2);
+			}
+		} @else if length($values) ==4 {
+			@if nth($values, 3) {
+				#{$bottom}: nth($values, 3);
+			}
+
+			@if nth($values, 4) {
+				#{$left}: nth($values, 4);
+			}
+		}
+	} @else {
+		#{$all}: $values;
+	}
+}
+
+/// Create fluid responsive sizes.
+@mixin fluid($type, $min-size, $max-size, $min-vw, $max-vw) {
+	#{$type}: #{$min-size};
+
+	@media only screen and (min-width: #{$min-vw}) {
+		#{$type}: calc(
+			#{$min-size} + #{strip-unit($max-size - $min-size)} * ((100vw - #{$min-vw}) / #{strip-unit($max-vw - $min-vw)})
+		);
+	}
+
+	@media only screen and (min-width: #{$max-vw}) {
+		#{$type}: #{$max-size};
+	}
+}
+
+/// Create placeholder.
+@mixin placeholder {
+	&.placeholder {
+		@content;
+	}
+
+	&:-moz-placeholder {
+		@content;
+	}
+
+	&::-moz-placeholder {
+		@content;
+	}
+
+	&:-ms-input-placeholder {
+		@content;
+	}
+
+	&::-webkit-input-placeholder {
+		@content;
+	}
+}
+
+/// Trigger hardware acceleration.
+@mixin hardware($will-change: auto, $perspective: 1000) {
+	backface-visibility: hidden;
+	will-change: $will-change;
+	perspective: $perspective;
+}
+
+/// Add retina media query.
+@mixin retina($ratio) {
+	@if map-has-key($ratios, #{2x}) or map-has-key($ratios, #{1-2x}) or map-has-key($ratios, #{1-3x}) or map-has-key($ratios, #{1-5x}) {
+		$ratio: map-get($ratios, $ratio);
+
+		@media only screen and (-webkit-min-device-pixel-ratio: nth($ratio, 1)),
+			only screen and (min--moz-device-pixel-ratio: nth($ratio, 1)),
+			only screen and (-o-min-device-pixel-ratio: #{nth($ratio, 1)}/1),
+			only screen and (min-device-pixel-ratio: nth($ratio, 1)),
+			only screen and (min-resolution: #{nth($ratio, 2)}dpi),
+			only screen and (min-resolution: #{nth($ratio, 1)}dppx) {
+			@content;
+		}
+	} @else {
+		@warn "There were no keys that match! Using default 2x ratio.";
+
+		@media only screen and (-webkit-min-device-pixel-ratio: 2),
+			only screen and (min--moz-device-pixel-ratio: 2),
+			only screen and (-o-min-device-pixel-ratio: 2/1),
+			only screen and (min-device-pixel-ratio: 2),
+			only screen and (min-resolution: 192dpi),
+			only screen and (min-resolution: 2dppx) {
+			@content;
+		}
+	}
+}
+
+/// Adding Truncation.
+@mixin truncate($truncation-boundary) {
+	max-width: $truncation-boundary;
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
+}
+
+/// Maintain aspect ratio.
+@mixin aspect-ratio($width, $height) {
+	position: relative;
+
+	&::before {
+		display: block;
+		content: '';
+		width: 100%;
+		padding-top: ($height / $width) * 100%;
+	}
+
+	> .content {
+		position: absolute;
+		top: 0;
+		left: 0;
+		right: 0;
+		bottom: 0;
+	}
+}
+
+/// Centering
+@mixin center($horizontal: true, $vertical: true) {
+	position: absolute;
+
+	@if ($horizontal and $vertical) {
+		top: 50%;
+		@include prefix(transform, translateY(-50%));
+		left: 0;
+		right: 0;
+		margin: 0 auto;
+	} @else if ($horizontal) {
+		left: 0;
+		right: 0;
+		margin: 0 auto;
+	} @else if ($vertical) {
+		top: 50%;
+		@include prefix(transform, translateY(-50%));
+	}
+}
+
+/// Clearfix
+@mixin clearfix() {
+	@supports (display: flow-root) {
+		display: flow-root;
+	}
+
+	@supports not (display: flow-root) {
+		&::after {
+			display: block;
+			clear: both;
+			content: '';
+		}
+	}
+}
+
+/// Font settings
+@mixin font($size: false, $family: false, $weight: false, $line: false) {
+	@if ($size) {
+		font-size: $size;
+	}
+
+	@if ($family) {
+		font-family: $family;
+	}
+
+	@if ($weight) {
+		font-weight: $weight;
+	}
+
+	@if ($line) {
+		line-height: $line;
+	}
+}
+
+/// Hover, Active, Focus.
+@mixin call-to-action($hover: true, $active: true, $focus: true) {
+	@if ($hover, $active, $focus) {
+		@supports (hover: hover) {
+			@media (hover: hover) {
+				&:hover {
+					@content;
+				}
+			}
+			&:active,
+			&:focus {
+				@content;
+			}
+		}
+		@supports not (hover: hover) {
+			&:hover,
+			&:active,
+			&:focus {
+				@content;
+			}
+		}
+	} @else if ($hover) {
+		@supports (hover: hover) {
+			@media (hover: hover) {
+				&:hover {
+					@content;
+				}
+			}
+		}
+		@supports not (hover: hover) {
+			&:hover {
+				@content;
+			}
+		}
+	} @else if ($active) {
+		&:active {
+			@content;
+		}
+	} @else if ($focus) {
+		&:focus {
+			@content;
+		}
+	} @else {
+		@warn "A valid hover and/or active and/or focus is required.";
+	}
+}
+
+/// Hover Detect
+@mixin hover {
+	@supports (hover: hover) {
+		@media (hover: hover) {
+			&:hover {
+				@content;
+			}
+		}
+
+		@media (hover: none) {
+			&:focus,
+			&:active {
+				@content;
+			}
+		}
+	}
+
+	@supports not (hover: hover) {
+		&:hover {
+			@content;
+		}
+	}
+}
+
+/// Background Settings
+@mixin background {
+	background-repeat: no-repeat;
+	background-size: cover;
+	background-position: center center;
+}
+
+/// Background Image
+@mixin bgImg($image, $position: ($x, $y), $mode: null, $darkImg: null) {
+	background-image: url(#{$image}.jpg);
+	background-image: url(#{$image}.webp);
+
+	@if $mode=='dark' {
+		@include darkmode {
+			background-image: url(#{$darkImg}.jpg);
+			background-image: url(#{$darkImg}.webp);
+		}
+	}
+
+	background-repeat: no-repeat;
+	background-size: cover;
+	background-position: nth($position, 1) nth($position, 2);
+}
+
+/// Background Overlay
+@mixin overlay($color: #{_colour(black)}, $alpha: 0.3) {
+	&::before {
+		content: '';
+		@include size(100%);
+		background-color: rgba($color, $alpha);
+		@include position;
+	}
+}
+
+/// Display Flex
+@mixin flex($align, $justify, $direction: false, $wrap: true) {
+	display: flex;
+	align-items: $align;
+
+	// If space-evenly is used.
+	@if $justify=='space-evenly' {
+		justify-content: space-between;
+
+		// Use fallback for Edge.
+		@supports (-ms-ime-align: auto) {
+			&::before,
+			&::after {
+				content: '';
+				display: block;
+			}
+		}
+
+		// If not Edge then apply space-evenly.
+		@supports not (-ms-ime-align: auto) {
+			// Run space-evenly.
+			justify-content: $justify;
+		}
+	} @else {
+		// If other justify-content used.
+		justify-content: $justify;
+	}
+
+	@if $direction {
+		@if str-index($direction, 'row') {
+			@if $wrap {
+				flex-flow: $direction wrap;
+			} @else {
+				flex-direction: $direction;
+
+				@include media('<=sm') {
+					@if $direction=='row' {
+						flex-direction: column;
+					} @else if $direction=='row-reverse' {
+						flex-direction: column-reverse;
+					}
+				}
+
+				flex-wrap: nowrap;
+			}
+		} @else {
+			flex-direction: $direction;
+			flex-wrap: nowrap;
+		}
+	}
+}

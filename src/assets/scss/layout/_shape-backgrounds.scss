@@ -1,0 +1,27 @@
+.shape-backgrounds {
+	position: relative;
+	.background {
+		@include background;
+		@include center(true, false);
+		width: 100%;
+		min-height: 400px;
+		&--header {
+			background-image: url('/assets/images/header-bg-light.svg');
+			@include darkmode {
+				background-image: url('/assets/images/header-bg.svg');
+			}
+			top: -656px;
+			top: -86vh;
+			height: 626px;
+			height: 114vh;
+		}
+		&--footer {
+			background-image: url('/assets/images/footer-bg-light.svg');
+			@include darkmode {
+				background-image: url('/assets/images/footer-bg.svg');
+			}
+			height: 100vh;
+			bottom: 0;
+		}
+	}
+}

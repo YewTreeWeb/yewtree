@@ -16,55 +16,20 @@
 
 # Title, decription, tagline and URL for your site
 # Can be used in your theme by calling 'site.title' and so on
-title: yewtree
-description: Portfolio website.
+title: "YewTree Web"
+description: "Portfolio website."
 url: https://yewtreeweb.co.uk
-lang: en_GB
+baseurl: "/"
+lang: en-GB
+words_per_minute: 200
 
 # Used so Jekyll outputs the site correctly so Gulp can do what it wants
-source: .tmp/src
-destination: .tmp/dist
+source: src
+destination: dist
 include:
   - _pages
   - _headers
   - _redirects
-  
-exclude:
-  - assets
-  - Gemfile
-  - Gemfile.lock
-  - node_modules
-  - vendor/bundle/
-  - vendor/cache/
-  - vendor/gems/
-  - vendor/ruby/
-  - package.json
-  - bower.json
-  - .bowerrc
-  - yarn.lock
-  - package-lock.json
-  - .jekyll-assets-cache
-  - .sass-cache/
-  - Rakefile
-  - README.md
-  - gulpfile.js
-  - gulpfile.babel.js
-  - .babelrc.js
-  - markdown.style.rb
-  - .mdlrc
-  - .scss-lint.yml
-  - .eslintignore
-  - .eslintrc.js
-  - .gitattributes
-  - .gitignore
-  - .editorconfig
-  - .travis.yml
-  - .codeclimate.yml
-  - .github/
-  - CHANGELOG.md
-  - workbox-config.js
-  - src/assets/js/sw.js
-  - .tmp/src/assets/js/sw.js
 
 # Same as the title etc for your site but can instead be
 # called by using 'site.author.name' and so on
@@ -74,12 +39,12 @@ author:
   email: mathew.teague@yewtreeweb.co.uk
   uri: yewtreeweb
   bio: me
-  twitter:
-  github:
-  twitter:
-  facebook:
-  instagram:
-  linkedin:
+  twitter: "https://twitter.com/yewtreeweb"
+  github: "https://github.com/YewTreeWeb"
+  pintrest: "https://www.pinterest.co.uk/mteague89/"
+  instagram: "https://www.instagram.com/mat.teague/"
+  linkedin: "https://www.linkedin.com/in/mathewteague"
+  gitlab: "https://gitlab.com/YewTreeWeb"
 
 # _config.dev.yml overwrites these options when you run `gulp`
 # Hides your drafts and future posts
@@ -93,15 +58,50 @@ limit_posts: 0
 # Permalink structure and pagination options
 permalink: pretty
 paginate: 10
-paginate_path: 'page:num'
-excerpt_separator: ''
+paginate_path: "page:num"
+excerpt_separator: ""
 
 # Markdown library and options
-markdown: redcarpet
-redcarpet:
-  extensions: ['no_intra_emphasis', 'tables', 'fenced_code_blocks', 'autolink', 'smart',
-              'strikethrough', 'superscript', 'underline', 'highlight', 'footnotes']
+markdown: kramdown
+kramdown:
+  auto_ids: true
+  footnote_nr: 1
+  entity_output: as_char
+  toc_levels: 1..6
+  enable_coderay: false
 highlighter: rouge
+strict_front_matter: true
+
+# Favicons
+favicon_version: "1.0"
+theme_colour: "#242830"
+
+# Site analytics
+google_site_verification: "geapSKtvpBNDSfXVmF09E9CnaHGglbO61r4XgLZtEmo"
+bing_site_verification: "D81F4C18A6CB3018F64D7C827D953DFD"
+alexa_site_verification: "Y5DYjZ4VWlrQzBP5kcQJeOKLNas"
+yandex_site_verification: "55a5419baf76a498"
+
+google_ad-client: "ca-pub-7328585512091257"
+google_ad-slot: "3049671934"
+google_analytics: "UA-2011187-1"
+
+pingback_url: "https://webmention.io/mademistakes.com/xmlrpc"
+webmention_url: "https://webmention.io/mademistakes.com/webmention"
+token_endpoint_url: "https://tokens.indieauth.com/token"
+authorization_endpoint_url: "https://indieauth.com/auth"
+
+# reCAPTCHA keys
+reCaptcha:
+  siteKey: "6LdRBykTAAAAAFB46MnIu6ixuxwu9W1ihFF8G60Q"
+  secret: "PznnZGu3P6eTHRPLORniSq+J61YEf+A9zmColXDM5icqF49gbunH51B8+h+i2IvewpuxtA9TFoK68TuhUp/X3YKmmqhXasegHYabY50fqF9nJh9npWNhvITdkQHeaOqnFXUIwxfiEeUt49Yoa2waRR7a5LdRAP3SVM8hz0KIBT4="
+
+# Collections
+collections:
+  portfolio:
+    output: true
+    permalink: /:collection/:path/
+    title: "The Wood"
 
 # Extending Jekyll
 plugins:
@@ -110,4 +110,45 @@ plugins:
   - jekyll-paginate
   - jekyll-sitemap
   - jekyll-seo-tag
-  - jekyll-redirect-from
+  - jekyll-include-cache
+  - jekyll-algolia
+  - jekyll/tagging
+  - jekyll-tagging-related_posts
+
+# Eclude files from Jekyll build
+exclude:
+  - Gemfile
+  - Gemfile.lock
+  - node_modules
+  - vendor/bundle/
+  - vendor/cache/
+  - vendor/gems/
+  - vendor/ruby/
+  - package.json
+  - yarn-error.log
+  - yarn.lock
+  - package-lock.json
+  - .jekyll-assets-cache
+  - .sass-cache/
+  - Rakefile
+  - README.md
+  - gulpfile.js
+  - gulpfile.babel.js
+  - .babelrc
+  - markdown.style.rb
+  - .mdlrc
+  - .eslintignore
+  - .eslintrc.js
+  - .gitattributes
+  - .gitignore
+  - .editorconfig
+  - .stylelintrc.json
+  - .travis.yml
+  - .codeclimate.yml
+  - .github/
+  - netlify.toml
+  - CHANGELOG.md
+  - workbox-config.js
+  - assets/
+  - .tmp/
+  - config/**/*

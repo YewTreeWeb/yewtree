@@ -1,0 +1,82 @@
+// MSIE: Required for IEMobile.
+@-ms-viewport {
+	width: device-width;
+}
+
+// Ensures page width is always >=320px.
+@include media('>=xs') {
+	html,
+	body {
+		min-width: 320px;
+	}
+}
+
+// Set box model to border-box.
+// Based on css-tricks.com/inheriting-box-sizing-probably-slightly-better-best-practice
+html {
+	box-sizing: border-box;
+}
+
+*,
+*:before,
+*:after {
+	box-sizing: inherit;
+}
+
+body {
+	background-color: v(colour-primary);
+	color: v(colour-text);
+
+	// MSIE: Prevents scrollbar from overlapping content.
+	-ms-overflow-style: scrollbar;
+
+	// Prevents animation/transition "flicker" on page load.
+	// Automatically added/removed by js/main.js.
+	&.is-loading {
+		*,
+		*::before,
+		*::after {
+			@include prefix('animation', 'none !important');
+			@include prefix('transition', 'none !important');
+		}
+	}
+
+	&.color-theme-in-transition {
+		*,
+		*::before,
+		*::after {
+			@include prefix('transition', 'ease-in-out 200ms !important');
+			@include prefix('transition-delay', '0 !important');
+		}
+	}
+
+	.asset-dark {
+		display: none;
+	}
+	.asset-light {
+		display: block;
+	}
+
+	&[data-theme='dark'] {
+		.asset-dark {
+			display: block;
+		}
+		.asset-light {
+			display: none;
+		}
+	}
+}
+
+.container {
+	@include media("screen", ">=1500px") {
+		max-width: 1440px;
+	}
+}
+
+.section {
+	padding: 5rem 1.5rem;
+}
+
+.highlight {
+	color: v(colour-accent);
+}

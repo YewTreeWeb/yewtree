@@ -1,6 +1,10 @@
 'use strict';
 
-import { task, src, dest } from 'gulp';
+import {
+  task,
+  src,
+  dest
+} from 'gulp';
 import shell from 'shelljs';
 import plugins from "gulp-load-plugins";
 import yargs from 'yargs';
@@ -15,9 +19,13 @@ const $ = plugins({
 // 'gulp jekyll:tmp' -- copies your Jekyll site to a temporary directory
 // to be processed
 task('site:tmp', () => {
-  return src(['src/**/*', '!src/assets/**/*', '!src/assets'], {dot: true})
+  return src(['src/**/*', '!src/assets/**/*', '!src/assets'], {
+      dot: true
+    })
     .pipe(dest('.tmp/src'))
-    .pipe($.size({title: 'Jekyll'}));
+    .pipe($.size({
+      title: 'Jekyll'
+    }));
 });
 
 // 'gulp jekyll' -- builds your site with development settings
@@ -30,10 +38,4 @@ task('site', (done) => {
     shell.exec('bundle exec jekyll build');
     done();
   }
-});
-
-// 'gulp doctor' -- literally just runs jekyll doctor
-task('site:check', (done) => {
-  shell.exec('jekyll doctor');
-  done();
 });

@@ -1,0 +1,43 @@
+{%- assign hero = page.hero -%}
+
+{%- if page.url != site.baseurl -%}
+    {%- assign modifier = 'hero--page' -%}
+{%- else -%}
+    {%- assign modifier = 'hero--main' -%}
+{%- endif -%}
+
+<section class="hero {{ modifier }}">
+  <div class="hero__body">
+    <div class="container">
+        {%- unless site.baseurl -%}
+            {%- if hero.subtitle -%}
+                <h1 class="hero__subtitle">{{ hero.subtitle }}</h1>
+            {%- endif -%}
+        {%- else -%}
+            <h1 class="hero__subtitle">{{ site.author.name }}</h1>
+        {%- endunless -%}
+        <h2 class="hero__title">{{ hero.title | default: site.title }}</h2>
+        {%- if hero.headings -%}
+            <h3 class="hero__headings">
+                <span class="hero__heading">
+                    {%- for heading in hero.headings -%}
+                        <b{% if forloop.first %} class="is-visible"{% endif %}>{{ heading.text }}</b>
+                    {%- endfor -%}
+                </span>
+            </h3>
+        {%- endif -%}
+        {%- if hero.quotes and site.data.quotes -%}
+            <div class="hero__quotes">
+            {%- for quote in site.data.quotes -%}       
+                <figure class="hero__quote">
+                    <blockquote cite="{{ quote.cite | escape }}">
+                        "{{ quote.quote | strip }}"
+                    </blockquote>
+                    <figcaption>By {{ quote.author }}</figcaption>
+                </figure>
+            {%- endfor -%}
+            </div>
+        {%- endif -%}
+    </div>
+  </div>
+</section>
